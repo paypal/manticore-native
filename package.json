@@ -1,0 +1,57 @@
+{
+  "name": "paypal-manticore",
+  "version": "1.0.0",
+  "description": "A runtime to expose Javascript classes, logic and code to native components",
+  "main": "index.js",
+  "bin": "./build/gen/index.js",
+  "config": {
+    "babelify": "-t [ babelify --presets [ es2015 ] --plugins [ syntax-async-functions transform-regenerator ] ]"
+  },
+  "scripts": {
+    "lint": "eslint test gen",
+    "test": "babel-node ./node_modules/.bin/tape test/**/test_*.js",
+    "build-test-js": "browserify $npm_package_config_babelify test/js-source/index.js > ./output/index.pack.js",
+    "build-objc-polyfill": "browserify $npm_package_config_babelify runtime/objc/js/polyfill.js > runtime/objc/js/polyfill.pack.js",
+    "gen-objc-test": "babel-node -- gen/index.js -q ./runtime/objc/templates ./output/objc test/js-source/*.js",
+    "build-android-polyfill": "mkdirp runtime/android/manticore/src/main/res/raw/ && browserify $npm_package_config_babelify runtime/android/js/polyfill.js > runtime/android/manticore/src/main/res/raw/polyfill_pack.js",
+    "gen-android-test": "babel-node -- gen/index.js -q ./runtime/android/templates ./runtime/android/manticore/src/test/java/com/paypal/manticore/ test/js-source/*.js",
+    "build": "babel gen/index --out-dir build/gen && babel gen/lib --out-dir build/gen/lib",
+    "prepubish": ""
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.paypal.com/RetailSDK-NewGen/paypal-manticore"
+  },
+  "keywords": [
+    "nodejs",
+    "mobile",
+    "javascript",
+    "sdk"
+  ],
+  "author": "PayPal",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "acorn-es7-plugin": "^1.0.12",
+    "babel-polyfill": "^6.7.4",
+    "babel-regenerator-runtime": "^6.5.0",
+    "bluebird": "^3.3.4",
+    "docchi": "^0.12.0",
+    "dustjs-helpers": "^1.7.3",
+    "dustjs-linkedin": "^2.7.2",
+    "fs-extra": "^0.26.7",
+    "glob": "^7.0.3",
+    "yaku": "^0.14.1"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.6.5",
+    "babel-eslint": "^6.0.0",
+    "babel-preset-es2015": "^6.6.0",
+    "babelify": "^7.2.0",
+    "browserify": "^13.0.0",
+    "eslint": "^2.5.1",
+    "eslint-config-airbnb": "^6.2.0",
+    "eslint-plugin-react": "^4.2.3",
+    "mkdirp": "^0.5.1",
+    "tape": "^4.5.1"
+  }
+}

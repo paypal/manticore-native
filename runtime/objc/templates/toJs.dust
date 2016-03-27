@@ -1,0 +1,11 @@
+{@converter type="{target}"}{@isCallback type="{target}"}{typePrefix}{packedName}_wrap_{@callbackName}{target}{/callbackName}_callback({arg}){:else}{@comment}
+    // A type we made
+{/comment}[[{typePrefix}{packedName} engine] resolveJSObject:{arg} ofType:[{@type noPointers="true"}{target}{/type} class]]{/isCallback}{@comment}
+    // Builtins are provided by the Manticore engine
+{/comment}{:builtin}[[{typePrefix}{packedName} engine].converter toJs{converter}:{arg}]{@comment}
+    // Enums are simple, except when part of array (where they're simpler, but different)
+{/comment}{:enum}{?isArray}{arg}{:else}@({arg}){/isArray}{@comment}
+    // One you make
+{/comment}{:custom}NativeToJS_{target}({arg}, [{typePrefix}{packedName} engine]){@comment}
+    // Arrays one element at a time
+{/comment}{:array}[[{typePrefix}{packedName} engine].converter toJsArray:{arg} withConverter: ^(id element) { return {>toJs target="{elementType}" arg="element" isArray="true"/}; }]{/converter}

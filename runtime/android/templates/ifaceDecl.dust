@@ -1,0 +1,6 @@
+  /**
+   * {@lineify indent=3}{description|s}{/lineify}
+   */
+  public interface {@firstCap}{name}{/firstCap}{suffix} {
+    {?returns}{@type}{returns.type}{/type}{:else}void{/returns} {name}({#args}{@type}{type}{/type} {name}{@sep}, {/sep}{/args});
+  }

@@ -1,0 +1,35 @@
+  /**
+   * Add an observer for the {name} event
+   */
+  public void add{@firstCap}{name}{/firstCap}Observer(final {@firstCap}{name}{/firstCap}Observer observer) {
+    if ({name}Handlers == null) {
+      {name}Handlers = new HashMap<{@firstCap}{name}{/firstCap}Observer,V8Object>();
+    } else if ({name}Handlers.containsKey(observer)) {
+      throw new IllegalArgumentException("That observer has already been added to the {name} event.");
+    }
+    final V8Object wrapped = wrapJavaFn(observer);
+    getEngine().getExecutor().run(new Runnable()
+    {~lb}
+      @Override public void run() {
+        {packedName}.this.impl.executeVoidFunction("on", getEngine().createJsArray().push("{name}").push(wrapped));
+      }
+    });
+    {name}Handlers.put(observer,wrapped);
+  }
+
+  /**
+   * Remove an observer for the {name} event
+   */
+  public void remove{@firstCap}{name}{/firstCap}Observer({@firstCap}{name}{/firstCap}Observer observer) {
+     if ({name}Handlers != null && {name}Handlers.containsKey(observer)) {
+       final V8Object ex = {name}Handlers.get(observer);
+       getEngine().getExecutor().run(new Runnable()
+       {~lb}
+         @Override public void run() {
+           {packedName}.this.impl.executeVoidFunction("removeListener", getEngine().createJsArray().push("{name}").push(ex));
+           ex.release();
+         }
+       });
+       {name}Handlers.remove(observer);
+     }
+  }

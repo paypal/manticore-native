@@ -1,0 +1,4 @@
+#import <Foundation/Foundation.h>
+#import "{languageSettings.basenames.importAll}{languageSettings.extensions.importAll}"
+{#classes}#import "{typePrefix}{packedName}.h"
+{/classes}

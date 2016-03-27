@@ -1,0 +1,38 @@
+{
+  "typeMap": {
+    "string": "NSString",
+    "decimal": "NSDecimalNumber",
+    "bool": "BOOL",
+    "int": "int",
+    "Date": "NSDate",
+    "object": "NSDictionary",
+    "error": "PPManticoreError"
+  },
+  "namespace": "PayPalManticore",
+  "typePrefix": "PPManticore",
+  "baseClass": "PPManticoreJSBackedObject",
+  "arrayType": "NSArray*",
+  "callbackSuffix": "Handler",
+  "hasPointers": true,
+  "valueTypes": [
+    "int",
+    "bool"
+  ],
+  "nativeConverters": {
+    "int": "Int",
+    "decimal": "Decimal",
+    "bool": "Bool",
+    "object": "Object"
+  },
+  "basenames": {
+    "importAll": "PayPalManticoreImports",
+    "typedefs": "PayPalManticoreTypes"
+  },
+  "extensions": {
+    "typedefs": ".h",
+    "importAll": ".h",
+    "classHeader": ".h",
+    "impl": ".m",
+    "class": ".m"
+  }
+}

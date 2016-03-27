@@ -1,0 +1,30 @@
+{#classes}@class {typePrefix}{packedName};
+{/classes}{#referencedTypes}{@sdkType type="{.}"}@class {@type noPointers="true"}{.}{/type};
+{/sdkType}{/referencedTypes}
+{#enums}{?description}
+/**
+ * {@lineify indent=3}{description|s}{/lineify}
+ */
+{/description}typedef NS_ENUM(NSInteger, {typePrefix}{packedName}) {
+{#values}  {typePrefix}{packedName}{name} = {value}{@sep},
+{/sep}{/values}
+};
+{/enums}
+{#allCallbacks}
+/**
+ * {@lineify indent=3}{description|s}{/lineify}
+ */
+typedef {^returns}void{:else}{@type}{returns.type}{/type}{/returns} (^{typePrefix}{type}{@firstCap}{name}{/firstCap}Handler)({#args}{@type}{type}{/type} {name}{@sep}, {/sep}{/args});
+{/allCallbacks}
+{#classes} {#events}
+/**
+ * {@lineify indent=3}{description|s}{/lineify}
+ */
+typedef {^returns}void{:else}{@type}{returns.type}{/type}{/returns} (^{typePrefix}{type}{@firstCap}{name}{/firstCap}Event)({#args}{@type}{type}{/type} {name}{@sep}, {/sep}{/args});
+
+/**
+ * Returned from add{@firstCap}{name}{/firstCap}Listener and used to unsubscribe from the event.
+ */
+typedef id {typePrefix}{type}{@firstCap}{name}{/firstCap}Signal;
+
+{/events} {/classes}

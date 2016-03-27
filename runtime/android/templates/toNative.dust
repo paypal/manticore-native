@@ -1,0 +1,16 @@
+{@converter type="{target}"}{@comment}
+    // First, if it's one of our types or one not explicitly configured, call the runtime converter
+{/comment}getEngine().getConverter().asNative({arg}, {@type}{target}{/type}.class){:enum}{@comment}
+    // If it's an enum, pass it back and forth as an int. So here we use fromInt to make the enum instance
+{/comment}{@type}{target}{/type}.fromInt((int) {arg}){:custom}{@comment}
+    // Custom converters have a name convention, let the compiler typing handle the rest
+{/comment}getEngine().getConverter().asNative{@firstCap}{target}{/firstCap}({arg}){:builtin}{@comment}
+    // Built in types are passed as is in j2v8
+{/comment}{arg}{:array}{@comment}
+    // Arrays. Oh vey, those are hard.
+{/comment}getEngine().getConverter().toNativeArray({arg}, new IManticoreTypeConverter.NativeElementConverter<{@type}{elementType}{/type}>() {
+        @Override
+        public {@type}{elementType}{/type} convert(Object jsValue) {
+            return ({@type}{elementType}{/type}) {>toNative target="{elementType}" arg="jsValue"/};
+        }
+    }){/converter}

@@ -1,0 +1,14 @@
+PODS:
+  - PayPalManticore (1.0.0)
+
+DEPENDENCIES:
+  - PayPalManticore (from `../../`)
+
+EXTERNAL SOURCES:
+  PayPalManticore:
+    :path: ../../
+
+SPEC CHECKSUMS:
+  PayPalManticore: cdc561c82ae30b85fff04cfa92c49705d8e78475
+
+COCOAPODS: 0.39.0

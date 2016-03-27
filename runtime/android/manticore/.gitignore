@@ -1,0 +1,8 @@
+/build
+local.properties
+.DS_Store
+src/test/java/com/paypal/manticore/SDKTest.java
+src/test/java/com/paypal/manticore/SDKTestDefault.java
+src/test/java/com/paypal/manticore/SDKTestDefaultSubclass.java
+src/test/java/com/paypal/manticore/SDKTestStatuses.java
+src/test/java/com/paypal/manticore/model.json

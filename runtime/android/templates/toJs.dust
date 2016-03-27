@@ -1,0 +1,18 @@
+{@converter type="{target}"}{@comment}
+    // Callbacks are wrapped in a generated function and passed to JS
+{/comment}{@isCallback type="{target}"}wrapJavaFn({arg}){:else}{@comment}
+    // The runtime converter function will check the type of arg and do the right thing
+{/comment}getEngine().getConverter().asJs({arg}){/isCallback}{:custom}{@comment}
+    // Custom converters (such as for decimal) adjust types based on the contract between native and JS
+{/comment}getEngine().getConverter().asJs{@firstCap}{target}{/firstCap}({arg}){:builtin}{@comment}
+    // Built in types are passed as is in j2v8
+{/comment}{arg}{:enum}{@comment}
+    // Enums are just ints as far as our JS is concerned
+{/comment}{arg}.getValue(){:array}{@comment}
+    // Arrays. Oh vey, those are hard.
+{/comment}getEngine().getConverter().toJsArray({arg}, new IManticoreTypeConverter.JsElementConverter<{@type}{elementType}{/type}>() {
+        @Override
+        public void push(V8Array dest, {@type}{elementType}{/type} nativeValue) {
+            dest.push({>toJs target="{elementType}" arg="nativeValue"/});
+        }
+    }){/converter}

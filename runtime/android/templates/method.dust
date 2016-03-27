@@ -1,0 +1,14 @@
+  /**
+   * {@lineify indent=3}{description|s}{/lineify}
+   */
+  public{?static} static{/static} {^returns}void{:else}{@type}{returns.type}{/type}{/returns} {name}({#args}final {@type}{type}{/type} {name}{@sep}, {/sep}{/args}) {
+    {?returns}return {/returns}getEngine().getExecutor().run(new {?returns}Callable<{@type}{returns.type}{/type}>{:else}Runnable{/returns}() {~lb}
+      @Override public {?returns}{@type}{returns.type}{/type} call() {{:else}void run() {{/returns}
+        V8Array args = {?args}getEngine().createJsArray(){#args}
+          .push({>toJs target="{type}" arg="{name}"/}){/args}{:else}getEngine().getEmptyArray(){/args};
+        V8Object objectToExecuteOn = {?static}getEngine().getJSClass("{packedName}"){:else}{packedName}.this.impl{/static};
+        {?returns}{>fnReturnType target="{returns.type}"/} retVal = {/returns}objectToExecuteOn.execute{?returns}{>fnType target="{returns.type}"/}{:else}Void{/returns}Function("{name}", args);
+        {?returns}return {>toNative target="{returns.type}" arg="retVal"/};{/returns}
+      }
+    });
+  }

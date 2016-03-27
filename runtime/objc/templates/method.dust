@@ -1,0 +1,10 @@
+{?isStatic}+{:else}-{/isStatic}({^returns}void{:else}{@type}{returns.type}{/type}{/returns}){name}{#args}{@eq key=$idx value=0}{:else}{name}{/eq}:({@type}{type}{/type}){name}{@sep} {/sep}{/args} {
+    NSArray *args = nil;
+{#args}    {@first}args = @[
+{:else}      {/first}{>toJs target="{type}" arg="{name}"/}{@isCallback type="{type}"}{:else} ?: [NSNull null]{/isCallback}{@sep},
+{/sep}{@last}
+    ];{/last}{/args}
+    JSValue *valueToInvokeMethodOn = {?isStatic}[[{typePrefix}{packedName} engine] resolveJSClass:@"{className}"]{:else}self.impl{/isStatic};
+    {?returns}JSValue *returnValue = [valueToInvokeMethodOn invokeMethod:@"{name}" withArguments:args];
+    return {>toNative target="{returns.type}" arg="returnValue"/};{:else}[valueToInvokeMethodOn invokeMethod:@"{name}" withArguments:args];{/returns}
+}

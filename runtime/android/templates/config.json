@@ -1,0 +1,32 @@
+{
+  "typeMap": {
+    "string": "String",
+    "decimal": "BigDecimal",
+    "bool": "Boolean",
+    "int": "Integer",
+    "object": "Map<String,? super Object>",
+    "error": "ManticoreException"
+  },
+  "arrayType": "List<%s>",
+  "arrayIsTyped": true,
+  "callbackSuffix": "Callback",
+  "innerCallbacksAndEvents": true,
+  "customConverters": [
+    "object",
+    "decimal",
+    "Date"
+  ],
+  "nativeConverters": {
+    "bool": "Boolean",
+    "string": "String",
+    "int": "Integer"
+  },
+  "extensions": {
+    "impl": ".java",
+    "enum": ".java",
+    "class": ".java"
+  },
+  "typePrefix": "",
+  "namespace": "com.paypal.manticore",
+  "baseClass": "JsBackedObject"
+}

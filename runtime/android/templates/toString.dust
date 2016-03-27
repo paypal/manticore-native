@@ -1,0 +1,14 @@
+  /**
+   * Returns a string representing the serialized state of the {packedName} object
+   */
+  public String toString() {
+    return getEngine().getExecutor().run(new Callable<String>() {~lb}
+      @Override public String call() {
+        V8Object objectToExecuteOn = getEngine().getJsObject("JSON");
+        V8Object objectStringify = {packedName}.this.impl;
+        V8Array args = getEngine().createJsArray().push(objectStringify);
+        String retVal = objectToExecuteOn.executeStringFunction("stringify", args);
+        return retVal;
+      }
+    });
+  }

@@ -1,0 +1,60 @@
+
+apply plugin: 'com.android.library'
+
+repositories {
+    mavenCentral()
+}
+
+android {
+    compileSdkVersion 23
+    buildToolsVersion '23.0.2'
+
+    defaultConfig {
+        minSdkVersion 10
+        targetSdkVersion 23
+        versionCode 2
+        versionName "1.0.1"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    libraryVariants.all { variant ->
+        variant.outputs.each { output ->
+            output.outputFile = new File(
+                    output.outputFile.parent,
+                    output.outputFile.name.replace(".aar", "-${defaultConfig.versionName}.aar"))
+        }
+    }
+
+    sourceSets {
+        debug.setRoot('build-types/debug')
+        release.setRoot('build-types/release')
+    }
+
+    lintOptions {
+        abortOnError false
+    }
+}
+
+dependencies {
+
+    // When updating this, you MUST keep the testCompile JAR's in sync or test will fail
+    compile 'com.eclipsesource.j2v8:j2v8:3.1.6@aar'
+    testCompile fileTree(dir: 'testLibs', include: ['*.jar'])
+
+    compile 'com.squareup.okhttp:okhttp:2.3.0'
+    testCompile 'junit:junit:4.12'
+    testCompile 'org.mockito:mockito-core:2.0.5-beta'
+    testCompile('org.powermock:powermock-api-mockito:1.6.2') {
+        exclude module: 'hamcrest-core'
+        exclude module: 'objenesis'
+    }
+    testCompile('org.powermock:powermock-module-junit4:1.6.2') {
+        exclude module: 'hamcrest-core'
+        exclude module: 'objenesis'
+    }
+}

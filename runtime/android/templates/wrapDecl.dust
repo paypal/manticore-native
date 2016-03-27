@@ -1,0 +1,29 @@
+  /**
+   * Generate the javascript function for a callback or event
+   */
+  private static V8Object wrapJavaFn(final {@firstCap}{name}{/firstCap}{suffix} javaInterface) {
+    return getEngine().getExecutor().run(new Callable<V8Object>() {~lb}
+      @Override public V8Object call() throws Exception {
+        V8Object _ = getEngine().createJsObject();
+        _.registerJavaMethod(new Java{^returns}Void{/returns}Callback() {
+          @Override
+          public {?returns}{@type}{returns.type}{/type}{:else}void{/returns} invoke(V8Object jsThis, V8Array args)
+          {
+            {#args}{>fnReturnType target="{type}"/} js{name} = {>defaultValue target="{type}"/};
+            {@type}{type}{/type} _{name} = {>defaultValue target="{type}"/};
+            if (args.length() > {$idx} && args.getType({$idx}) != V8Value.UNDEFINED) {
+              js{name} = args.get{>fnType target="{type}"/}({$idx});
+              _{name} = {>toNative target="{type}" arg="js{name}"/};
+            }
+
+            {/args}
+            {?returns}{@type}{returns.type}{/type} retVal = {/returns}javaInterface.{name}({#args}_{name}{@sep}, {/sep}{/args});
+            {?returns}return {>toJs target="{returns.type}" arg="retVal"/};{/returns}
+          }
+        }, "_");
+        V8Object fn = _.getObject("_");
+        _.release();
+        return fn;
+      }
+    });
+  }

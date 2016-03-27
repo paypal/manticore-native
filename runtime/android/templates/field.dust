@@ -1,0 +1,28 @@
+  /**
+   * {@lineify indent=3}{description|s}{/lineify}
+   */
+  public {@type}{type}{/type} get{@firstCap}{name}{/firstCap}() {
+    return getEngine().getExecutor().run(new Callable<{@type}{type}{/type}>() {~lb}
+      @Override public {@type}{type}{/type} call() {
+        int _jsType = {packedName}.this.impl.getType("{name}");
+        if (_jsType == V8Value.UNDEFINED || _jsType == V8Value.NULL) {
+          return {>defaultValue target="{type}"/};
+        }
+        {>fnReturnType target="{type}"/} _{name} = {packedName}.this.impl.get{>fnType target="{type}"/}("{name}");
+        return {>toNative target="{type}" arg="_{name}"/};
+      }
+    });
+  }
+{^readonly}
+  /**
+   * {@lineify indent=3}{description|s}{/lineify}
+   */
+  public void set{@firstCap}{name}{/firstCap}(final {@type}{type}{/type} value) {
+    getEngine().getExecutor().run(new Runnable()
+    {~lb}
+      @Override public void run() {
+        {packedName}.this.impl.add("{name}", {>toJs target="{type}" arg="value"/});
+      }
+    });
+  }
+{/readonly}

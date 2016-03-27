@@ -1,0 +1,1 @@
+{@converter type="{target}"}null{:enum}{@type}{target}{/type}.fromInt(0){:builtin}{@select key="{target}"}{@eq value="int"}0{/eq}{@none}null{/none}{/select}{:custom}null{:array}null{/converter}

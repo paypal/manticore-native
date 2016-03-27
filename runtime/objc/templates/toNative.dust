@@ -1,0 +1,9 @@
+{@converter type="{target}"}[[{typePrefix}{packedName} engine] attachNativeObject:{arg} ofType:[{@type noPointers="true"}{target}{/type} class]]{@comment}
+    // Builtin provided by the Manticore converter
+{/comment}{:builtin}{@isStrong type="{target}"}{:else}{?isCollection}@({/isCollection}{/isStrong}[[{typePrefix}{packedName} engine].converter toNative{converter}:{arg}]{@isStrong type="{target}"}{:else}{?isCollection}){/isCollection}{/isStrong}{@comment}
+    // Custom converters
+{/comment}{:custom}JSToNative_{target}({arg}){@comment}
+    // Enum, but has to be special if it's in a collection
+{/comment}{:enum}{?isCollection}[NSNumber numberWithInt:{/isCollection}{arg}.toInt32{?isCollection}]{/isCollection}{@comment}
+    // Collections
+{/comment}{:array}[[{typePrefix}{packedName} engine].converter toNativeArray:{arg} withConverter: ^(JSValue* element) { return {>toNative target="{elementType}" arg="element" isCollection="true"/}; }]{/converter}
