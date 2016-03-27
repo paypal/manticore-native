@@ -1,15 +1,15 @@
 function logger(level, args) {
-  global.manticore.log(level, Array.prototype.slice.call(args).join(' '));
+  global.manticore.log(level, args.join(' '));
 }
 
 global.console = {
-  log() {
-    logger('debug', arguments);
+  log(...args) {
+    logger('debug', args);
   },
-  warn() {
-    logger('warn', arguments);
+  warn(...args) {
+    logger('warn', args);
   },
-  error() {
-    logger('error', arguments);
-  }
+  error(...args) {
+    logger('error', args);
+  },
 };

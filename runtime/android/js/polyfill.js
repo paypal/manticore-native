@@ -13,16 +13,18 @@ if (!g.setTimeout) {
 g.Promise = require('yaku');
 g.regeneratorRuntime = require('babel-regenerator-runtime');
 
-m.construct = function _construct(C,args) {
+m.construct = function _construct(C, args) {
   function F() {
     return C.apply(this, args);
   }
 
   F.prototype = C.prototype;
   return new F();
-}
+};
 
-m.newDate = function _newDate(t) { return new Date(t); }
+m.newDate = function _newDate(t) {
+  return new Date(t);
+};
 
 require('../../common/fetch');
 m.log('info', 'Loaded android polyfill');
