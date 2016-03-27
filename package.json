@@ -15,8 +15,7 @@
     "gen-objc-test": "babel-node -- gen/index.js -q ./runtime/objc/templates ./output/objc test/js-source/*.js",
     "build-android-polyfill": "mkdirp runtime/android/manticore/src/main/res/raw/ && browserify $npm_package_config_babelify runtime/android/js/polyfill.js > runtime/android/manticore/src/main/res/raw/polyfill_pack.js",
     "gen-android-test": "babel-node -- gen/index.js -q ./runtime/android/templates ./runtime/android/manticore/src/test/java/com/paypal/manticore/ test/js-source/*.js",
-    "build": "babel gen/index --out-dir build/gen && babel gen/lib --out-dir build/gen/lib",
-    "prepubish": ""
+    "build": "babel gen/index --out-dir build/gen && babel gen/lib --out-dir build/gen/lib"
   },
   "repository": {
     "type": "git",
