@@ -1,7 +1,6 @@
 language: objective-c
 
 os:
-  - linux
   - osx
 
 osx_image: xcode7.3
@@ -11,9 +10,9 @@ podfile: runtime/objc/Podfile
 before_install:
   - brew update
   - brew install nodejs
+  - npm install -g npm@3
 
 script:
-  - npm install -g npm@3
   - npm install
   - npm run build-test-js
   - npm run build-objc-polyfill
