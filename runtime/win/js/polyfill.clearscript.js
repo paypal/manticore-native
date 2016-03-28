@@ -1,17 +1,25 @@
 const g = global;
 const m = g.manticore;
+
 // Setup the JavaScriptCore runtime to look like what Manticore requires (bind native functions)
 m.log('info', 'Loading ClearScript polyfill');
 
-require('core-js/es6');
+g.exports = g.exports || {};
+
+require('core-js/es6/symbol');
+require('core-js/es6/set');
+require('core-js/fn/string/includes');
+require('core-js/fn/object/is');
+require('core-js/fn/object/assign');
+require('core-js/fn/array/of');
+require('core-js/fn/array/from');
+require('core-js/fn/array/find');
+require('core-js/fn/array/find-index');
+require('core-js/fn/symbol/iterator');
+
 require('../../common/console');
-
-if (!g.setTimeout) {
-  g.setTimeout = m.setTimeout;
-}
-
-g.Promise = require('yaku');
-g.regeneratorRuntime = require('babel-regenerator-runtime');
+require('../../common/promise');
+require('../../common/timer');
 
 m._ = {
   array() {
@@ -34,11 +42,15 @@ m._ = {
       }
     };
   },
-  construct: function construct(C, a) {
-    if (!C) return {};
-    function F() { return C.apply(this, a); }
-    F.prototype = C.prototype;
+  construct: function construct(className, args) {
+    if (!className) return {};
+    const cons = g.exports[className];
+    function F() { return cons.apply(this, args); }
+    F.prototype = cons.prototype;
     return new F();
+  },
+  getClass: function getClass(className) {
+    return g.exports[className];
   },
 };
 

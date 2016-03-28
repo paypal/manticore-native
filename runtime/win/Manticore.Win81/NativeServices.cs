@@ -42,17 +42,11 @@ namespace Manticore
                 engine.AsJsFunction((thisObject, args) =>
                 {
                     JsValue extra = JsValue.Null;
-                    if (args.Length > 3)
+                    if (args.Length > 2)
                     {
-                        extra = args[3];
+                        extra = args[2];
                     }
-                    Log(args[0].AsString(), args[1].AsString(), args[2].AsString(), extra);
-                    return JsValue.Undefined;
-                }), true, false, false);
-            engine.ManticoreJsObject.FastAddProperty("export",
-                engine.AsJsFunction((thisObject, args) =>
-                {
-                    Export(engine, args[0]);
+                    Log(args[0].AsString(), args[1].AsString(), extra);
                     return JsValue.Undefined;
                 }), true, false, false);
             engine.ManticoreJsObject.FastAddProperty("setTimeout",
@@ -83,52 +77,9 @@ namespace Manticore
                 }), true, false, false);
         }
 
-        void Log(String level, String component, String message, JsValue extraData)
+        void Log(String level, String message, JsValue extraData)
         {
-            Debug.WriteLine("{0} ({1}): {2} {3}", level, ThreadId, component, message);
-        }
-
-        internal void JsLog(ManticoreEngine engine, string level, string component, string message)
-        {
-            try
-            {
-                engine.Js(() =>
-                {
-                    engine.ManticoreJsObject.Get("log")
-                        .As<FunctionInstance>()
-                        .Call(engine.ManticoreJsObject, new JsValue[]
-                        {
-                            level,
-                            component,
-                            message
-                        });
-                });
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex);
-            }
-        }
-
-        void Export(ManticoreEngine engine, JsValue items)
-        {
-            if (items.IsNull() || items.IsUndefined())
-            {
-                return;
-            }
-            ObjectInstance i = items.AsObject();
-            if (i != null)
-            {
-                foreach (var n in i.GetOwnProperties())
-                {
-                    if (!n.Value.Value.HasValue || !n.Value.Value.Value.IsObject())
-                    {
-                        continue;
-                    }
-                    // The awkwardness of this statement is not lost on me.
-                    engine.exportedItems[n.Key] = n.Value.Value.Value.AsObject();
-                }
-            }
+            Debug.WriteLine("{0} ({1}): {2}", level, ThreadId, message);
         }
 
 #if DOTNET_4
@@ -148,7 +99,8 @@ namespace Manticore
                     }
                     catch (Exception x)
                     {
-                        JsLog(engine, "error", "manticore.nativeService", x.ToString());
+                        // TODO perhaps throw this error INTO JS?
+                        Log("error", x.ToString(), JsValue.Null);
                     }
                 });
             };
@@ -213,7 +165,8 @@ namespace Manticore
                 }
                 catch (Exception x)
                 {
-                    JsLog(engine, "error", "manticore.nativeService", x.ToString());
+                    // TODO fire this into JS? manticore.onError()?
+                    Log("error", x.ToString(), JsValue.Null);
                     var errorBuilder = new JsErrorBuilder(engine, x);
                     if (x is WebException)
                     {
@@ -450,7 +403,7 @@ namespace Manticore
                         }
                         catch (ParserException px)
                         {
-                            this.Log("DEBUG", "Network", px.ToString(), JsValue.Undefined);
+                            this.Log("DEBUG", px.ToString(), JsValue.Undefined);
                         }
                     }
                 }

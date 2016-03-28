@@ -8,7 +8,9 @@ using Jint.Runtime;
 using Jint.Runtime.Interop;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -16,29 +18,34 @@ namespace Manticore
 {
     public class ManticoreEngine
     {
-        public static JsValue[] EmptyArgs = new JsValue[] { };
-
+        public static JsValue[] EmptyArgs = { };
         public IJsTypeConverter Converter { get; set; }
         public Engine jsEngine { get; private set; }
 
-        NativeServices nativeServices;
-        internal Dictionary<string, JsValue> exportedItems;
+        private bool _loadedPolyfill;
+        private readonly NativeServices _nativeServices;
+        private ObjectInstance _exports;
 
         public ObjectInstance ManticoreJsObject { get; private set; }
 
         public ManticoreEngine()
         {
-            nativeServices = new NativeServices();
+            _nativeServices = new NativeServices();
             Start();
         }
 
         public void Start()
         {
-            exportedItems = new Dictionary<string, JsValue>();
             jsEngine = new Engine();
-            ManticoreJsObject = jsEngine.Object.Construct(EmptyArgs);
-            jsEngine.SetValue("manticore", ManticoreJsObject);
-            nativeServices.Register(this);
+            RunOnJsThread(() =>
+            {
+                ManticoreJsObject = jsEngine.Object.Construct(EmptyArgs);
+                jsEngine.Global.FastAddProperty("manticore", ManticoreJsObject, false, true, false);
+                jsEngine.Global.FastAddProperty("global", jsEngine.Global, false, false, false);
+                _exports = jsEngine.Object.Construct(EmptyArgs);
+                jsEngine.Global.FastAddProperty("exports", _exports, false, false, false);
+                _nativeServices.Register(this);
+            });
         }
 
         public bool IsStarted
@@ -51,46 +58,70 @@ namespace Manticore
 
         public void Shutdown()
         {
-            if (exportedItems != null)
+            if (jsEngine != null)
             {
-                exportedItems.Clear();
-                exportedItems = null;
+                jsEngine.Global.RemoveOwnProperty("global");
+                jsEngine.Global.RemoveOwnProperty("manticore");
+                jsEngine = null;
             }
-            jsEngine = null;
-            ManticoreJsObject = null;
+            ManticoreJsObject = _exports = null;
+            _loadedPolyfill = false;
         }
 
         public void LoadScript(String script)
         {
-            jsEngine.Execute(script);
+            String poly = null;
+            if (!_loadedPolyfill)
+            {
+                _loadedPolyfill = true;
+                poly = GetPolyfill();
+            }
+            RunOnJsThread(() =>
+            {
+                if (poly != null)
+                {
+                    jsEngine.Execute(poly);
+                }
+                jsEngine.Execute(script);
+            });
         }
 
-        private Exception ConvertException(JavaScriptException jse)
+        protected Exception ConvertException(JavaScriptException jse)
         {
             // TODO return better stuff.
-            var jsv = new ObjectInstance(this.jsEngine);
+            var jsv = new ObjectInstance(jsEngine);
             jsv.FastAddProperty("message", new JsValue(jse.Message), false, true, false);
             return new ManticoreException(jsv);
         }
 
         public T JsWithReturn<T>(Func<T> func)
         {
-            lock (jsEngine)
+            var result = default(T);
+            Exception ex = null;
+            RunOnJsThread(() =>
             {
                 try
                 {
-                    return func();
+                    result = func();
                 }
                 catch (JavaScriptException jse)
                 {
-                    throw ConvertException(jse);
+                    ex = ConvertException(jse);
                 }
+            });
+
+            if (ex != null)
+            {
+                throw ex;
             }
+
+            return result;
         }
 
         public void Js(Action action)
         {
-            lock (jsEngine)
+            Exception ex = null;
+            RunOnJsThread(() =>
             {
                 try
                 {
@@ -98,8 +129,13 @@ namespace Manticore
                 }
                 catch (JavaScriptException jse)
                 {
-                    throw ConvertException(jse);
+                    ex = ConvertException(jse);
                 }
+            });
+
+            if (ex != null)
+            {
+                throw ex;
             }
         }
 
@@ -107,7 +143,7 @@ namespace Manticore
         {
             return JsWithReturn(() =>
             {
-                ScriptFunctionInstance constructor = exportedItems[name].As<ScriptFunctionInstance>();
+                var constructor = _exports.Get(name).As<ScriptFunctionInstance>();
                 return constructor.Construct(args);
             });
         }
@@ -121,7 +157,7 @@ namespace Manticore
         {
             return JsWithReturn(() =>
             {
-                return exportedItems[name].As<ObjectInstance>();
+                return _exports.Get(name).As<ObjectInstance>();
             });
         }
 
@@ -133,7 +169,13 @@ namespace Manticore
 
         public DelegateWrapper Wrap(Delegate d)
         {
-            return new DelegateWrapper(jsEngine, d);
+            DelegateWrapper wrapper = null;
+            RunOnJsThread(() =>
+            {
+                wrapper = new DelegateWrapper(jsEngine, d);
+            });
+
+            return wrapper;
         }
 
         public bool IsNullOrUndefined(JsValue v)
@@ -141,5 +183,54 @@ namespace Manticore
             return (v.IsNull() || v.IsUndefined());
         }
 
+#if DOTNET_4
+        private readonly object _locker = new object();
+
+        protected void RunOnJsThread(Action action)
+        {
+            lock (_locker)
+            {
+                try
+                {
+                    action();
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
+        }
+
+        protected string GetPolyfill()
+        {
+            using (Stream s = Assembly.GetExecutingAssembly().GetManifestResourceStream("Manticore.polyfill.jint.pack.js"))
+            {
+                using (StreamReader reader = new StreamReader(s))
+                {
+                    return reader.ReadToEnd();
+                }
+            }
+        }
+#else
+        protected void RunOnJsThread(Action action)
+        {
+            lock (jsEngine)
+            {
+                try
+                {
+                    action();
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
+        }
+
+        protected string GetPolyfill()
+        {
+            return new StreamReader(typeof(ManticoreEngine).GetTypeInfo().Assembly.GetManifestResourceStream("Manticore.polyfill.jint.pack.js")).ReadToEnd();
+        }
+#endif
     }
 }

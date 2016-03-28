@@ -137,8 +137,8 @@
     <None Include="Manticore.Win81.Test_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="..\generated\polyfill.pack.js">
-      <Link>polyfill.pack.js</Link>
+    <EmbeddedResource Include="..\..\..\output\index.pack.js">
+      <Link>index.pack.js</Link>
     </EmbeddedResource>
     <Content Include="Images\UnitTestLogo.scale-100.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

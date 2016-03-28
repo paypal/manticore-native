@@ -18,8 +18,7 @@ namespace Manticore
         public void Register(ManticoreEngine engine)
         {
             this.engine = engine;
-            engine.ManticoreJsObject.log = new Action<String, String, String>((level, component, message) => log(level, component, message));
-            engine.ManticoreJsObject.export = new Action<dynamic>((obj) => export(engine, obj));
+            engine.ManticoreJsObject.log = new Action<String, String>((level, message) => log(level, message));
             engine.ManticoreJsObject.setTimeout = new Action<dynamic, int>((fn, msec) =>
             {
                 setTimeout(fn, msec);
@@ -27,9 +26,9 @@ namespace Manticore
             engine.ManticoreJsObject.http = new Action<dynamic, dynamic>((opts, cb) => this.http(opts, cb));
         }
 
-        public void log(String level, String component, String message)
+        public void log(String level, String message)
         {
-            Console.Out.WriteLine("{0} ({1}): {2} {3}", level, Thread.CurrentThread.ManagedThreadId, component, message);
+            Console.Out.WriteLine("{0} ({1}): {2}", level, Thread.CurrentThread.ManagedThreadId, message);
         }
 
         public void http(dynamic options, dynamic callback)
@@ -170,22 +169,6 @@ namespace Manticore
             }
 
             callback();
-        }
-
-        static void export(ManticoreEngine engine, dynamic obj)
-        {
-            if (obj == null || obj is Undefined)
-            {
-                return;
-            }
-            var exports = obj as DynamicObject;
-            if (exports != null)
-            {
-                foreach (var name in exports.GetDynamicMemberNames())
-                {
-                    engine.exportedItems[name] = obj[name];
-                }
-            }
         }
     }
 }

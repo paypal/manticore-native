@@ -44,7 +44,7 @@ both cases. However, there are some rules and conventions that will make this po
 mean you should be intentional about dependencies. This includes built in node modules - e.g. no fs or process.
 2. No native modules. If it has to compile something, it's not going to work in Manticore.
 3. Use ES6. It's just nicer.
-4. Use only supported "specials" like setTimeout, Promise and the fetch API.
+4. Use only supported "specials" like setTimeout, Promise and the fetch API. If something is missing - add it!
 
 My Way or the Highway
 =====================
@@ -79,7 +79,7 @@ didn't want to force a complete app rewrite to integrate our components.
 * Manticore exposes your Javascript objects to native code. Generally React Native thinks
 about the world the other way around.
 
-We love React Native, and we strive to make code generated for Manticore work in React Native
+We love React Native, and we strive to make code targeted for Manticore work in React Native
 as well.
 
 Platform Support

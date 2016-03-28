@@ -82,9 +82,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\generated\polyfill.pack.js">
-      <Link>polyfill.pack.js</Link>
-    </Content>
+    <EmbeddedResource Include="..\..\..\output\index.pack.js">
+      <Link>index.pack.js</Link>
+    </EmbeddedResource>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

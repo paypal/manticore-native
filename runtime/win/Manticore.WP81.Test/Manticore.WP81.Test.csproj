@@ -97,9 +97,6 @@
     <None Include="Manticore.WP81.Test_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="..\generated\polyfill.pack.js">
-      <Link>polyfill.pack.js</Link>
-    </EmbeddedResource>
     <Content Include="Assets\Logo.scale-240.png" />
     <Content Include="Assets\SmallLogo.scale-240.png" />
     <Content Include="Assets\SplashScreen.scale-240.png" />

@@ -3,15 +3,20 @@ const g = global;
 // Setup the JavaScriptCore runtime to look like what Manticore requires (bind native functions)
 g.manticore.log('info', 'Loading objc polyfill');
 
-require('core-js/es6');
+require('core-js/es6/symbol');
+require('core-js/es6/set');
+require('core-js/fn/string/includes');
+require('core-js/fn/object/is');
+require('core-js/fn/object/assign');
+require('core-js/fn/array/of');
+require('core-js/fn/array/from');
+require('core-js/fn/array/find');
+require('core-js/fn/array/find-index');
+require('core-js/fn/symbol/iterator');
+
 require('../../common/console');
-
-if (!g.setTimeout) {
-  g.setTimeout = g.manticore.setTimeout;
-}
-
-g.Promise = require('yaku');
-g.regeneratorRuntime = require('babel-regenerator-runtime');
-
+require('../../common/promise');
+require('../../common/timer');
 require('../../common/fetch');
+
 g.manticore.log('info', 'Loaded objc polyfill');

@@ -351,14 +351,14 @@ namespace Manticore.Win81.Test
             get
             {
 #if WINDOWS_APP
-                return new StreamReader(typeof(EngineTests).GetTypeInfo().Assembly.GetManifestResourceStream("Manticore.Win81.Test.manticoreSample.js")).ReadToEnd();
+                return new StreamReader(typeof(EngineTests).GetTypeInfo().Assembly.GetManifestResourceStream("Manticore.Win81.Test.index.pack.js")).ReadToEnd();
 #elif WINDOWS_PHONE_APP
-                return new StreamReader(typeof(EngineTests).GetTypeInfo().Assembly.GetManifestResourceStream("Manticore.WP81.Test.manticoreSample.js")).ReadToEnd();
+                return new StreamReader(typeof(EngineTests).GetTypeInfo().Assembly.GetManifestResourceStream("Manticore.WP81.Test.index.pack.js")).ReadToEnd();
 #else
 #if DOTNET_4
-                String src = "Manticore.Net4.Test.manticoreSample.js";
+                String src = "Manticore.Net4.Test.index.pack.js";
 #else
-                String src = "Manticore.Desktop.Test.manticoreSample.js";
+                String src = "Manticore.Desktop.Test.index.pack.js";
 #endif
                 String javascript;
                 using (Stream s = Assembly.GetExecutingAssembly().GetManifestResourceStream(src))

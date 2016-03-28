@@ -2,18 +2,15 @@
 //  ManticoreTestAppTests.m
 //  ManticoreTestAppTests
 //
-//  Created by Schneider, Griffin on 6/12/15.
-//  Copyright (c) 2015 Schneider, Griffin. All rights reserved.
+//  Copyright (c) 2015 PayPal. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 
 #if TARGET_OS_IPHONE
 #import <UIKit/UIKit.h>
-#define MANTICORE_TEST_NAME ManticoreiOSTests
 #else
 #import <Cocoa/Cocoa.h>
-#define MANTICORE_TEST_NAME ManticoreOSXTests
 #endif
 
 #import <XCTest/XCTest.h>
@@ -23,14 +20,14 @@
 #import "PPManticoreSDKTest.h"
 #import "PPManticoreError.h"
 
-@interface MANTICORE_TEST_NAME : XCTestCase
+@interface ManticoreTests : XCTestCase
 
 @property (nonatomic, strong) PPManticoreEngine *engine;
 @property (nonatomic, strong) PPManticoreSDKTest *t;
 
 @end
 
-@implementation MANTICORE_TEST_NAME
+@implementation ManticoreTests
 
 - (void)setUp {
     [super setUp];
@@ -194,8 +191,11 @@
 }
 
 - (void)testFetch {
+    XCTestExpectation *expectSignal = [self expectationWithDescription:@"expect signal"];
     [self.t goFetch:^(PPManticoreError *error, NSDictionary *response) {
-
+        XCTAssertNil(error, @"No error for plain fetch.");
+        [expectSignal fulfill];
     }];
+    [self waitForExpectationsWithTimeout:30 handler:nil];
 }
 @end

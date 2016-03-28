@@ -129,12 +129,20 @@
             connectionError = nil;
         }
         
+        JSValue *jsError = nil;
+        if (connectionError) {
+            NSString *msg = [connectionError localizedDescription] ?: connectionError.domain;
+            jsError = [JSValue valueWithNewErrorFromMessage:msg inContext:self.engine.context];
+            jsError[@"domain"] = connectionError.domain;
+            jsError[@"code"] = @(connectionError.code);
+        }
+        
         NSDictionary *responseInfo = @{
                                        @"headers": response.allHeaderFields ?: [NSNull null],
                                        @"statusCode": @(code),
                                        @"body": bodyResponse ?: [NSNull null]
                                        };
-        [callback callWithArguments:@[connectionError?:[NSNull null], responseInfo?:[NSNull null]]];
+        [callback callWithArguments:@[jsError?:[NSNull null], responseInfo?:[NSNull null]]];
         JSValueUnprotect(self.engine.jsEngine.JSGlobalContextRef, callback.JSValueRef);
     }];
     return nil;

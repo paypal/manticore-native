@@ -55,10 +55,12 @@
     <Compile Include="..\Manticore.Win81\JsBackedObject.cs">
       <Link>JsBackedObject.cs</Link>
     </Compile>
+    <Compile Include="..\Manticore.Win81\ManticoreEngine.cs">
+      <Link>ManticoreEngine.cs</Link>
+    </Compile>
     <Compile Include="..\Manticore.Win81\NativeServices.cs">
       <Link>NativeServices.cs</Link>
     </Compile>
-    <Compile Include="ManticoreEngine.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -66,6 +68,11 @@
       <Project>{678738da-f723-4920-b9e5-cad667104bda}</Project>
       <Name>Jint</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="..\generated\polyfill.jint.pack.js">
+      <Link>polyfill.jint.pack.js</Link>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
