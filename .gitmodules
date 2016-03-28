@@ -1,0 +1,3 @@
+[submodule "runtime/win/jint"]
+	path = runtime/win/jint
+	url = https://github.com/djMax/jint.git

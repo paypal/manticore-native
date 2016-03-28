@@ -1,0 +1,9 @@
+{@converter type="{type}"}{@isCallback type="{target}"}{@comment}
+    // Delegates are wrapped in a JS-compatible lambda
+{/comment}WrapDelegate({arg}){:else}Engine.Converter.AsJs({arg}){/isCallback}{@comment}
+    // Custom handlers are methods on the base class
+{/comment}{:custom}Engine.Converter.AsJs{@firstCap}{type}{/firstCap}({arg}){@comment}
+    // Arrays are converted one element at a time
+{/comment}{:array}Engine.Converter.ToJsArray({arg}, (element) => {>toJs arg="element" type="{elementType}"/}){@comment}
+    // Builtin converters are provided by Manticore on the Engine. You can derive from the engine if you need to.
+{/comment}{:builtin}Engine.Converter.AsJs{@firstCap}{type}{/firstCap}({arg}){:enum}(int){arg}{/converter}

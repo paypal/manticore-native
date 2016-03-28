@@ -1,0 +1,10 @@
+        /**
+         * {@lineify indent=9}{description|s}{/lineify}
+         */
+        public {?isStatic}static{/isStatic} {^returns}void{:else}{@type}{returns.type}{/type}{/returns} {@firstCap}{name}{/firstCap}({>argList/}) {
+            {?returns}return Engine.JsWithReturn(() => {
+              dynamic returnValue = {:else}Engine.Js(() => { {/returns} {?isStatic}Engine.GetJsClass("{className}"){:else}this.impl{/isStatic}.{name}({?args}{#args}{>toJs target="{type}" arg="{name}"/}{@sep},
+            {/sep}{/args}{/args});{?returns}
+              return {>toNative target="{returns.type}" arg="returnValue"/};{/returns}
+            });
+        }

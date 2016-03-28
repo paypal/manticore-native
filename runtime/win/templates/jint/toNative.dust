@@ -1,0 +1,11 @@
+{@converter type="{target}"}{@comment}
+    // A type we made
+{/comment}(({arg}.IsNull()||{arg}.IsUndefined()) ? null : {@type}{target}{/type}.NativeInstanceForObject({arg}.AsObject())){:custom}{@comment}
+    // Custom converters hang off your base class
+{/comment}Engine.Converter.AsNative{@firstCap}{target}{/firstCap}({arg}){:builtin}{@comment}
+    // Builtin converters are provided by Manticore
+{/comment}Engine.Converter.AsNative{converter}({arg}){:array}{@comment}
+    // Arrays are converted one by one
+{/comment}Engine.Converter.ToNativeArray({arg}, new Func<JsValue,{@type}{elementType}{/type}>((element) => {>toNative arg="element" target="{elementType}"/})){:enum}{@comment}
+    // Enums are just ints
+{/comment}(({@type}{target}{/type})Engine.Converter.AsNativeInt({arg})){/converter}

@@ -1,0 +1,11 @@
+namespace {namespace}
+{
+    public enum {packedName} {
+{#values}
+        /**
+         * {@lineify indent=9}{description|s}{/lineify}
+         */
+        {name} = {value}{@sep},
+        {/sep}{/values}
+    }
+}

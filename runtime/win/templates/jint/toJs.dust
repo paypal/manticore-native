@@ -1,0 +1,11 @@
+{@converter type="{target}"}{@isCallback type="{target}"}WrapDelegate({arg}){@comment}
+    // Not a callback, likely a type we made
+{/comment}{:else}Engine.Converter.AsJs({arg}){/isCallback}{@comment}
+    // We have a custom converter for some types
+{/comment}{:custom}Engine.Converter.AsJs{@firstCap}{target}{/firstCap}({arg}){@comment}
+    // Build a JS array by converting each element
+{/comment}{:array}Engine.Converter.ToJsArray({arg}, (element) => {>toJs arg="element" target="{elementType}"/}){@comment}
+    // Jint has a converter for us
+{/comment}{:builtin}Engine.Converter.AsJs{converter}({arg}){@comment}
+    // simple conversion
+{/comment}{:enum}(int){arg}{/converter}

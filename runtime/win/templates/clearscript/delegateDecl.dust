@@ -1,0 +1,1 @@
+{?returns}Func<{returns.type}{?args},{/args}{:else}Action{?args}<{/args}{/returns}{#args}dynamic{@sep},{/sep}{/args}{?returns}>{:else}{?args}>{/args}{/returns}

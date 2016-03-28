@@ -1,0 +1,31 @@
+{
+  "namespace": "Manticore",
+  "typeMap": {
+    "string": "String",
+    "decimal": "Decimal?",
+    "bool": "bool",
+    "int": "int",
+    "Date": "DateTime",
+    "error": "ManticoreException",
+    "object": "IDictionary<String,Object>"
+  },
+  "arrayType": "List<%s>",
+  "arrayIsTyped": true,
+  "callbackSuffix": "Delegate",
+  "innerCallbacksAndEvents": true,
+  "typePrefix": "",
+  "baseClass": "JsBackedObject",
+  "nativeConverters": {
+    "string": "String",
+    "bool": "Bool",
+    "int": "Int",
+    "decimal": "Decimal",
+    "Date": "DateTime",
+    "object": "Object"
+  },
+  "extensions": {
+    "impl": ".cs",
+    "enum": ".cs",
+    "class": ".cs"
+  }
+}

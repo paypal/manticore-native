@@ -1,0 +1,15 @@
+  /**
+   * {@lineify indent=9}{description|s}{/lineify}
+   */
+  public {?isStatic}static{/isStatic} {^returns}void{:else}{@type}{returns.type}{/type}{/returns} {@firstCap}{name}{/firstCap}({#args}{@type}{type}{/type} {name}{@sep}, {/sep}{/args}) {
+    JsValue[] args = new JsValue[] {
+      {#args}{>toJs target="{type}" arg="{name}"/}{@sep},
+    {/sep}{/args}
+    };
+    {?isStatic}var jsClass = Engine.GetJsClass("{className}");{/isStatic}
+    var func = {?isStatic}jsClass{:else}this.impl{/isStatic}.Get("{name}").As<FunctionInstance>();
+      {?returns}return {/returns}Engine.Js{?returns}WithReturn{/returns}(() => {
+      {?returns}var returnValue = {/returns}func.Call({?isStatic}jsClass{:else}this.impl{/isStatic}, args);
+      {?returns}return {>toNative target="{returns.type}" arg="returnValue"/};{/returns}
+    });
+  }
