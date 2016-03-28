@@ -8,5 +8,14 @@ osx_image: xcode7.3
 
 podfile: runtime/objc/Podfile
 
+before_install:
+  - brew update
+  - brew install nodejs
+
 script:
+  - npm install -g npm@3
+  - npm install
+  - npm run build-test-js
+  - npm run build-objc-polyfill
+  - npm run gen-objc-test
   - xctool test -workspace Manticore.xcworkspace -scheme ManticoreContainer-iOS -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO
