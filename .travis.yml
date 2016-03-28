@@ -9,6 +9,7 @@ podfile: runtime/objc/Podfile
 
 before_install:
   - brew update
+  - brew unlink node
   - brew install homebrew/versions/node4-lts
   - npm install -g npm@3
 
