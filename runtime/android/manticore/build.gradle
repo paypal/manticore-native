@@ -58,3 +58,10 @@ dependencies {
         exclude module: 'objenesis'
     }
 }
+
+task copyTestResources(type: Copy) {
+    from '../../../output/index.pack.js'
+    into 'src/test/resources/'
+}
+
+preBuild.dependsOn copyTestResources
