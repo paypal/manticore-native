@@ -14,6 +14,7 @@
 		C71088411B3B4C2E005A3B40 /* ManticoreTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C710883E1B3B4C2E005A3B40 /* ManticoreTests.m */; };
 		C71088541B3B55AC005A3B40 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C71088531B3B55AC005A3B40 /* main.m */; };
 		C710885A1B3BBDCC005A3B40 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C71088531B3B55AC005A3B40 /* main.m */; };
+		C7D3B84B1CA9B80E000A4D84 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C7D3B8491CA9B7C8000A4D84 /* Default-568h@2x.png */; };
 		C7E783AC1CA6DB0D0087B3AB /* PPManticoreSDKTest.m in Sources */ = {isa = PBXBuildFile; fileRef = C7E783A71CA6DB0D0087B3AB /* PPManticoreSDKTest.m */; };
 		C7E783AD1CA6DB0D0087B3AB /* PPManticoreSDKTest.m in Sources */ = {isa = PBXBuildFile; fileRef = C7E783A71CA6DB0D0087B3AB /* PPManticoreSDKTest.m */; };
 		C7E783AE1CA6DB0D0087B3AB /* PPManticoreSDKTestDefault.m in Sources */ = {isa = PBXBuildFile; fileRef = C7E783A91CA6DB0D0087B3AB /* PPManticoreSDKTestDefault.m */; };
@@ -64,6 +65,7 @@
 		C71088331B3B4991005A3B40 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C710883E1B3B4C2E005A3B40 /* ManticoreTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ManticoreTests.m; path = ../../Common/ManticoreTests.m; sourceTree = "<group>"; };
 		C71088531B3B55AC005A3B40 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = SOURCE_ROOT; };
+		C7D3B8491CA9B7C8000A4D84 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "../Default-568h@2x.png"; sourceTree = "<group>"; };
 		C7E783A21CA6D8E20087B3AB /* index.pack.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = index.pack.js; path = ../../../../output/index.pack.js; sourceTree = "<group>"; };
 		C7E783A41CA6DB0D0087B3AB /* PayPalManticoreImports.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PayPalManticoreImports.h; path = ../../../../output/objc/PayPalManticoreImports.h; sourceTree = "<group>"; };
 		C7E783A51CA6DB0D0087B3AB /* PayPalManticoreTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PayPalManticoreTypes.h; path = ../../../../output/objc/PayPalManticoreTypes.h; sourceTree = "<group>"; };
@@ -159,6 +161,7 @@
 		C71087F21B3B493E005A3B40 /* iOS */ = {
 			isa = PBXGroup;
 			children = (
+				C7D3B8491CA9B7C8000A4D84 /* Default-568h@2x.png */,
 				C71087F31B3B493E005A3B40 /* Info.plist */,
 			);
 			name = iOS;
@@ -368,6 +371,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C7E783B51CA6DCA10087B3AB /* index.pack.js in Resources */,
+				C7D3B84B1CA9B80E000A4D84 /* Default-568h@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
