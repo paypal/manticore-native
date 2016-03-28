@@ -5,19 +5,21 @@
   "main": "index.js",
   "bin": "./build/gen/index.js",
   "config": {
-    "babelify": "-t [ babelify --presets [ es2015 ] --plugins [ syntax-async-functions transform-regenerator ] ]"
+    "babelify": "-t [ babelify --presets [ es2015 ] --plugins [ syntax-async-functions transform-regenerator ] ]",
+    "win": "runtime/win/generated"
   },
   "scripts": {
     "lint": "eslint .",
     "test": "babel-node ./node_modules/.bin/tape test/**/test_*.js",
-    "build-test-js": "browserify $npm_package_config_babelify test/js-source/index.js > ./output/index.pack.js",
+    "build-test-js": "mkdirp output && browserify $npm_package_config_babelify test/js-source/index.js > ./output/index.pack.js",
     "build-objc-polyfill": "browserify $npm_package_config_babelify runtime/objc/js/polyfill.js > runtime/objc/js/polyfill.pack.js",
-    "gen-objc-test": "babel-node -- gen/index.js -q ./runtime/objc/templates ./output/objc test/js-source/*.js",
+    "gen-objc-test": "mkdirp output/objc && babel-node -- gen/index.js -q ./runtime/objc/templates ./output/objc test/js-source/*.js",
     "build-android-polyfill": "mkdirp runtime/android/manticore/src/main/res/raw/ && browserify $npm_package_config_babelify runtime/android/js/polyfill.js > runtime/android/manticore/src/main/res/raw/polyfill_pack.js",
     "gen-android-test": "babel-node -- gen/index.js -q ./runtime/android/templates ./runtime/android/manticore/src/test/java/com/paypal/manticore/ test/js-source/*.js",
-    "gen-win-test": "babel-node -- gen/index.js -q ./runtime/win/templates/jint ./runtime/win/generated/jint test/js-source/*.js && babel-node -- gen/index.js -q ./runtime/win/templates/clearscript ./runtime/win/generated/ClearScript test/js-source/*.js",
+    "gen-win-test": "mkdirp $npm_package_config_win/jint $npm_package_config_win/ClearScript && babel-node -- gen/index.js -q ./runtime/win/templates/jint ./runtime/win/generated/jint test/js-source/*.js && babel-node -- gen/index.js -q ./runtime/win/templates/clearscript ./runtime/win/generated/ClearScript test/js-source/*.js",
     "build-win-polyfill": "browserify $npm_package_config_babelify runtime/win/js/polyfill.clearscript.js > runtime/win/generated/polyfill.clearscript.pack.js && browserify $npm_package_config_babelify runtime/win/js/polyfill.jint.js > runtime/win/generated/polyfill.jint.pack.js",
-    "build": "babel gen/index --out-dir build/gen && babel gen/lib --out-dir build/gen/lib"
+    "build": "babel gen/index --out-dir build/gen && babel gen/lib --out-dir build/gen/lib",
+    "dev": "git submodule update --init --recursive && npm run build-test-js && npm run build-objc-polyfill && npm run build-android-polyfill && npm run build-win-polyfill && npm run gen-objc-test && npm run gen-android-test && npm run gen-win-test"
   },
   "repository": {
     "type": "git",
