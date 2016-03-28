@@ -81,3 +81,17 @@ about the world the other way around.
 
 We love React Native, and we strive to make code generated for Manticore work in React Native
 as well.
+
+Platform Support
+================
+
+Platform | Version | CI Status | Distro | Version
+-------- | ------- |------ | ------ | -------
+iOS      | 7.0+ | - | CocoaPods | 1.0.0
+MacOS    | 10.9+ | - | CocoaPods | 1.0.0
+Android  | API 19+ | - | JCenter | 1.0.0
+Windows  | XP (.Net4) | - | NuGet | 1.0.0
+Windows  | 7,8,Vista (v8) | - | NuGet | 1.0.0
+Windows  | 8.1, 8.1 Phone, 10 (jint) | - | NuGet | 1.0.0
+ChromeOS/Chrome App | 32 | - | npm | 1.0.0
+Node.js | 0.12 | - | npm | 1.0.0
