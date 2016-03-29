@@ -84,7 +84,7 @@ dust.helpers.type = (outerchunk, context, bodies, params) => {
     if (lang.hasPointers) {
       let ptr = noPointers ? '' : '*';
       if (isEnum(context.get('enums'), string) ||
-        (lang.valueTypes && _.contains(lang.valueTypes, string))) {
+        (lang.valueTypes && _.includes(lang.valueTypes, string))) {
         ptr = '';
       }
       let packed = backup.replace('.', '');
@@ -143,7 +143,7 @@ dust.helpers.sdkType = (outerchunk, context, bodies, params) =>
 dust.helpers.arcSetting = (outerchunk, context, bodies) => {
   const lang = context.get('languageSettings');
   return outerchunk.capture(bodies.block, context, (string, chunk) => {
-    if (_.contains(lang.valueTypes, string) || isEnum(context.get('enums'), string)) {
+    if (_.includes(lang.valueTypes, string) || isEnum(context.get('enums'), string)) {
       chunk.end('assign');
     } else {
       chunk.end('strong');
@@ -154,7 +154,7 @@ dust.helpers.arcSetting = (outerchunk, context, bodies) => {
 dust.helpers.nullabilityProp = (outerchunk, context, bodies) => {
   const lang = context.get('languageSettings');
   return outerchunk.capture(bodies.block, context, (string, chunk) => {
-    if (_.contains(lang.valueTypes, string) || isEnum(context.get('enums'), string)) {
+    if (_.includes(lang.valueTypes, string) || isEnum(context.get('enums'), string)) {
       chunk.end('');
     } else {
       chunk.end(',nullable');
@@ -168,7 +168,7 @@ dust.helpers.nullabilityType = (outerchunk, context, bodies) => {
     if (string.indexOf('~') > 0) {
       // It's a callback...
       chunk.end(' _Nullable');
-    } else if (_.contains(lang.valueTypes, string) || isEnum(context.get('enums'), string)) {
+    } else if (_.includes(lang.valueTypes, string) || isEnum(context.get('enums'), string)) {
       chunk.end('');
     } else {
       chunk.end(' _Nullable');
@@ -180,7 +180,7 @@ dust.helpers.isStrong = (outerchunk, context, bodies, params) => {
   const lang = context.get('languageSettings');
   return outerchunk.map(chunk => {
     const type = dust.helpers.tap(params.type, chunk, context);
-    if (_.contains(lang.valueTypes, type) || isEnum(context.get('enums'), type)) {
+    if (_.includes(lang.valueTypes, type) || isEnum(context.get('enums'), type)) {
       if (bodies.else) {
         return bodies.else(chunk, context).end();
       }
