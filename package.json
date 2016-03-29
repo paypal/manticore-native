@@ -11,6 +11,7 @@
   "scripts": {
     "lint": "eslint .",
     "test": "babel-node ./node_modules/.bin/tape test/**/test_*.js",
+    "testSome": "babel-node ./node_modules/.bin/tape",
     "build-test-js": "mkdirp output && browserify $npm_package_config_babelify test/js-source/index.js > ./output/index.pack.js",
     "build-objc-polyfill": "browserify $npm_package_config_babelify runtime/objc/js/polyfill.js > runtime/objc/js/polyfill.pack.js",
     "gen-objc-test": "mkdirp output/objc && babel-node -- gen/index.js -q ./runtime/objc/templates ./output/objc test/js-source/*.js",
@@ -45,6 +46,7 @@
     "fs-extra": "^0.26.7",
     "glob": "^7.0.3",
     "lodash": "^4.6.1",
+    "node-fetch": "^1.4.1",
     "yaku": "^0.14.1"
   },
   "devDependencies": {

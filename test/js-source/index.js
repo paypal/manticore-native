@@ -1,9 +1,9 @@
 console.log('Loading sample JS');
 
 import { SDKTest } from './SDKTest';
-import { SDKTestDefault } from './SDKTestDefault';
-import { exports } from '../../index';
+import { SDKTestDefault, SDKTestDefaultSubclass } from './SDKTestDefault';
+import { nativeExport } from '../../index';
 
-Object.assign(exports, { SDKTest, SDKTestDefault });
+nativeExport(module, { SDKTest, SDKTestDefault, SDKTestDefaultSubclass });
 
 console.log('Completed sample JS');

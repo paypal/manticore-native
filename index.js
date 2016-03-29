@@ -20,9 +20,39 @@ export const native = (() => {
 })();
 
 /**
- * Export a class to the native host by adding it here
+ * Export a set of objects to the native layer, as well as
+ * adding them to your module exports (for JS platforms)
+ * @param module Your module (e.g. put "module" here)
+ * @param obj The object containing items to export
  */
-export const exports = g.exports || closure.exports;
+export function nativeExport(module, obj) {
+  const nativeExports = g.exports || closure.exports;
+  for (const k of Object.getOwnPropertyNames(obj)) {
+    nativeExports[k] = module.exports[k] = obj[k];
+  }
+}
+
+let _fetch = native.fetch || global.fetch;
+
+// Trick browserify to avoid pulling node-fetch into all native bundles
+// since the native bundles are in charge of providing their own fetch function
+if (!_fetch) {
+  const fakeBrowserify = require;
+  _fetch = fakeBrowserify('node-fetch');
+}
+
+/**
+ * The HTTP "fetch" function, exposed via manticore so that you can write your JS code
+ * to work in both node and other supported manticore environments. Your code should
+ * call manticore.fetch, and let higher modules (e.g. the app/tool) decide what
+ * implementation that should use.
+ * TODO this is not a faithful implementation of fetch yet. It's close enough for simple
+ * tasks, but we should flesh this out a lot more in the polyfills for the various
+ * runtimes (including node).
+ */
+export function fetch(...args) {
+  return _fetch.apply(null, args);
+}
 
 /**
  * This allows "import manticore from 'manticore';" to do something useful

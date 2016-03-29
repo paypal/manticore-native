@@ -88,7 +88,7 @@ infra.test('Codegen', (suite) => {
       const genWrapper = makeGeneratorWrapper(templateDir, outputDir);
 
       infra.wipe(outputDir);
-      await genWrapper({});
+      await genWrapper({ s: true });
       infra.assertFiles(t, outputDir, files);
 
       infra.assertContents(t, outputDir);

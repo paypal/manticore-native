@@ -1,5 +1,6 @@
 import { EventEmitter } from 'events';
 import { SDKTestDefault, SDKTestDefaultSubclass } from './SDKTestDefault';
+import * as manticore from '../../index';
 
 /**
  * This single file basically fakes the real SDK and exercises the various ways the native engines
@@ -172,7 +173,7 @@ export class SDKTest extends EventEmitter {
    */
   async goFetch(callback) {
     try {
-      const result = await fetch('https://httpbin.org/get');
+      const result = await manticore.fetch('https://httpbin.org/get');
       console.log(`fetch completed ${Object.getOwnPropertyNames(result)}`);
       callback(null, result);
     } catch (x) {
