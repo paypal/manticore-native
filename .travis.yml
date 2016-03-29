@@ -1,7 +1,6 @@
 matrix:
   include:
-    - os: linux
-      language: node
+    - language: node_js
       env: BUILD_ITEM=node
       node_js:
         - "4"
