@@ -1,0 +1,34 @@
+{
+  "namespace": "Manticore",
+  "typePrefix": "PPManticore",
+  "typeMap": {
+    "string": "string",
+    "decimal": "NSDecimalNumber",
+    "bool": "bool",
+    "int": "int",
+    "Date": "NSDate",
+    "object": "NSDictionary",
+    "error": "PPManticoreError"
+  },
+  "arrayType": "%s[]",
+  "arrayIsTyped": true,
+  "callbackSuffix": "Handler",
+  "hasPointers": false,
+  "valueTypes": [
+    "int",
+    "bool"
+  ],
+  "customConverters": [
+    "int",
+    "decimal",
+    "bool"
+  ],
+  "basenames": {
+    "impl": "ApiDefinition",
+    "enums": "StructsAndEnums"
+  },
+  "extensions": {
+    "impl": ".cs",
+    "enums": ".cs"
+  }
+}
