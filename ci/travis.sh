@@ -22,12 +22,14 @@ then
   xcodebuild test -workspace Manticore.xcworkspace -scheme ManticoreContainer-iOS -destination 'platform=iOS Simulator,name=iPhone 6,OS=9.2' | tee xcodebuild9.log | xcpretty
   xcodebuild test -workspace Manticore.xcworkspace -scheme ManticoreContainer-iOS -destination 'platform=iOS Simulator,name=iPhone 6,OS=8.1' | tee xcodebuild8.log | xcpretty
 elif [ "$BUILD_ITEM" == "osx" ]
+then
   echo "=*=*=*=*=*=*=*=*=*=*=*=* BUILDING osx =*=*=*=*=*=*=*=*=*=*=*=*"
   osxSetup
   cd runtime/objc
   instruments -s devices
   xcodebuild test -workspace Manticore.xcworkspace -scheme ManticoreContainer-OSX | tee xcodebuild.log | xcpretty
 elif [ "$BUILD_ITEM" == "node" ]
+then
   echo "=*=*=*=*=*=*=*=*=*=*=*=* BUILDING node =*=*=*=*=*=*=*=*=*=*=*=*"
   npm install -g npm@3
   npm install
