@@ -26,10 +26,9 @@ m._ = {
     return [];
   },
   fn(fnlike, count) {
-    return function () {
-        const a = arguments;
+    return function csFn(...a) {
       switch (count) {
-      case 0:
+        case 0:
           return fnlike();
         case 1:
           return fnlike(a[0]);
@@ -45,7 +44,11 @@ m._ = {
   construct: function construct(className, args) {
     if (!className) return {};
     const cons = g.exports[className];
-    function F() { return cons.apply(this, args); }
+
+    function F() {
+      return cons.apply(this, args);
+    }
+
     F.prototype = cons.prototype;
     return new F();
   },

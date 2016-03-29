@@ -1,3 +1,5 @@
 **/*.pack.js
 **/*_pack.js
-runtime/android/manticore/build
+/runtime/android/manticore/build
+/runtime/win/jint
+/build/

@@ -3,6 +3,9 @@ import glob from 'glob';
 import fs from 'fs';
 import path from 'path';
 
+global.Promise = require('bluebird');
+global.Promise.longStackTraces(true);
+
 export function test(name, fn) {
   return tape(name, fn);
 }

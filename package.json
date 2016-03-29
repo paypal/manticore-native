@@ -2,7 +2,7 @@
   "name": "paypal-manticore",
   "version": "1.0.0",
   "description": "A runtime to expose Javascript classes, logic and code to native components",
-  "main": "index.js",
+  "main": "build/index.js",
   "bin": "./build/gen/index.js",
   "config": {
     "babelify": "-t [ babelify --presets [ es2015 ] --plugins [ syntax-async-functions transform-regenerator ] ]",
@@ -18,7 +18,7 @@
     "gen-android-test": "babel-node -- gen/index.js -q ./runtime/android/templates ./runtime/android/manticore/src/test/java/com/paypal/manticore/ test/js-source/*.js",
     "gen-win-test": "mkdirp $npm_package_config_win/jint $npm_package_config_win/ClearScript && babel-node -- gen/index.js -q ./runtime/win/templates/jint $npm_package_config_win/jint test/js-source/*.js && babel-node -- gen/index.js -q ./runtime/win/templates/clearscript $npm_package_config_win/ClearScript test/js-source/*.js",
     "build-win-polyfill": "browserify $npm_package_config_babelify runtime/win/js/polyfill.clearscript.js > $npm_package_config_win/polyfill.clearscript.pack.js && browserify $npm_package_config_babelify runtime/win/js/polyfill.jint.js > $npm_package_config_win/polyfill.jint.pack.js",
-    "build": "babel gen/index --out-dir build/gen && babel gen/lib --out-dir build/gen/lib",
+    "build": "babel index.js --out-dir build && babel gen --out-dir build/gen",
     "dev": "git submodule update --init --recursive && npm run build-test-js && npm run build-objc-polyfill && npm run build-android-polyfill && npm run build-win-polyfill && npm run gen-objc-test && npm run gen-android-test && npm run gen-win-test"
   },
   "repository": {
