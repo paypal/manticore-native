@@ -1,17 +1,21 @@
-language: objective-c
-
-os:
-  - osx
-
-osx_image: xcode7.3
+matrix:
+  include:
+    - os: linux
+      language: node
+      env: BUILD_ITEM=node
+    - os: osx
+      language: objective-c
+      env: BUILD_ITEM=ios
+      osx_image: xcode7.3
+    - os: osx
+      language: objective-c
+      env: BUILD_ITEM=osx
+      osx_image: xcode7.3
 
 podfile: runtime/objc/Podfile
 
-before_install:
-  - brew update
-  - brew unlink node
-  - brew install homebrew/versions/node4-lts
-  - npm install -g npm@3
+node_js:
+  - "4"
 
 script:
   - ./ci/travis.sh
