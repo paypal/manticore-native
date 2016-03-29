@@ -38,7 +38,11 @@ elif [ "$BUILD_ITEM" == "android" ]
 then
   echo "=*=*=*=*=*=*=*=*=*=*=*=* BUILDING android =*=*=*=*=*=*=*=*=*=*=*=*"
   cd runtime/android
-  ./gradlew test
+  ./gradlew testDebug --stacktrace --info
+  if [ $? != 0 ]
+  then
+    exit $?
+  fi
 else
   echo "=*=*=*=*=*=*=*=*=*=*=*=* MISSING BUILD_ITEM env var =*=*=*=*=*=*=*=*=*=*=*=*"
 fi
