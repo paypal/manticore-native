@@ -1,0 +1,43 @@
+{
+  "namespace": "MyNamespace",
+  "typeMap": {
+    "string": "typeIsString",
+    "decimal": "typeIsDecimal",
+    "bool": "typeIsBool",
+    "int": "typeIsInt",
+    "Date": "typeIsDate",
+    "error": "typeIsError",
+    "object": "typeIsObject"
+  },
+  "arrayType": "MyArrayType-%s",
+  "arrayIsTyped": true,
+  "callbackSuffix": "MyCallbackSuffx",
+  "innerCallbacksAndEvents": true,
+  "typePrefix": "myTypePrefix",
+  "baseClass": "MyBaseClass",
+  "nativeConverters": {
+    "string": "String",
+    "bool": "Bool",
+    "int": "Int",
+    "decimal": "Decimal",
+    "Date": "Date",
+    "object": "Object"
+  },
+  "basenames": {
+    "header": "headerFilename",
+    "enums": "enumsFilename",
+    "impl": "implFilename",
+    "importAll": "importAllFilename",
+    "typedefs": "typedefsFilename"
+  },
+  "extensions": {
+    "class": ".class",
+    "classHeader": ".classHeader",
+    "enum": ".enum",
+    "enums": ".enums",
+    "header": ".header",
+    "impl": ".impl",
+    "importAll": ".importAll",
+    "typedefs": ".typedefs"
+  }
+}

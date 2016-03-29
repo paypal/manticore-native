@@ -1,6 +1,8 @@
 paypal-manticore
 ================
 
+[![Build Status](https://travis-ci.com/paypal/paypal-manticore.svg?token=zgKPydNJ3A6t49VkNfPv&branch=master)](https://travis-ci.com/paypal/paypal-manticore)
+
 A cross platform Javascript runtime environment with code generation
 
 Native Class Generator
@@ -87,7 +89,7 @@ Platform Support
 
 Platform | Version | CI Status | Distro | Version
 -------- | ------- |------ | ------ | -------
-iOS      | 7.0+ | - | CocoaPods | 1.0.0
+iOS      | 7.0+ | [![Build Status](https://travis-ci.com/paypal/paypal-manticore.svg?token=zgKPydNJ3A6t49VkNfPv&branch=master)](https://travis-ci.com/paypal/paypal-manticore) | CocoaPods | 1.0.0
 MacOS    | 10.9+ | - | CocoaPods | 1.0.0
 Android  | API 19+ | - | JCenter | 1.0.0
 Windows  | XP (.Net4) | - | NuGet | 1.0.0
