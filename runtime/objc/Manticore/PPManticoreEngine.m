@@ -41,9 +41,8 @@
 - (void)loadScript:(NSString *)script withName:(NSString *)name {
     if (!self.loadedPolyfill) {
         self.loadedPolyfill = YES;
-        NSBundle *bundle = [NSBundle bundleForClass:[self class]];
-        NSURL *bundleUrl = [bundle URLForResource:@"PayPalManticoreResources" withExtension:@"bundle"];
-        bundle = [NSBundle bundleWithURL:bundleUrl];
+        NSURL *bundleUrl = [[NSBundle mainBundle] URLForResource:@"PayPalManticoreResources" withExtension:@"bundle"];
+        NSBundle *bundle = [NSBundle bundleWithURL:bundleUrl];
         NSString *jsPath = [bundle pathForResource:@"polyfill.pack" ofType:@"js"];
         NSString *js = [NSString stringWithContentsOfFile:jsPath encoding:NSUTF8StringEncoding error:nil];
         [self loadScript:js withName:@"manticore://polyfill.pack.js"];
