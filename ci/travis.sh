@@ -15,19 +15,24 @@ function osxSetup {
 
 if [ "$BUILD_ITEM" == "ios" ]
 then
+  echo "=*=*=*=*=*=*=*=*=*=*=*=* BUILDING ios =*=*=*=*=*=*=*=*=*=*=*=*"
   osxSetup
   cd runtime/objc
   instruments -s devices
   xcodebuild test -workspace Manticore.xcworkspace -scheme ManticoreContainer-iOS -destination 'platform=iOS Simulator,name=iPhone 6,OS=9.2' | tee xcodebuild9.log | xcpretty
   xcodebuild test -workspace Manticore.xcworkspace -scheme ManticoreContainer-iOS -destination 'platform=iOS Simulator,name=iPhone 6,OS=8.1' | tee xcodebuild8.log | xcpretty
 elif [ "$BUILD_ITEM" == "osx" ]
+  echo "=*=*=*=*=*=*=*=*=*=*=*=* BUILDING osx =*=*=*=*=*=*=*=*=*=*=*=*"
   osxSetup
   cd runtime/objc
   instruments -s devices
   xcodebuild test -workspace Manticore.xcworkspace -scheme ManticoreContainer-OSX | tee xcodebuild.log | xcpretty
 elif [ "$BUILD_ITEM" == "node" ]
+  echo "=*=*=*=*=*=*=*=*=*=*=*=* BUILDING node =*=*=*=*=*=*=*=*=*=*=*=*"
   npm install -g npm@3
   npm install
   npm run lint
   npm test
+else
+  echo "=*=*=*=*=*=*=*=*=*=*=*=* MISSING BUILD_ITEM env var =*=*=*=*=*=*=*=*=*=*=*=*"
 fi
