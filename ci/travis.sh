@@ -31,9 +31,7 @@ then
 elif [ "$BUILD_ITEM" == "node" ]
 then
   echo "=*=*=*=*=*=*=*=*=*=*=*=* BUILDING node =*=*=*=*=*=*=*=*=*=*=*=*"
-  node -v
   npm -v
-  npm install -g npm@3
   npm install
   npm run lint
   npm test

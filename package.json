@@ -43,6 +43,7 @@
     "dustjs-linkedin": "^2.7.2",
     "fs-extra": "^0.26.7",
     "glob": "^7.0.3",
+    "lodash": "^4.6.1",
     "yaku": "^0.14.1"
   },
   "devDependencies": {
