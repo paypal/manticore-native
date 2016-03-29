@@ -3,6 +3,8 @@ matrix:
     - os: linux
       language: node
       env: BUILD_ITEM=node
+      node_js:
+        - "4"
     - os: osx
       language: objective-c
       env: BUILD_ITEM=ios
@@ -13,9 +15,6 @@ matrix:
       osx_image: xcode7.3
 
 podfile: runtime/objc/Podfile
-
-node_js:
-  - "4"
 
 script:
   - ./ci/travis.sh
