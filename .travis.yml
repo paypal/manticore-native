@@ -6,18 +6,15 @@ matrix:
         - "4"
     - os: osx
       language: objective-c
-      env: BUILD_ITEM=ios
-      osx_image: xcode7.3
-    - os: osx
-      language: objective-c
-      env: BUILD_ITEM=osx
+      env: BUILD_ITEM=mac
       osx_image: xcode7.3
     - language: android
       env: BUILD_ITEM=android
       android:
         components:
           - platform-tools
-          - tools
+          - build-tools-23.0.2
+          - android-23
 
 podfile: runtime/objc/Podfile
 
