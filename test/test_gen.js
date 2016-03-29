@@ -56,7 +56,8 @@ infra.test('Codegen', (suite) => {
     t.ok(mi.namespace, 'Should have namespace');
 
     t.ok(mi.rootTypes.SDKTest, 'SDKTest type should exist');
-    t.equal(inputFiles[0], mi.rootTypes.SDKTest.filename, 'SDKTest filename should match');
+    const sdkTestFilename = path.relative(process.cwd(), inputFiles[0]);
+    t.equal(sdkTestFilename, mi.rootTypes.SDKTest.filename, 'SDKTest filename should match');
     t.ok(mi.rootTypes.SDKTest.methods.echo, 'echo function should exist');
     t.ok(mi.rootTypes.SDKTest.methods.echo.args.arg, 'echo function arg name');
     t.ok(mi.rootTypes.SDKTest.methods.echo.args.callback, 'echo function callback arg');
@@ -65,7 +66,8 @@ infra.test('Codegen', (suite) => {
     t.equal('SDKTestDefault', mi.rootTypes.SDKTest.fields.complexType.type, 'complex type return');
 
     // and so on
-    t.equal(inputFiles[1], mi.rootTypes.SDKTestDefault.filename, 'SDKTestDefault filename');
+    const defFilename = path.relative(process.cwd(), inputFiles[1]);
+    t.equal(defFilename, mi.rootTypes.SDKTestDefault.filename, 'SDKTestDefault filename');
 
     t.ok(mi.enums.Statuses.values.ON_FIRE, 'enum value should exist');
     t.equal('SDKTest.Statuses', mi.rootTypes.SDKTest.fields.myStatus.type, 'enum field type');

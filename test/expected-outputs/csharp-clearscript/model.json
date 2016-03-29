@@ -2,7 +2,7 @@
   "rootTypes": {
     "SDKTest": {
       "name": "SDKTest",
-      "filename": "/Users/mmetral/dev/opensource/paypal-manticore/test/js-source/SDKTest.js",
+      "filename": "test/js-source/SDKTest.js",
       "description": "This single file basically fakes the real SDK and exercises the various ways the native engines\ninteract with Javascript.",
       "methods": [
         {
@@ -239,7 +239,7 @@
         "Statuses": {
           "name": "Statuses",
           "description": "Valid SDK statuses",
-          "filename": "/Users/mmetral/dev/opensource/paypal-manticore/test/js-source/SDKTest.js",
+          "filename": "test/js-source/SDKTest.js",
           "location": {
             "start": {
               "line": 223,
@@ -348,7 +348,7 @@
     },
     "SDKTestDefault": {
       "name": "SDKTestDefault",
-      "filename": "/Users/mmetral/dev/opensource/paypal-manticore/test/js-source/SDKTestDefault.js",
+      "filename": "test/js-source/SDKTestDefault.js",
       "description": "",
       "methods": [
         {
@@ -420,7 +420,7 @@
       "subclasses": [
         {
           "name": "SDKTestDefaultSubclass",
-          "filename": "/Users/mmetral/dev/opensource/paypal-manticore/test/js-source/SDKTestDefault.js",
+          "filename": "test/js-source/SDKTestDefault.js",
           "description": "",
           "methods": [
             {
@@ -454,7 +454,7 @@
     },
     "SDKTestDefaultSubclass": {
       "name": "SDKTestDefaultSubclass",
-      "filename": "/Users/mmetral/dev/opensource/paypal-manticore/test/js-source/SDKTestDefault.js",
+      "filename": "test/js-source/SDKTestDefault.js",
       "description": "",
       "methods": [
         {
@@ -488,7 +488,7 @@
   "allTypes": [
     {
       "name": "SDKTest",
-      "filename": "/Users/mmetral/dev/opensource/paypal-manticore/test/js-source/SDKTest.js",
+      "filename": "test/js-source/SDKTest.js",
       "description": "This single file basically fakes the real SDK and exercises the various ways the native engines\ninteract with Javascript.",
       "methods": [
         {
@@ -725,7 +725,7 @@
         "Statuses": {
           "name": "Statuses",
           "description": "Valid SDK statuses",
-          "filename": "/Users/mmetral/dev/opensource/paypal-manticore/test/js-source/SDKTest.js",
+          "filename": "test/js-source/SDKTest.js",
           "location": {
             "start": {
               "line": 223,
@@ -835,7 +835,7 @@
     {
       "name": "Statuses",
       "description": "Valid SDK statuses",
-      "filename": "/Users/mmetral/dev/opensource/paypal-manticore/test/js-source/SDKTest.js",
+      "filename": "test/js-source/SDKTest.js",
       "location": {
         "start": {
           "line": 223,
@@ -870,7 +870,7 @@
     },
     {
       "name": "SDKTestDefault",
-      "filename": "/Users/mmetral/dev/opensource/paypal-manticore/test/js-source/SDKTestDefault.js",
+      "filename": "test/js-source/SDKTestDefault.js",
       "description": "",
       "methods": [
         {
@@ -942,7 +942,7 @@
       "subclasses": [
         {
           "name": "SDKTestDefaultSubclass",
-          "filename": "/Users/mmetral/dev/opensource/paypal-manticore/test/js-source/SDKTestDefault.js",
+          "filename": "test/js-source/SDKTestDefault.js",
           "description": "",
           "methods": [
             {
@@ -976,7 +976,7 @@
     },
     {
       "name": "SDKTestDefaultSubclass",
-      "filename": "/Users/mmetral/dev/opensource/paypal-manticore/test/js-source/SDKTestDefault.js",
+      "filename": "test/js-source/SDKTestDefault.js",
       "description": "",
       "methods": [
         {
@@ -1010,7 +1010,7 @@
   "classes": [
     {
       "name": "SDKTest",
-      "filename": "/Users/mmetral/dev/opensource/paypal-manticore/test/js-source/SDKTest.js",
+      "filename": "test/js-source/SDKTest.js",
       "description": "This single file basically fakes the real SDK and exercises the various ways the native engines\ninteract with Javascript.",
       "methods": [
         {
@@ -1247,7 +1247,7 @@
         "Statuses": {
           "name": "Statuses",
           "description": "Valid SDK statuses",
-          "filename": "/Users/mmetral/dev/opensource/paypal-manticore/test/js-source/SDKTest.js",
+          "filename": "test/js-source/SDKTest.js",
           "location": {
             "start": {
               "line": 223,
@@ -1356,7 +1356,7 @@
     },
     {
       "name": "SDKTestDefault",
-      "filename": "/Users/mmetral/dev/opensource/paypal-manticore/test/js-source/SDKTestDefault.js",
+      "filename": "test/js-source/SDKTestDefault.js",
       "description": "",
       "methods": [
         {
@@ -1428,7 +1428,7 @@
       "subclasses": [
         {
           "name": "SDKTestDefaultSubclass",
-          "filename": "/Users/mmetral/dev/opensource/paypal-manticore/test/js-source/SDKTestDefault.js",
+          "filename": "test/js-source/SDKTestDefault.js",
           "description": "",
           "methods": [
             {
@@ -1462,7 +1462,7 @@
     },
     {
       "name": "SDKTestDefaultSubclass",
-      "filename": "/Users/mmetral/dev/opensource/paypal-manticore/test/js-source/SDKTestDefault.js",
+      "filename": "test/js-source/SDKTestDefault.js",
       "description": "",
       "methods": [
         {
@@ -1497,7 +1497,7 @@
     {
       "name": "Statuses",
       "description": "Valid SDK statuses",
-      "filename": "/Users/mmetral/dev/opensource/paypal-manticore/test/js-source/SDKTest.js",
+      "filename": "test/js-source/SDKTest.js",
       "location": {
         "start": {
           "line": 223,

@@ -111,7 +111,7 @@ export async function generate(templateDirectory, config, outputDirectory, optio
   // read all the type information from the specified input files --
   // multiple classes per file is possible
   const results = await Promise.all(globbedFiles.map((filename) => {
-    const parser = new Parser(filename, typeInformation);
+    const parser = new Parser(path.relative(process.cwd(), filename), typeInformation);
     parser.readTypes();
     return parser;
   }));
