@@ -2,6 +2,7 @@ import tape from 'tape';
 import glob from 'glob';
 import fs from 'fs-extra';
 import path from 'path';
+import ansidiff from 'ansidiff';
 
 global.Promise = require('bluebird');
 global.Promise.longStackTraces(true);
@@ -53,8 +54,14 @@ export function assertContents(t, dir) {
       t.ok(fs.existsSync(otherFile), `${otherFile} should exist`);
 
       // diff the 2 files
-      t.equal(fs.readFileSync(expectedFile).toString(), fs.readFileSync(otherFile).toString(),
-        `${otherFile} should match ${expectedFile}`);
+      const expected = fs.readFileSync(expectedFile).toString();
+      const actual = fs.readFileSync(otherFile).toString();
+      if (actual !== expected) {
+        console.error(ansidiff.lines(actual, expected)); // eslint-disable-line no-console
+        t.fail(`${otherFile} does not match ${expectedFile}.`);
+      } else {
+        t.pass(`${otherFile} should match ${expectedFile}`);
+      }
     }
   }
 }
@@ -71,7 +78,6 @@ function loadAnything(what, input, transformer) {
   const _transformer = transformer || ((i) => i);
 
   for (const myThing of input) {
-    // console.log("making " + what + " " + myThing.name);
     ret[myThing.name] = _transformer(myThing);
   }
   return ret;
