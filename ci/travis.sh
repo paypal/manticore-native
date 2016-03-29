@@ -16,25 +16,29 @@ function osxSetup {
 if [ "$BUILD_ITEM" == "ios" ]
 then
   echo "=*=*=*=*=*=*=*=*=*=*=*=* BUILDING ios =*=*=*=*=*=*=*=*=*=*=*=*"
-  osxSetup
-  cd runtime/objc
-  instruments -s devices
-  xcodebuild test -workspace Manticore.xcworkspace -scheme ManticoreContainer-iOS -destination 'platform=iOS Simulator,name=iPhone 6,OS=9.2' | tee xcodebuild9.log | xcpretty
-  xcodebuild test -workspace Manticore.xcworkspace -scheme ManticoreContainer-iOS -destination 'platform=iOS Simulator,name=iPhone 6,OS=8.1' | tee xcodebuild8.log | xcpretty
+#  osxSetup
+#  cd runtime/objc
+#  instruments -s devices
+#  xcodebuild test -workspace Manticore.xcworkspace -scheme ManticoreContainer-iOS -destination 'platform=iOS Simulator,name=iPhone 6,OS=9.3' | tee xcodebuild9.log | xcpretty
 elif [ "$BUILD_ITEM" == "osx" ]
 then
   echo "=*=*=*=*=*=*=*=*=*=*=*=* BUILDING osx =*=*=*=*=*=*=*=*=*=*=*=*"
-  osxSetup
-  cd runtime/objc
-  instruments -s devices
-  xcodebuild test -workspace Manticore.xcworkspace -scheme ManticoreContainer-OSX | tee xcodebuild.log | xcpretty
+#  osxSetup
+#  cd runtime/objc
+#  instruments -s devices
+#  xcodebuild test -workspace Manticore.xcworkspace -scheme ManticoreContainer-OSX | tee xcodebuild.log | xcpretty
 elif [ "$BUILD_ITEM" == "node" ]
 then
   echo "=*=*=*=*=*=*=*=*=*=*=*=* BUILDING node =*=*=*=*=*=*=*=*=*=*=*=*"
-  npm -v
-  npm install
-  npm run lint
-  npm test
+#  npm -v
+#  npm install
+#  npm run lint
+#  npm test
+elif [ "$BUILD_ITEM" == "android" ]
+then
+  echo "=*=*=*=*=*=*=*=*=*=*=*=* BUILDING android =*=*=*=*=*=*=*=*=*=*=*=*"
+  cd runtime/android
+  ./gradlew test
 else
   echo "=*=*=*=*=*=*=*=*=*=*=*=* MISSING BUILD_ITEM env var =*=*=*=*=*=*=*=*=*=*=*=*"
 fi
