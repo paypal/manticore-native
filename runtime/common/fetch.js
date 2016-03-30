@@ -1,3 +1,5 @@
+// Inspired by
+// https://github.com/bitinn/node-fetch
 global.fetch = function fetcher(url, options) {
   return new Promise((accept, reject) => (
     global.manticore.http(Object.assign({
