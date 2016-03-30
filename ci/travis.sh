@@ -25,6 +25,12 @@ then
 elif [ "$BUILD_ITEM" == "android" ]
 then
   echo "=*=*=*=*=*=*=*=*=*=*=*=* BUILDING android =*=*=*=*=*=*=*=*=*=*=*=*"
+  nvm install 4.4
+  npm install -g npm@3
+  npm install
+  npm run build-test-js
+  npm run build-android-polyfill
+  npm run gen-android-test
   cd runtime/android
   ./gradlew testDebug --stacktrace --info
 else
