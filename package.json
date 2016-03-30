@@ -9,7 +9,7 @@
   },
   "scripts": {
     "lint": "eslint .",
-    "precommit-lint": "eslint . || :",
+    "precommit-lint": "eslint .; true",
     "test": "babel-node ./node_modules/.bin/tape test/**/test_*.js",
     "testSome": "babel-node ./node_modules/.bin/tape",
     "build-test-js": "babel-node ./mantify.js ./output/index.pack.js test/js-source/index.js",
