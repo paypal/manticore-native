@@ -97,7 +97,6 @@ infra.test('Codegen', (suite) => {
   }
 
   queueTest('j2v8', '../runtime/android/templates', [
-    'model.json',
     'SDKTest.java',
     'SDKTestDefault.java',
     'SDKTestDefaultSubclass.java',
@@ -105,7 +104,6 @@ infra.test('Codegen', (suite) => {
   ]);
 
   queueTest('objc', '../runtime/objc/templates', [
-    'model.json',
     'PayPalManticoreImports.h',
     'PayPalManticoreTypes.h',
     'PPManticoreSDKTest.h',
@@ -117,7 +115,6 @@ infra.test('Codegen', (suite) => {
   ]);
 
   queueTest('csharp-clearscript', '../runtime/win/templates/clearscript', [
-    'model.json',
     'SDKTest.cs',
     'SDKTestDefault.cs',
     'SDKTestDefaultSubclass.cs',
@@ -125,7 +122,6 @@ infra.test('Codegen', (suite) => {
   ]);
 
   queueTest('csharp-jint', '../runtime/win/templates/jint', [
-    'model.json',
     'SDKTest.cs',
     'SDKTestDefault.cs',
     'SDKTestDefaultSubclass.cs',
