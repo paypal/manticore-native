@@ -7,14 +7,10 @@ matrix:
         - "4"
     - os: osx
       language: objective-c
-      env:
-        - BUILD_ITEM=mac
-        - TRAVIS_NODE_VERSION="4"
+      env: BUILD_ITEM=mac
       osx_image: xcode7.3
     - language: android
-      env:
-        - BUILD_ITEM=android
-        - TRAVIS_NODE_VERSION="4"
+      env: BUILD_ITEM=android
       android:
         components:
           - platform-tools
