@@ -18,12 +18,12 @@ namespace Manticore
         public void Register(ManticoreEngine engine)
         {
             this.engine = engine;
-            engine.ManticoreJsObject.log = new Action<String, String>((level, message) => log(level, message));
-            engine.ManticoreJsObject.setTimeout = new Action<dynamic, int>((fn, msec) =>
+            engine.ManticoreJsObject._log = new Action<String, String>((level, message) => log(level, message));
+            engine.ManticoreJsObject._setTimeout = new Action<dynamic, int>((fn, msec) =>
             {
                 setTimeout(fn, msec);
             });
-            engine.ManticoreJsObject.http = new Action<dynamic, dynamic>((opts, cb) => this.http(opts, cb));
+            engine.ManticoreJsObject._fetch = new Action<dynamic, dynamic>((opts, cb) => this.fetch(opts, cb));
         }
 
         public void log(String level, String message)
@@ -31,14 +31,14 @@ namespace Manticore
             Console.Out.WriteLine("{0} ({1}): {2}", level, Thread.CurrentThread.ManagedThreadId, message);
         }
 
-        public void http(dynamic options, dynamic callback)
+        public void fetch(dynamic request, dynamic callback)
         {
             var client = new HttpClient();
 
             HttpMethod requestMethod = HttpMethod.Get;
-            if (!(options.method is Undefined))
+            if (!(request.method is Undefined))
             {
-                var method = ((object)options.method).ToString();
+                var method = ((object)request.method).ToString();
                 if (method != null)
                 {
                     switch (method.ToLower())
@@ -65,12 +65,13 @@ namespace Manticore
                 }
             }
 
-            var request = new HttpRequestMessage(requestMethod, new Uri(options.url));
-            if (!(options.body is Undefined))
+            var httpRequest = new HttpRequestMessage(requestMethod, new Uri(request.url));
+            var rawBody = request.nativeBody();
+            if (!engine.IsNullOrUndefined(rawBody))
             {
-                var body = ((object)options.body).ToString();
-                if ((!(options.base64Body is Undefined)) && options.base64Body == true)
-                {
+                var body = ((object)rawBody).ToString();
+                if ((!(request.isBase64 is Undefined) && request.isBase64 == true))
+                {  
                     request.Content = new ByteArrayContent(Convert.FromBase64String(body));
                 }
                 else
@@ -79,34 +80,27 @@ namespace Manticore
                 }
             }
 
-            if (!(options.headers is Undefined))
+            dynamic rqHeaders = request.headers.raw();
+            DynamicObject dopts = (DynamicObject)rqHeaders;
+            foreach (var p in dopts.GetDynamicMemberNames())
             {
-                DynamicObject dopts = (DynamicObject)options.headers;
-                foreach (var p in dopts.GetDynamicMemberNames())
+                if ("content-type".Equals(p, StringComparison.OrdinalIgnoreCase))
                 {
-                    if ("content-type".Equals(p, StringComparison.OrdinalIgnoreCase))
+                    if (request.Content != null)
                     {
-                        if (request.Content != null)
-                        {
-                            request.Content.Headers.ContentType = new MediaTypeHeaderValue(options.headers[p]);
-                        }
-                    }
-                    else
-                    {
-                        request.Headers.Add(p, options.headers[p]);
+                        request.Content.Headers.ContentType = new MediaTypeHeaderValue(rqHeaders[p]);
                     }
                 }
+                else
+                {
+                    request.Headers.Add(p, rqHeaders[p]);
+                }
             }
-
-            String format = null;
-            if (!(options.format is Undefined))
-            {
-                format = ((object)options.format).ToString();
-            }
-            sendRequest(format, client, request, callback);
+            
+            sendRequest(client, httpRequest, callback);
         }
 
-        private async void sendRequest(String format, HttpClient client, HttpRequestMessage request, dynamic callback)
+        private async void sendRequest(HttpClient client, HttpRequestMessage request, dynamic callback)
         {
             HttpResponseMessage response;
             try
@@ -131,7 +125,7 @@ namespace Manticore
                     headers = engine.ManticoreJsObject._.construct();
                 }
 
-                headers[kv.Key] = kv.Value.FirstOrDefault();
+                headers[kv.Key] = engine.Converter.ToJsArray(kv.Value.ToList(), (v) => v.ToString());
             }
 
             foreach (var kv in response.Content.Headers)
@@ -141,20 +135,26 @@ namespace Manticore
                     headers = engine.ManticoreJsObject._.construct();
                 }
 
-                headers[kv.Key] = kv.Value.FirstOrDefault();
+                headers[kv.Key] = engine.Converter.ToJsArray(kv.Value.ToList(), (v) => v.ToString());
             }
             responseInfo.headers = headers;
-            responseInfo.statusCode = (int)response.StatusCode;
-            try
+            responseInfo.status = (int)response.StatusCode;
+            // TODO figure out how to sneak this wait into the readers
+            var responseBytes = await response.Content.ReadAsByteArrayAsync();
+            responseInfo.json = new Func<dynamic>(() =>
             {
-                DefaultConverter<JsBackedObject>.ParseResponseBody(engine, responseInfo, format, await response.Content.ReadAsByteArrayAsync());
-                callback(null, responseInfo);
-            }
-            catch (ScriptEngineException se)
-            {
-                dynamic exp = new JsErrorBuilder(se).Build();
-                callback(exp, responseInfo);
-            }
+                try
+                {
+                    return engine.v8.Script.JSON.parse(Encoding.UTF8.GetString(responseBytes));
+                }
+                catch (ScriptEngineException se)
+                {
+                    return new JsErrorBuilder(se).Build();
+                }
+            });
+            responseInfo.text = new Func<dynamic>(() => Encoding.UTF8.GetString(responseBytes));
+            responseInfo.body = new Func<dynamic>(() => Convert.ToBase64String(responseBytes));
+            callback(null, responseInfo);
         }
 
         static async void setTimeout(dynamic callback, int timeout)

@@ -2,7 +2,7 @@ const g = global;
 const m = g.manticore;
 
 // Setup the JavaScriptCore runtime to look like what Manticore requires (bind native functions)
-m.log('info', 'Loading ClearScript polyfill');
+m._log('info', 'Loading ClearScript polyfill');
 
 g.exports = g.exports || {};
 
@@ -20,6 +20,7 @@ require('core-js/fn/symbol/iterator');
 require('../../common/console');
 require('../../common/promise');
 require('../../common/timer');
+require('../../common/fetch');
 
 m._ = {
   array() {
@@ -57,5 +58,4 @@ m._ = {
   },
 };
 
-require('../../common/fetch');
-m.log('info', 'Loaded ClearScript polyfill');
+m._log('info', 'Loaded ClearScript polyfill');

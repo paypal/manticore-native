@@ -1,7 +1,7 @@
 const g = global;
 const m = g.manticore;
 // Setup the JavaScriptCore runtime to look like what Manticore requires (bind native functions)
-m.log('info', 'Loading Jint polyfill');
+m._log('info', 'Loading Jint polyfill');
 
 require('core-js/es6/symbol');
 require('core-js/es6/set');
@@ -19,4 +19,4 @@ require('../../common/promise');
 require('../../common/timer');
 require('../../common/fetch');
 
-m.log('info', 'Loaded Jint polyfill');
+m._log('info', 'Loaded Jint polyfill');

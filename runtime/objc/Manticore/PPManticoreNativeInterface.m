@@ -108,7 +108,8 @@
         urlRequest.HTTPMethod = request[@"method"].toString;
     }
     
-    if (request[@"body"].isString) {
+    JSValue *body = [request invokeMethod:@"nativeBody" withArguments:nil];
+    if (body && body.isString) {
         if (request[@"isBase64"].isBoolean && request[@"isBase64"].toBool) {
             urlRequest.HTTPBody = [[NSData alloc] initWithBase64EncodedString:request[@"body"].toString options:0];
         } else {

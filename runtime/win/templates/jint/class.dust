@@ -4,6 +4,7 @@ using Jint.Native.Object;
 using Jint.Native.Function;
 using Jint.Runtime.Interop;
 using System;
+using System.Threading.Tasks;
 using System.Collections.Generic;
 using Manticore;
 

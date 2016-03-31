@@ -38,7 +38,7 @@ namespace Manticore
 
         public void Register(ManticoreEngine engine)
         {
-            engine.ManticoreJsObject.FastAddProperty("log",
+            engine.ManticoreJsObject.FastAddProperty("_log",
                 engine.AsJsFunction((thisObject, args) =>
                 {
                     JsValue extra = JsValue.Null;
@@ -49,31 +49,20 @@ namespace Manticore
                     Log(args[0].AsString(), args[1].AsString(), extra);
                     return JsValue.Undefined;
                 }), true, false, false);
-            engine.ManticoreJsObject.FastAddProperty("setTimeout",
+            engine.ManticoreJsObject.FastAddProperty("_setTimeout",
                 engine.AsJsFunction((thisObject, args) =>
                 {
                     SetTimeout(engine, args[0].As<FunctionInstance>(), (int) args[1].AsNumber());
                     return JsValue.Undefined;
                 }), true, false, false);
-            engine.ManticoreJsObject.FastAddProperty("http",
+            engine.ManticoreJsObject.FastAddProperty("_fetch",
                 engine.AsJsFunction((thisObject, args) =>
                 {
                     Task.Factory.StartNew(() =>
                     {
-                        Http(engine, args[0], args[1]);
+                        Fetch(engine, args[0], args[1]);
                     });
                     return JsValue.Undefined;
-                }), true, false, false);
-            engine.ManticoreJsObject.FastAddProperty("base64ToArray",
-                engine.AsJsFunction((thisObject, args) =>
-                {
-                    var bytes = Convert.FromBase64String(args[0].AsString());
-                    ObjectInstance array = engine.jsEngine.Array.Construct(new JsValue[] { bytes.Length });
-                    for (var i = 0; i < bytes.Length; i++)
-                    {
-                        array.Put(i.ToString(), new JsValue(bytes[i]), true);
-                    }
-                    return array;
                 }), true, false, false);
         }
 
@@ -107,7 +96,7 @@ namespace Manticore
             timer.Start();
         }
 
-        public void Http(ManticoreEngine engine, JsValue optionsValue, JsValue callback)
+        public void Fetch(ManticoreEngine engine, JsValue optionsValue, JsValue callback)
         {
             var options = optionsValue.As<ObjectInstance>();
             var hasBody = options.HasProperty("body");
@@ -268,7 +257,7 @@ namespace Manticore
             });
         }
 
-        public void Http(ManticoreEngine engine, JsValue optionsValue, JsValue callback)
+        public void Fetch(ManticoreEngine engine, JsValue optionsValue, JsValue callback)
         {
             var options = optionsValue.As<ObjectInstance>();
             var httpBaseFilter = new HttpBaseProtocolFilter

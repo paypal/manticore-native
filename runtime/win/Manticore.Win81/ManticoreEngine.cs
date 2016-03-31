@@ -183,6 +183,11 @@ namespace Manticore
             return (v.IsNull() || v.IsUndefined());
         }
 
+        public void ResolvePromise(JsValue promise, ClrFunctionInstance callback)
+        {
+            ManticoreJsObject.Get("asCallback").As<FunctionInstance>().Call(ManticoreJsObject, new JsValue[] { promise, callback });
+        }
+
 #if DOTNET_4
         private readonly object _locker = new object();
 

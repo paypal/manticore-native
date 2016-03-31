@@ -146,5 +146,10 @@ namespace Manticore
             }
             return array;
         }
+
+        public void ResolvePromise(dynamic promise, dynamic callback)
+        {
+            ManticoreJsObject.asCallback(promise, callback);
+        }
     }
 }

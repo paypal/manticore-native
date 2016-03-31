@@ -18,8 +18,8 @@ namespace Manticore
         private static DateTime Epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
 
         ManticoreEngine engine;
-        Func<JsBaseClass,dynamic> jsExtractor;
-        Func<dynamic,Exception> jsException;
+        Func<JsBaseClass, dynamic> jsExtractor;
+        Func<dynamic, Exception> jsException;
 
         /// <summary>
         /// One of the important goals of Manticore is to isolate the fact that you have chosen to use it
@@ -29,7 +29,7 @@ namespace Manticore
         /// your exception class. This means that in most simple cases you won't have to derive from
         /// DefaultConverter, just create one.
         /// </summary>
-        public DefaultConverter(ManticoreEngine engine, Func<JsBaseClass, dynamic> jsExtractor, Func<dynamic,Exception> jsException)
+        public DefaultConverter(ManticoreEngine engine, Func<JsBaseClass, dynamic> jsExtractor, Func<dynamic, Exception> jsException)
         {
             this.engine = engine;
             this.jsExtractor = jsExtractor;
@@ -162,39 +162,58 @@ namespace Manticore
                 return null;
             }
             var ret = new Dictionary<String, Object>();
-            foreach (var p in value.GetDynamicMemberNames())
+            ExpandoObject expo = value as ExpandoObject;
+            if (expo != null)
             {
-                var v = (Object) value[p];
-                if (v == null || v is Undefined)
+                var arr = expo.ToArray();
+                foreach (var p in arr)
                 {
-                    ret[p] = null;
+                    Assign(ret, p.Key, p.Value);
                 }
-                else if (v is String)
+            } else {
+                foreach (var p in value.GetDynamicMemberNames())
                 {
-                    ret[p] = v.ToString();
-                }
-                else if (v is bool)
-                {
-                    ret[p] = (bool)v;
-                }
-                else if (v is double)
-                {
-                    ret[p] = (double)v;
-                }
-                else if (v is float)
-                {
-                    ret[p] = (float) v;
-                }
-                else if (v is int)
-                {
-                    ret[p] = (int) v;
-                }
-                else
-                {
-                    ret[p] = (string) ((dynamic)v).toString();
+                    Assign(ret, p, value[p]);
                 }
             }
             return ret;
+        }
+
+        private void Assign(Dictionary<String, Object> ret, String p, Object v)
+        {
+            if (v == null || v is Undefined)
+            {
+                ret[p] = null;
+            }
+            else if (v is String)
+            {
+                ret[p] = v.ToString();
+            }
+            else if (v is bool)
+            {
+                ret[p] = (bool)v;
+            }
+            else if (v is double)
+            {
+                ret[p] = (double)v;
+            }
+            else if (v is float)
+            {
+                ret[p] = (float)v;
+            }
+            else if (v is int)
+            {
+                ret[p] = (int)v;
+            }
+            else if (v is DynamicObject)
+            {
+                // TODO could cause circular reference here
+                ret[p] = AsNativeObject(v);                
+            }
+            else
+            {
+                ret[p] = (string)((dynamic)v).toString();
+            }
         }
 
         public List<T> ToNativeArray<T>(object value, Func<object, T> converter)

@@ -4,6 +4,7 @@ using System.Text;
 using System.Reflection;
 using System.IO;
 using System.Threading;
+using System.Threading.Tasks;
 
 #if NETFX_CORE
 using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
@@ -334,6 +335,59 @@ namespace Manticore.Win81.Test
             Assert.IsTrue(both[1] is SDKTestDefaultSubclass);
         }
 
+        [TestMethod]
+#if WINDOWS_PHONE_APP
+        public void Phone_FetchTest()
+#elif WINDOWS_APP
+        public void Win81_FetchTest()
+#elif DOTNET_4
+        public void Net4_FetchTest()
+#else
+        public void Desktop_FetchTest()
+#endif
+        {
+            JsBackedObject.CreateManticoreEngine(SampleScript);
+
+            var latch = new ManualResetEvent(false);
+            var tester = new SDKTest("123");
+            tester.GoFetch(new SDKTest.FetchedDelegate((x, r) =>
+            {
+                try
+                {
+                    Assert.IsNull(x);
+                    Assert.IsNotNull(r);
+                    Assert.IsNotNull(r["args"]);
+                    Assert.IsInstanceOfType(r["args"], typeof(IDictionary<String, Object>));
+                    Assert.AreEqual(((IDictionary<String,Object>)r["args"])["foo"], "bar");
+                }
+                finally
+                {
+                    latch.Set();
+                }
+            }));
+            Assert.IsTrue(latch.WaitOne(10000));
+        }
+
+        [TestMethod]
+#if WINDOWS_PHONE_APP
+        public async Task Phone_FetchPTest()
+#elif WINDOWS_APP
+        public async Task Win81_FetchPTest()
+#elif DOTNET_4
+        public async void Net4_FetchPTest()
+#else
+        public async Task Desktop_FetchPTest()
+#endif
+        {
+            JsBackedObject.CreateManticoreEngine(SampleScript);
+
+            var tester = new SDKTest("123");
+            var response = await tester.GoFetchP();
+            Assert.IsNotNull(response);
+            Assert.IsNotNull(response["args"]);
+            Assert.IsInstanceOfType(response["args"], typeof(IDictionary<String, Object>));
+            Assert.AreEqual(((IDictionary<String, Object>)response["args"])["baz"], "bop");
+        }
 
         private void Verify(IDictionary<String, Object> dict)
         {

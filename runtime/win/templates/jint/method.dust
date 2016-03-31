@@ -1,15 +1,31 @@
   /**
    * {@lineify indent=9}{description|s}{/lineify}
    */
-  public {?isStatic}static{/isStatic} {^returns}void{:else}{@type}{returns.type}{/type}{/returns} {@firstCap}{name}{/firstCap}({#args}{@type}{type}{/type} {name}{@sep}, {/sep}{/args}) {
-    JsValue[] args = new JsValue[] {
+  public {?isStatic}static {/isStatic}{?async}async Task{?returns}<{@type}{returns.type}{/type}>{/returns}{:else}{^returns}void{:else}{@comment}
+    ***** Regular non-async returns
+  {/comment}{@type}{returns.type}{/type}{/returns}{/async} {@firstCap}{name}{/firstCap}({#args}{@type}{type}{/type} {name}{@sep}, {/sep}{/args}) {{?async}
+    var _completer = new TaskCompletionSource{?returns}<{@type}{returns.type}{/type}>{:else}<bool>{/returns}();{/async}
+    JsValue[] args = new JsValue[] {{?args}
       {#args}{>toJs target="{type}" arg="{name}"/}{@sep},
     {/sep}{/args}
-    };
+    {/args}};
     {?isStatic}var jsClass = Engine.GetJsClass("{className}");{/isStatic}
     var func = {?isStatic}jsClass{:else}this.impl{/isStatic}.Get("{name}").As<FunctionInstance>();
-      {?returns}return {/returns}Engine.Js{?returns}WithReturn{/returns}(() => {
+    {^async}{?returns}return {/returns}{/async}Engine.Js{?returns}{^async}WithReturn{/async}{/returns}(() => {
       {?returns}var returnValue = {/returns}func.Call({?isStatic}jsClass{:else}this.impl{/isStatic}, args);
-      {?returns}return {>toNative target="{returns.type}" arg="returnValue"/};{/returns}
-    });
+    {?async}var _callback = Engine.AsJsFunction(new Func<JsValue,JsValue[],JsValue>((thisObject, cbArgs) => {
+        Object _cbError;
+        if (cbArgs.Length > 0 && !cbArgs[0].IsNull() && !cbArgs[0].IsUndefined()) {
+            _completer.TrySetException(new ManticoreException(cbArgs[0].AsObject()));
+        } else {
+          {?returns}if (cbArgs.Length > 1 && !cbArgs[1].IsNull() && !cbArgs[1].IsUndefined()) {
+            _completer.TrySetResult({>toNative target="{returns.type}" arg="cbArgs[1]"/});
+          }{:else}_completer.TrySetResult(true);{/returns}
+        }
+        return JsValue.Undefined;
+      }));
+      Engine.ResolvePromise(returnValue, _callback);
+    {:else}{?returns}return {>toNative target="{returns.type}" arg="returnValue"/};{/returns}{/async}
+    });{?async}
+    return await _completer.Task;{/async}
   }

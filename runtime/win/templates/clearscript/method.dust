@@ -1,10 +1,28 @@
+
         /**
          * {@lineify indent=9}{description|s}{/lineify}
          */
-        public {?isStatic}static{/isStatic} {^returns}void{:else}{@type}{returns.type}{/type}{/returns} {@firstCap}{name}{/firstCap}({>argList/}) {
-            {?returns}return Engine.JsWithReturn(() => {
-              dynamic returnValue = {:else}Engine.Js(() => { {/returns} {?isStatic}Engine.GetJsClass("{className}"){:else}this.impl{/isStatic}.{name}({?args}{#args}{>toJs target="{type}" arg="{name}"/}{@sep},
-            {/sep}{/args}{/args});{?returns}
-              return {>toNative target="{returns.type}" arg="returnValue"/};{/returns}
-            });
+        public {?isStatic}static {/isStatic}{?async}async Task{?returns}<{@type}{returns.type}{/type}>{/returns}{:else}{^returns}void{:else}{@comment}
+            ***** Regular non-async returns
+        {/comment}{@type}{returns.type}{/type}{/returns}{/async} {@firstCap}{name}{/firstCap}({>argList/})
+        {
+            {?async}var _completer = new TaskCompletionSource{?returns}<{@type}{returns.type}{/type}>{/returns}();
+            Engine.Js(() =>
+            {
+                dynamic _promise = {:else}{?returns}return Engine.JsWithReturn(() =>
+            {
+                dynamic returnValue = {:else}Engine.Js(() =>
+            {{/returns}{/async}{?isStatic}Engine.GetJsClass("{className}"){:else}this.impl{/isStatic}.{name}({?args}{#args}{>toJs target="{type}" arg="{name}"/}{@sep},
+                  {/sep}{/args}{/args});{?async}
+                {@comment}
+            ***** Async functions return a promise
+{/comment}var _promiseCallback = new Action<dynamic,dynamic>((_err,_result) => {
+                    _completer.TrySetResult({>toNative target="{returns.type}" arg="_result"/});
+                });
+                Engine.ResolvePromise(_promise, _promiseCallback);{:else}{@comment}
+              {/comment}{?returns}
+              return {>toNative target="{returns.type}" arg="returnValue"/};{/returns}{/async}
+            });{?async}
+            return await _completer.Task;
+        {/async}
         }
