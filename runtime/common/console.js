@@ -1,5 +1,5 @@
 function logger(level, args) {
-  global.manticore.log(level, args.join(' '));
+  global.manticore._log(level, args.join(' '));
 }
 
 global.console = {

@@ -14,9 +14,30 @@
  \*-------------------------------------------------------------------------------------------------------------------*/
 
 #import "PPManticoreError.h"
+#import "PPManticoreJSBackedObject.h"
 
-@interface PPManticoreError ()
+@interface PPManticoreError () <
+    PPManticoreNativeObjectProtocol
+>
+@property (nonatomic,strong) JSValue *impl;
 @end
 
 @implementation PPManticoreError
+-(id)initFromJavascript:(JSValue *)value {
+    if ((self = [super initWithDomain:[value[@"domain"] toString]
+                                 code:[value[@"code"] toInt32]
+                             userInfo:@{
+                                        NSLocalizedDescriptionKey: [value[@"message"] toString]
+                                        }])) {
+    }
+    return self;
+}
+
++(PPManticoreEngine *)engine {
+    return [PPManticoreJSBackedObject engine];
+}
+
++(Class)nativeClassForObject:(JSValue *)value {
+    return [PPManticoreError class];
+}
 @end

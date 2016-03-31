@@ -20,11 +20,11 @@
     PPManticoreNativeObjectProtocol
 >
 
-@property (nonatomic, strong) JSValue *impl;
+@property (nonatomic,strong,nonnull) JSValue *impl;
 
-- (instancetype)initFromJavascript:(JSValue *)value;
+- (instancetype _Nonnull)initFromJavascript:(JSValue* _Nonnull)value;
 
-+ (void)setManticoreEngine:(PPManticoreEngine *)engine;
-+ (PPManticoreEngine *)engine;
++ (void)setManticoreEngine:(PPManticoreEngine* _Nonnull)engine;
++ (PPManticoreEngine* _Nullable)engine;
 
 @end

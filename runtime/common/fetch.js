@@ -5,7 +5,7 @@ import Response from './fetch/Response';
 
 global.fetch = function fetcher(url, options) {
   return new Promise((accept, reject) => (
-    global.manticore.http(new Request(url, options),
+    global.manticore._fetch(new Request(url, options),
       (err, native) => {
         if (err) {
           reject(err);

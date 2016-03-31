@@ -189,8 +189,9 @@ export class SDKTest extends EventEmitter {
    * @returns {object} JSON value
    */
   async goFetchP() {
-    const result = await manticore.fetchJson('https://httpbin.org/get?baz=bop');
-    return result;
+    const result = await manticore.fetch('https://httpbin.org/get?baz=bop');
+    const json = await result.json();
+    return json;
   }
 
   /**

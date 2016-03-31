@@ -46,9 +46,9 @@ class NativeServices
   {
     this.engine = engine;
 
-    engine.manticoreJsObject.registerJavaMethod(this, "log", "log", new Class<?>[]{String.class, Object.class});
-    engine.manticoreJsObject.registerJavaMethod(this, "http", "http", new Class<?>[]{V8Object.class, V8Function.class});
-    engine.manticoreJsObject.registerJavaMethod(this, "setTimeout", "setTimeout", new Class<?>[]{V8Function.class, Integer.class});
+    engine.manticoreJsObject.registerJavaMethod(this, "log", "_log", new Class<?>[]{String.class, Object.class});
+    engine.manticoreJsObject.registerJavaMethod(this, "fetch", "_fetch", new Class<?>[]{V8Object.class, V8Function.class});
+    engine.manticoreJsObject.registerJavaMethod(this, "setTimeout", "_setTimeout", new Class<?>[]{V8Function.class, Integer.class});
 
     // If you need to develop against invalid certificates...
     /*
@@ -121,17 +121,17 @@ class NativeServices
     }
   }
 
-  public void http(final V8Object options, V8Function jsCallback)
+  public void fetch(final V8Object request, V8Function jsCallback)
   {
     final V8Function callback = (V8Function) jsCallback.twin();
-    final String url = options.getString("url");
+    final String url = request.getString("url");
     final Request.Builder httpRequestBuilder = new Request.Builder()
         .url(url);
 
     String contentType = "application/x-www-form-urlencoded";
-    if (options.contains("headers"))
+    if (request.contains("headers"))
     {
-      V8Object headers = options.getObject("headers");
+      V8Object headers = request.getObject("headers");
       for (String kv : headers.getKeys())
       {
         String key = kv.toString();
@@ -146,39 +146,28 @@ class NativeServices
 
     String method = "GET";
     RequestBody body = null;
-    if (options.contains("body"))
+    if (request.contains("body"))
     {
-      body = RequestBody.create(MediaType.parse(contentType), options.getString("body"));
+      body = RequestBody.create(MediaType.parse(contentType), request.getString("body"));
     }
-    if (options.contains("method"))
+    if (request.contains("method"))
     {
-      httpRequestBuilder.method(options.getString("method"), body);
+      httpRequestBuilder.method(request.getString("method"), body);
     }
 
     String tmpformat = null;
-    if (options.contains("format"))
+    if (request.contains("format"))
     {
-      tmpformat = options.getString("format");
+      tmpformat = request.getString("format");
     }
 
     final String format = tmpformat;
-
-    final boolean isDebug = options.contains("debug");
-    if (isDebug) {
-      // Set a breakpoint here and modify the JS call to intercept it.
-      Log.d("NativeServices", "debuggable request");
-    }
 
     httpClient.newCall(httpRequestBuilder.build()).enqueue(new Callback()
     {
       @Override
       public void onFailure(final Request request, final IOException e)
       {
-        if (isDebug) {
-          // Set a breakpoint here and modify the JS call to intercept it.
-          Log.d("NativeServices", "debuggable request");
-        }
-
         engine.getExecutor().runNoWait(new Runnable()
         {
           @Override

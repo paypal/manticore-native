@@ -49,15 +49,15 @@
         platform[@"name"] = @"osx";
         platform[@"version"] = [NSProcessInfo processInfo].operatingSystemVersionString;
 #endif
-        _manticoreObject[@"log"] = ^(NSString* level,  NSString* message) {
+        _manticoreObject[@"_log"] = ^(NSString* level,  NSString* message) {
             [weakSelf log:level message:message];
         };
         
-        _manticoreObject[@"http"] = ^(JSValue *options, JSValue *callback) {
-            return [weakSelf http:options callback:callback];
+        _manticoreObject[@"_fetch"] = ^(JSValue *request, JSValue *callback) {
+            return [weakSelf fetch:request callback:callback];
         };
         
-        _manticoreObject[@"setTimeout"] = ^(JSValue *callback, JSValue *timeout) {
+        _manticoreObject[@"_setTimeout"] = ^(JSValue *callback, JSValue *timeout) {
             [weakSelf setTimeout:^{
                 [callback callWithArguments:nil];
             } after:timeout.toInt32];
@@ -85,7 +85,7 @@
     NSLog(@"%@: %@", level, message);
 }
 
--(JSValue*)http:(JSValue *)request callback:(JSValue *)callback {
+-(JSValue*)fetch:(JSValue *)request callback:(JSValue *)callback {
     NSURL *url = [NSURL URLWithString:request[@"url"].toString];
     JSValueProtect(self.engine.jsEngine.JSGlobalContextRef, callback.JSValueRef);
     

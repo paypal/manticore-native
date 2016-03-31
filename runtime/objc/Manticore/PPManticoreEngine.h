@@ -21,16 +21,16 @@
 
 @interface PPManticoreEngine : NSObject
 
-@property (nonatomic,strong) PPManticoreTypeConverter *converter;
-@property (nonatomic,readonly) JSContext *context;
-@property (nonatomic,readonly) JSGlobalContextRef globalContext;
+@property (nonatomic,strong,nonnull) PPManticoreTypeConverter *converter;
+@property (nonatomic,readonly,nonnull) JSContext *context;
+@property (nonatomic,readonly,nonnull) JSGlobalContextRef globalContext;
 
-- (void)loadScript:(NSString *)script withName:(NSString *)name;
+- (void)loadScript:(NSString* _Nonnull)script withName:(NSString* _Nullable)name;
 
--(JSValue*)createJSObject:(NSString*)jsClassName withArguments:(NSArray*)args;
--(id)attachNativeObject:(JSValue*)value ofType:(Class)nativeType;
--(id)resolveJSObject:(id)object ofType:(Class)nativeType;
--(JSValue*)resolveJSClass:(NSString*)jsClassName;
--(void)resolvePromise:(JSValue*)promise toCallback:(void (^_Nonnull)(JSValue*,JSValue*))callback;
+-(JSValue* _Nullable)createJSObject:(NSString* _Nonnull)jsClassName withArguments:(NSArray* _Nullable)args;
+-(id _Nullable)attachNativeObject:(JSValue* _Nonnull)value ofType:(Class _Nonnull)nativeType;
+-(id _Nullable)resolveJSObject:(id _Nullable)object ofType:(Class _Nonnull)nativeType;
+-(JSValue* _Nullable)resolveJSClass:(NSString* _Nonnull)jsClassName;
+-(void)resolvePromise:(JSValue* _Nonnull)promise toCallback:(void (^_Nonnull)(JSValue* _Nullable,JSValue* _Nullable))callback;
 
 @end
