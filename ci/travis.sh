@@ -25,6 +25,7 @@ then
 elif [ "$BUILD_ITEM" == "android" ]
 then
   echo "=*=*=*=*=*=*=*=*=*=*=*=* BUILDING android =*=*=*=*=*=*=*=*=*=*=*=*"
+  curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.31.0/install.sh | bash
   nvm install 4.4
   npm install -g npm@3
   npm install
