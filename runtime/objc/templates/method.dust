@@ -1,10 +1,23 @@
-{?isStatic}+{:else}-{/isStatic}({^returns}void{:else}{@type}{returns.type}{/type}{/returns}){name}{#args}{@eq key=$idx value=0}{:else}{name}{/eq}:({@type}{type}{/type}){name}{@sep} {/sep}{/args} {
+{?isStatic}+{:else}-{/isStatic}({^returns}void{:else}{?async}void{:else}{@type}{returns.type}{/type}{/async}{/returns}){name}{@comment}
+    ***** argument declarations
+{/comment}{#args}{@eq key=$idx value=0}{:else}{name}{/eq}:({@type}{type}{/type}){name}{@sep} {/sep}{/args}{@comment}
+    ***** async rejoinder
+{/comment}{?async}{?args} callback{/args}:({typePrefix}{@firstCap}{name}{/firstCap}Callback _Nullable) callback{/async} {
     NSArray *args = nil;
 {#args}    {@first}args = @[
 {:else}      {/first}{>toJs target="{type}" arg="{name}"/}{@isCallback type="{type}"}{:else} ?: [NSNull null]{/isCallback}{@sep},
 {/sep}{@last}
     ];{/last}{/args}
     JSValue *valueToInvokeMethodOn = {?isStatic}[[{typePrefix}{packedName} engine] resolveJSClass:@"{className}"]{:else}self.impl{/isStatic};
-    {?returns}JSValue *returnValue = [valueToInvokeMethodOn invokeMethod:@"{name}" withArguments:args];
-    return {>toNative target="{returns.type}" arg="returnValue"/};{:else}[valueToInvokeMethodOn invokeMethod:@"{name}" withArguments:args];{/returns}
+    {?async}JSValue *promise = {:else}{?returns}JSValue *returnValue = {/returns}{/async}[valueToInvokeMethodOn invokeMethod:@"{name}" withArguments:args];
+    {?async}{@comment}
+        ***** async gets a promise back
+    {/comment}[[{typePrefix}{packedName} engine] resolvePromise:promise toCallback:^(JSValue *error, JSValue *result) {
+        callback(
+          {>toNative target="error" arg="error"/},
+          {>toNative target="{returns.type}" arg="result"/}
+        );
+    }];{:else}{@comment}
+        ***** regular return
+    {/comment}{?returns}return {>toNative target="{returns.type}" arg="returnValue"/};{/returns}{/async}
 }

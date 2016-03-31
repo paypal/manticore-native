@@ -85,41 +85,38 @@
     NSLog(@"%@: %@", level, message);
 }
 
--(JSValue*)http:(JSValue *)options callback:(JSValue *)callback {
-    NSURL *url = [NSURL URLWithString:options[@"url"].toString];
+-(JSValue*)http:(JSValue *)request callback:(JSValue *)callback {
+    NSURL *url = [NSURL URLWithString:request[@"url"].toString];
     JSValueProtect(self.engine.jsEngine.JSGlobalContextRef, callback.JSValueRef);
     
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-    if (options[@"headers"].isObject) {
-        NSDictionary *values = [options[@"headers"] toObjectOfClass:[NSDictionary class]];
+    NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
+    if (request[@"headers"].isObject) {
+        JSValue *headersRaw = [request[@"headers"] invokeMethod:@"raw" withArguments:nil];
+        NSDictionary *values = [headersRaw toObjectOfClass:[NSDictionary class]];
         for (NSString *header in values) {
-            [request setValue:[values objectForKey:header] forHTTPHeaderField:header];
+            id headerVal = values[header];
+            if ([headerVal isKindOfClass:[NSArray class]]) {
+                for (id arrVal in ((NSArray*)headerVal)) {
+                    [urlRequest addValue:[arrVal stringValue] forHTTPHeaderField:header];
+                }
+            } else {
+                [urlRequest setValue:[[values objectForKey:header] stringValue] forHTTPHeaderField:header];
+            }
         }
     }
-    if (options[@"method"].isString) {
-        request.HTTPMethod = options[@"method"].toString;
+    if (request[@"method"].isString) {
+        urlRequest.HTTPMethod = request[@"method"].toString;
     }
-    if (options[@"body"].isString) {
-        if (options[@"base64Body"].isBoolean && options[@"base64Body"].toBool) {
-            request.HTTPBody = [[NSData alloc] initWithBase64EncodedString:options[@"body"].toString options:0];
+    
+    if (request[@"body"].isString) {
+        if (request[@"isBase64"].isBoolean && request[@"isBase64"].toBool) {
+            urlRequest.HTTPBody = [[NSData alloc] initWithBase64EncodedString:request[@"body"].toString options:0];
         } else {
-            request.HTTPBody = [options[@"body"].toString dataUsingEncoding:NSUTF8StringEncoding];
+            urlRequest.HTTPBody = [request[@"body"].toString dataUsingEncoding:NSUTF8StringEncoding];
         }
     }
     
-    __block NSString *format = options[@"format"].toString ?: @"json";
-
-    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *rawResponse, NSData *data, NSError *connectionError) {
-        id bodyResponse = nil;
-        if (data.length) {
-            if ([format caseInsensitiveCompare:@"json"] == NSOrderedSame) {
-                bodyResponse = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-            } else if ([format caseInsensitiveCompare:@"binary"] != NSOrderedSame) {
-                bodyResponse = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-            } else {
-                bodyResponse = [data base64EncodedStringWithOptions:0];
-            }
-        }
+    [NSURLConnection sendAsynchronousRequest:urlRequest queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *rawResponse, NSData *data, NSError *connectionError) {
 
         NSHTTPURLResponse *response = (NSHTTPURLResponse*) rawResponse;
         NSInteger code = response.statusCode;
@@ -128,7 +125,23 @@
             code = 401;
             connectionError = nil;
         }
-        
+
+        // Now construct a Response-like object that lets us do the fetching
+        JSValue *jsResponse = [JSValue valueWithNewObjectInContext:self.engine.jsEngine];
+        if (response.allHeaderFields) {
+            jsResponse[@"headers"] = response.allHeaderFields;
+        }
+        jsResponse[@"status"] = @(code);
+        jsResponse[@"json"] = ^() {
+            return [JSValue valueWithObject:[NSJSONSerialization JSONObjectWithData:data options:0 error:nil] inContext:self.engine.context];
+        };
+        jsResponse[@"text"] = ^() {
+            return [JSValue valueWithObject:[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] inContext:self.engine.context];
+        };
+        jsResponse[@"body"] = ^() {
+            return [JSValue valueWithObject:[data base64EncodedDataWithOptions:0] inContext:self.engine.context];
+        };
+
         JSValue *jsError = nil;
         if (connectionError) {
             NSString *msg = [connectionError localizedDescription] ?: connectionError.domain;
@@ -137,12 +150,7 @@
             jsError[@"code"] = @(connectionError.code);
         }
         
-        NSDictionary *responseInfo = @{
-                                       @"headers": response.allHeaderFields ?: [NSNull null],
-                                       @"statusCode": @(code),
-                                       @"body": bodyResponse ?: [NSNull null]
-                                       };
-        [callback callWithArguments:@[jsError?:[NSNull null], responseInfo?:[NSNull null]]];
+        [callback callWithArguments:@[jsError?:[NSNull null], jsResponse]];
         JSValueUnprotect(self.engine.jsEngine.JSGlobalContextRef, callback.JSValueRef);
     }];
     return nil;

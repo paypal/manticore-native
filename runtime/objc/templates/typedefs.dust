@@ -15,7 +15,11 @@
  * {@lineify indent=3}{description|s}{/lineify}
  */
 typedef {^returns}void{:else}{@type}{returns.type}{/type}{/returns} (^{typePrefix}{type}{@firstCap}{name}{/firstCap}Handler)({#args}{@type}{type}{/type} {name}{@sep}, {/sep}{/args});
-{/allCallbacks}
+{/allCallbacks}{#classes}{#methods}{?async}
+/**
+ * Callback for {typePrefix}{type} {name} method
+ */
+typedef void (^{typePrefix}{type}{@firstCap}{name}{/firstCap}Callback)({@type}error{/type} error, {@type}{returns.type}{/type} result);{/async}{/methods}{/classes}
 {#classes} {#events}
 /**
  * {@lineify indent=3}{description|s}{/lineify}

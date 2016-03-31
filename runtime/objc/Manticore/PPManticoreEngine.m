@@ -96,6 +96,10 @@
     return jsvalue;
 }
 
+-(void)resolvePromise:(JSValue *)promise toCallback:(void (^)(JSValue *error, JSValue *result))callback {
+    [self.jsEngine[@"manticore"] invokeMethod:@"asCallback" withArguments:@[promise, callback]];
+}
+
 -(JSGlobalContextRef)globalContext {
     return self.jsEngine.JSGlobalContextRef;
 }

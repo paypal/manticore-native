@@ -1,4 +1,5 @@
-import Body from 'Body';
+import Body from './Body';
+import Headers from './Headers';
 
 export default class Request extends Body {
   /**
@@ -21,7 +22,7 @@ export default class Request extends Body {
     }
     // Bypass URL validation. Don't screw it up, caller.
 
-    super(_init.body || this._clone(_input), {
+    super(_init.body || _input.body, {
       timeout: _init.timeout || _input.timeout || 0,
       size: _init.size || _input.size || 0,
     });

@@ -148,9 +148,9 @@
 - (void)verifyMixed:(NSDictionary *)mixed {
     XCTAssertEqualObjects(@1.1, mixed[@"aFloat"]);
     XCTAssertEqualObjects(@4, mixed[@"anInt"]);
-    XCTAssertEqualObjects(@"[object Object]", mixed[@"aMixed"]);
+    XCTAssertEqualObjects(@{}, mixed[@"aMixed"]);
     XCTAssertEqualObjects(@YES, mixed[@"aBool"]);
-    XCTAssertEqualObjects(@"This is an SDK Default object: true", mixed[@"anObject"]);
+    XCTAssertEqualObjects(@(1), mixed[@"anObject"][@"itsTrue"]);
     XCTAssertEqualObjects([NSNull null], mixed[@"aNull"]);
     XCTAssertEqualObjects(@"testing", mixed[@"aString"]);
 }
@@ -194,6 +194,21 @@
     XCTestExpectation *expectSignal = [self expectationWithDescription:@"expect signal"];
     [self.t goFetch:^(PPManticoreError *error, NSDictionary *response) {
         XCTAssertNil(error, @"No error for plain fetch.");
+        NSDictionary *args = response[@"args"];
+        XCTAssert(args, @"Expected args object");
+        XCTAssertEqualObjects(args[@"foo"], @"bar", @"foo should be bar in response");
+        [expectSignal fulfill];
+    }];
+    [self waitForExpectationsWithTimeout:30 handler:nil];
+}
+
+- (void)testFetchP {
+    XCTestExpectation *expectSignal = [self expectationWithDescription:@"expect signal"];
+    [self.t goFetchP:^(PPManticoreError *error, NSDictionary *response) {
+        XCTAssertNil(error, @"No error for plain fetch.");
+        NSDictionary *args = response[@"args"];
+        XCTAssert(args, @"Expected args object");
+        XCTAssertEqualObjects(args[@"baz"], @"bop", @"foo should be bar in response");
         [expectSignal fulfill];
     }];
     [self waitForExpectationsWithTimeout:30 handler:nil];

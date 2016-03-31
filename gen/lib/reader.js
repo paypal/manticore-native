@@ -268,6 +268,8 @@ export class Parser {
         };
       } else if (t.title === 'protected') {
         localInfo.protected = true;
+      } else if (t.title === 'async') {
+        localInfo.async = true;
       } else if (shouldNotErrorOnTagCallback(t)) {
         // ¯\_(ツ)_/¯
       } else {

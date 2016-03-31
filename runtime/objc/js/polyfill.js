@@ -1,7 +1,8 @@
 const g = global;
+const m = g.manticore;
 
 // Setup the JavaScriptCore runtime to look like what Manticore requires (bind native functions)
-g.manticore.log('info', 'Loading objc polyfill');
+m.log('info', 'Loading objc polyfill');
 
 require('core-js/es6/symbol');
 require('core-js/es6/set');
@@ -19,4 +20,4 @@ require('../../common/promise');
 require('../../common/timer');
 require('../../common/fetch');
 
-g.manticore.log('info', 'Loaded objc polyfill');
+m.log('info', 'Loaded objc polyfill');

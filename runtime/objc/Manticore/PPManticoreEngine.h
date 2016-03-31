@@ -31,5 +31,6 @@
 -(id)attachNativeObject:(JSValue*)value ofType:(Class)nativeType;
 -(id)resolveJSObject:(id)object ofType:(Class)nativeType;
 -(JSValue*)resolveJSClass:(NSString*)jsClassName;
+-(void)resolvePromise:(JSValue*)promise toCallback:(void (^_Nonnull)(JSValue*,JSValue*))callback;
 
 @end

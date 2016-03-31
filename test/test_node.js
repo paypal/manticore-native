@@ -15,16 +15,21 @@ infra.test('Node.js runtime', (suite) => {
     t.end();
   });
 
-  suite.test('Fetch should work', async (t) => {
+  suite.test('Fetch should work', infra.wrapTest(async(t) => {
     const sdkTest = new SDK.SDKTest();
-    try {
-      sdkTest.goFetch((err, rz) => {
-        t.ok(!err, 'Fetch should not error');
-        t.ok(rz, 'Fetch should get result');
-        t.end();
-      });
-    } catch (fetchError) {
-      t.end(fetchError);
-    }
+    sdkTest.goFetch((err, rz) => {
+      t.ok(!err, 'Fetch should not error');
+      t.ok(rz, 'Fetch should get result');
+      t.equal(rz.args.foo, 'bar', 'Should echo query string arg');
+      t.end();
+    });
+  }));
+
+  suite.test('Promise fetch should work', async(t) => {
+    const sdkTest = new SDK.SDKTest();
+    const rz = await sdkTest.goFetchP();
+    t.ok(rz, 'Promise fetch should get result');
+    t.equal(rz.args.baz, 'bop', 'Promise fetch should echo query string arg');
+    t.end();
   });
 });

@@ -173,13 +173,24 @@ export class SDKTest extends EventEmitter {
    */
   async goFetch(callback) {
     try {
-      const result = await manticore.fetch('https://httpbin.org/get');
-      console.log(`fetch completed ${Object.getOwnPropertyNames(result)}`);
-      callback(null, result);
+      const response = await manticore.fetch('https://httpbin.org/get?foo=bar');
+      const json = await response.json();
+      console.log(`fetch completed ${Object.getOwnPropertyNames(json)}`);
+      callback(null, json);
     } catch (x) {
       console.error('error', `fetch failed ${x.message}`);
       callback(x, null);
     }
+  }
+
+  /**
+   * Fetch some JSON with promise style interface
+   * @async
+   * @returns {object} JSON value
+   */
+  async goFetchP() {
+    const result = await manticore.fetchJson('https://httpbin.org/get?baz=bop');
+    return result;
   }
 
   /**

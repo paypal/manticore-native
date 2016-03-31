@@ -38,7 +38,11 @@
 {#methods}{?description}/**
  * {@lineify indent=1}{description|s}{/lineify}
  */
-{/description}-({^returns}void{:else}{@type}{returns.type}{/type}{@nullabilityType}{returns.type}{/nullabilityType}{/returns}){name}{#args}{@eq key=$idx value=0}{:else}{name}{/eq}:({@type}{type}{/type}{@nullabilityType}{type}{/nullabilityType}){name}{@sep} {/sep}{/args};
+{/description}{?async}{@comment}
+ ***** Async methods get callbacks as last param *****
+{/comment}-(void){name}{#args}{@eq key=$idx value=0}{:else}{name}{/eq}:({@type}{type}{/type}{@nullabilityType}{type}{/nullabilityType}){name}{@sep} {/sep}{/args}{?args} callback{/args}:({typePrefix}{@firstCap}{name}{/firstCap}Callback _Nullable) callback;{:else}{@comment}
+ ***** Regular non-async method *****
+{/comment}-({^returns}void{:else}{@type}{returns.type}{/type}{@nullabilityType}{returns.type}{/nullabilityType}{/returns}){name}{#args}{@eq key=$idx value=0}{:else}{name}{/eq}:({@type}{type}{/type}{@nullabilityType}{type}{/nullabilityType}){name}{@sep} {/sep}{/args};{/async}
 
 {/methods}
 

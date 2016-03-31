@@ -93,10 +93,11 @@
             dict[key] = val.toNumber;
         } else if (val.isString) {
             dict[key] = val.toString;
+        } else if (val.isObject) {
+            // TODO this could cause an infinite loop...
+            dict[key] = [self toNativeObject:val];
         } else {
             // TODO decide what the right thing to do here is...
-            // Maybe try and instantiate the native class?
-            // But generally don't use objects to send back.
             dict[key] = val.toString;
         }
     }
