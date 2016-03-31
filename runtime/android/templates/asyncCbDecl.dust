@@ -1,0 +1,37 @@
+  /**
+   * Completion callback for {name}
+   */
+  public interface {@firstCap}{name}{/firstCap}Callback {
+    void done({@type}error{/type}{?returns} error, {@type}{returns.type}{/type} result{/returns});
+  }
+
+  /**
+   * Generate the javascript function for a callback or event
+   */
+  private static V8Object wrapPromise(final {@firstCap}{name}{/firstCap}Callback javaInterface) {
+    return getEngine().getExecutor().run(new Callable<V8Object>() {~lb}
+      @Override public V8Object call() throws Exception {
+        V8Object _ = getEngine().createJsObject();
+        _.registerJavaMethod(new JavaVoidCallback() {
+          @Override
+          public void invoke(V8Object jsThis, V8Array args)
+          {
+            {@type}error{/type} error = null;
+            {?returns}{@type}{returns.type}{/type} result = {>defaultValue target="{type"/};{/returns}
+            if (args.length() > 0 && args.getType(0) != V8Value.UNDEFINED && args.getType(0) != V8Value.NULL) {
+              V8Object jsError = args.getObject(0);
+              error = {>toNative target="error" arg="jsError"/};
+            }
+            if (args.length() > 1 && args.getType(1) != V8Value.UNDEFINED) {
+              {>fnReturnType target="{returns.type}"/} jsResult = args.get{>fnType target="{type}"/}(1);
+              result = {>toNative target="{returns.type}" arg="jsResult"/};
+            }
+            javaInterface.done(error, result);
+          }
+        }, "_");
+        V8Object fn = _.getObject("_");
+        _.release();
+        return fn;
+      }
+    });
+  }

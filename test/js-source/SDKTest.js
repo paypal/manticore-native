@@ -12,6 +12,7 @@ import * as manticore from '../../index';
  * @property {string} accessorString This property has accessor functions in JS
  * @property {SDKTestDefault} complexType Yep.
  * @property {SDKTest.Statuses} myStatus fake enum for status.
+ * @property {bool} noSsl Disable SSL requests (I'm looking at you Android Junit)
  */
 export class SDKTest extends EventEmitter {
   /**
@@ -173,7 +174,8 @@ export class SDKTest extends EventEmitter {
    */
   async goFetch(callback) {
     try {
-      const response = await manticore.fetch('https://httpbin.org/get?foo=bar');
+      const protocol = this.noSsl ? 'http' : 'https';
+      const response = await manticore.fetch(`${protocol}://httpbin.org/get?foo=bar`);
       const json = await response.json();
       console.log(`fetch completed ${Object.getOwnPropertyNames(json)}`);
       callback(null, json);
@@ -189,7 +191,8 @@ export class SDKTest extends EventEmitter {
    * @returns {object} JSON value
    */
   async goFetchP() {
-    const result = await manticore.fetch('https://httpbin.org/get?baz=bop');
+    const protocol = this.noSsl ? 'http' : 'https';
+    const result = await manticore.fetch(`${protocol}://httpbin.org/get?baz=bop`);
     const json = await result.json();
     return json;
   }

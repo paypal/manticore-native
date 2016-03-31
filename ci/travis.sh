@@ -10,9 +10,9 @@ then
   brew install homebrew/versions/node4-lts
   npm install -g npm@3
   npm install
-  npm run build-test-js
-  npm run build-objc-polyfill
-  npm run gen-objc-test
+  npm run build-testjs
+  npm run objc-polyfill
+  npm run objc-testjs
   cd runtime/objc
 #  instruments -s devices
   xcodebuild test -workspace Manticore.xcworkspace -scheme ManticoreContainer-OSX | tee xcodebuild-osx.log | xcpretty
@@ -29,9 +29,9 @@ then
   nvm install 4.4
   npm install -g npm@3
   npm install
-  npm run build-test-js
-  npm run build-android-polyfill
-  npm run gen-android-test
+  npm run build-testjs
+  npm run android-polyfill
+  npm run android-testjs
   cd runtime/android
   ./gradlew testDebug --stacktrace --info
 else

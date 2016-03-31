@@ -14,18 +14,17 @@
  \*-------------------------------------------------------------------------------------------------------------------*/
 package com.paypal.manticore;
 
-import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.URL;
 
 import android.test.mock.MockContext;
 import android.test.mock.MockResources;
 import android.util.Log;
+import okhttp3.OkHttpClient;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -47,36 +46,46 @@ import static org.mockito.Mockito.mock;
  */
 @PrepareForTest({Log.class})
 @RunWith(PowerMockRunner.class)
-public class BaseTest {
+public class BaseTest
+{
   static MockContext _mockContext;
   static MockResources _mockResources;
   static String _testJs;
 
+
   @Before
-  public void mockAndroids() throws Exception {
+  public void mockAndroids() throws Exception
+  {
     // Mock the Android logging framework because it doesn't exist during JUnit and we like logs.
     PowerMockito.mockStatic(Log.class);
-    PowerMockito.when(Log.d(anyString(), anyString())).thenAnswer(new Answer() {
+    PowerMockito.when(Log.d(anyString(), anyString())).thenAnswer(new Answer()
+    {
       public Object answer(InvocationOnMock invocation)
       {
         Object[] args = invocation.getArguments();
         System.out.println(args[0].toString() + " " + args[1].toString());
         return 0;
-      } });
-    PowerMockito.when(Log.e(anyString(), anyString())).thenAnswer(new Answer() {
+      }
+    });
+    PowerMockito.when(Log.e(anyString(), anyString())).thenAnswer(new Answer()
+    {
       public Object answer(InvocationOnMock invocation)
       {
         Object[] args = invocation.getArguments();
         System.out.println(args[0].toString() + " " + args[1].toString());
         return 0;
-      } });
+      }
+    });
   }
 
+
   @BeforeClass
-  public static void mockJS() throws Exception {
+  public static void mockJS() throws Exception
+  {
     // Fake the javascript loading mechanism to go against the local disk since the
     // resource loader isn't available.
-    if (_mockContext == null) {
+    if (_mockContext == null)
+    {
       _mockContext = mock(MockContext.class);
       _mockResources = mock(MockResources.class);
 
@@ -102,69 +111,116 @@ public class BaseTest {
     }
   }
 
-  static String fromStream(InputStream in) throws IOException {
+
+  static String fromStream(InputStream in) throws IOException
+  {
     InputStreamReader input = new InputStreamReader(in /*, "UTF-8"*/);
     final int CHARS_PER_PAGE = 5000; //counting spaces
     final char[] buffer = new char[CHARS_PER_PAGE];
     StringBuilder output = new StringBuilder(CHARS_PER_PAGE);
-    try {
+    try
+    {
       for (int read = input.read(buffer, 0, buffer.length);
            read != -1;
-           read = input.read(buffer, 0, buffer.length)) {
+           read = input.read(buffer, 0, buffer.length))
+      {
         output.append(buffer, 0, read);
       }
-    } catch (IOException ignore) {
+    }
+    catch (IOException ignore)
+    {
     }
     return output.toString();
   }
 
+
   @Test
-  public void makeEngineTest() {
+  public void makeEngineTest()
+  {
     new EngineTests().makeEngineTest(_mockContext);
   }
 
+
   @Test
-  public void loadJsTest() {
+  public void loadJsTest()
+  {
     new EngineTests().loadJsTest(_mockContext, _testJs);
   }
 
+
   @Test
-  public void propertyTest() {
+  public void propertyTest()
+  {
     new EngineTests().propertyTest(_mockContext, _testJs);
   }
 
+
   @Test
-  public void functionCallTest() {
+  public void functionCallTest()
+  {
     new EngineTests().functionCallTest(_mockContext, _testJs);
   }
 
+
   @Test
-  public void callbackTest() throws Exception {
+  public void callbackTest() throws Throwable
+  {
     new EngineTests().callbackTest(_mockContext, _testJs);
   }
 
+
   @Test
-  public void collectionTest() {
+  public void eventTest() throws Throwable
+  {
+    new EngineTests().eventTest(_mockContext, _testJs);
+  }
+
+
+  @Test
+  public void collectionTest()
+  {
     new EngineTests().collectionTest(_mockContext, _testJs);
   }
 
+
   @Test
-  public void staticMethodTest() {
+  public void staticMethodTest()
+  {
     new EngineTests().staticMethodTest(_mockContext, _testJs);
   }
 
-  @Test
-  public void objectTest() { new EngineTests().objectTest(_mockContext, _testJs); }
 
   @Test
-  public void dateTest() {
+  public void objectTest()
+  {
+    new EngineTests().objectTest(_mockContext, _testJs);
+  }
+
+
+  @Test
+  public void dateTest()
+  {
     new EngineTests().dateTest(_mockContext, _testJs);
   }
 
+
   @Test
-  public void inheritanceTest() {
+  public void inheritanceTest()
+  {
     new EngineTests().inheritanceTest(_mockContext, _testJs);
   }
 
 
+  @Test
+  public void fetchTest() throws Throwable
+  {
+    new EngineTests().fetchTest(_mockContext, _testJs);
+  }
+
+
+  @Test
+  public void fetchPTest() throws Throwable
+  {
+    new EngineTests().fetchPTest(_mockContext, _testJs);
+  }
 }

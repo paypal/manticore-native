@@ -1,7 +1,7 @@
 const g = global;
 const m = g.manticore;
 // Setup the JavaScriptCore runtime to look like what Manticore requires (bind native functions)
-m.log('info', 'Loading android polyfill');
+m._log('info', 'Loading android polyfill');
 
 require('core-js/es6/symbol');
 require('core-js/es6/set');
@@ -32,4 +32,4 @@ m.newDate = function _newDate(t) {
   return new Date(t);
 };
 
-m.log('info', 'Loaded android polyfill');
+m._log('info', 'Loaded android polyfill');

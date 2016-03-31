@@ -71,6 +71,7 @@ public class ManticoreEngine
         EmptyArray = new V8Array(v8);
         manticoreJsObject = new V8Object(v8);
         v8.add("manticore", manticoreJsObject);
+        v8.executeVoidScript("manticore.toString = function () { return \"MANTICORE\"; }");
 
         V8Object platform = new V8Object(v8);
         manticoreJsObject.add("platform", platform);
@@ -171,6 +172,18 @@ public class ManticoreEngine
     return null;
   }
 
+
+  /**
+   * Under the covers, JS async functions (marked with @async for native exposure) return promises and are code-gened
+   * to take an extra parameter (callback). The resolvePromise function merely adds then() and catch() handlers
+   * that call through to callback
+   * @param promise The promise returned from the async method (or any promise)
+   * @param callback The JS function (typically a wrapped Java interface) to be invoked when the promise
+   *                 is accepted or rejected
+   */
+  public void resolvePromise(V8Object promise, V8Object callback) {
+    manticoreJsObject.executeVoidFunction("asCallback", createJsArray().push(promise).push(callback));
+  }
 
   public V8Object getJSClass(String className) {
     return exports.getObject(className);

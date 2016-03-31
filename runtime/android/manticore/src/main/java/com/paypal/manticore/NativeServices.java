@@ -25,25 +25,32 @@ import java.util.concurrent.TimeUnit;
 import android.util.Base64;
 import android.util.Log;
 import com.eclipsesource.v8.V8;
+import com.eclipsesource.v8.V8Array;
 import com.eclipsesource.v8.V8Function;
 import com.eclipsesource.v8.V8Object;
 import com.eclipsesource.v8.V8RuntimeException;
 import com.eclipsesource.v8.V8Value;
-import com.squareup.okhttp.Callback;
-import com.squareup.okhttp.MediaType;
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.RequestBody;
-import com.squareup.okhttp.Response;
+import okhttp3.Call;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 class NativeServices
 {
   ManticoreEngine engine;
   ScheduledExecutorService deferredFnExecutor = Executors.newScheduledThreadPool(1);
-  OkHttpClient httpClient = new OkHttpClient();
+  OkHttpClient httpClient;
 
   public NativeServices(ManticoreEngine engine)
   {
+    try {
+      httpClient = new OkHttpClient();
+    } catch (AssertionError ae) {
+      Log.e("manticore", "Could not start default OkHttpClient", ae);
+    }
     this.engine = engine;
 
     engine.manticoreJsObject.registerJavaMethod(this, "log", "_log", new Class<?>[]{String.class, Object.class});
@@ -100,6 +107,10 @@ class NativeServices
     */
   }
 
+  public void injectHttpClient(OkHttpClient client) {
+    this.httpClient = client;
+  }
+
   public void log(String level,  Object messageValue)
   {
     String message;
@@ -131,42 +142,58 @@ class NativeServices
     String contentType = "application/x-www-form-urlencoded";
     if (request.contains("headers"))
     {
-      V8Object headers = request.getObject("headers");
+      V8Object headers = request.getObject("headers").executeObjectFunction("raw", engine.EmptyArray);
       for (String kv : headers.getKeys())
       {
-        String key = kv.toString();
-        String value = headers.getString(kv);
-        if ("Content-Type".equalsIgnoreCase(key))
+        if ("Content-Type".equalsIgnoreCase(kv))
         {
-          contentType = value;
+          contentType = headers.getString(kv);
+          continue;
         }
-        httpRequestBuilder.addHeader(key, value);
+        if (headers.getType(kv) == V8Value.V8_ARRAY)
+        {
+          V8Array allValues = headers.getArray(kv);
+          for (int hv = 0; hv < allValues.length(); hv++)
+          {
+            httpRequestBuilder.addHeader(kv, allValues.get(hv).toString());
+          }
+        }
+        else
+        {
+          httpRequestBuilder.addHeader(kv, headers.get(kv).toString());
+        }
       }
     }
 
-    String method = "GET";
     RequestBody body = null;
-    if (request.contains("body"))
+    Object jsBody = request.executeFunction("nativeBody", null);
+    if (jsBody != null &&
+        (jsBody instanceof V8Value) &&
+        !((V8Value) jsBody).isUndefined())
     {
-      body = RequestBody.create(MediaType.parse(contentType), request.getString("body"));
+      String stringBody = jsBody.toString();
+      if (stringBody != null && stringBody.length() > 0)
+      {
+        if (request.contains("isBase64") && request.getType("isBase64") == V8Value.BOOLEAN && request.getBoolean("isBase64"))
+        {
+          body = RequestBody.create(MediaType.parse(contentType), Base64.decode(stringBody, Base64.NO_WRAP));
+        }
+        else
+        {
+          body = RequestBody.create(MediaType.parse(contentType), stringBody);
+        }
+      }
     }
+
     if (request.contains("method"))
     {
       httpRequestBuilder.method(request.getString("method"), body);
     }
 
-    String tmpformat = null;
-    if (request.contains("format"))
-    {
-      tmpformat = request.getString("format");
-    }
-
-    final String format = tmpformat;
-
     httpClient.newCall(httpRequestBuilder.build()).enqueue(new Callback()
     {
       @Override
-      public void onFailure(final Request request, final IOException e)
+      public void onFailure(Call call, final IOException e)
       {
         engine.getExecutor().runNoWait(new Runnable()
         {
@@ -179,83 +206,20 @@ class NativeServices
         });
       }
 
-
       @Override
-      public void onResponse(final Response response) throws IOException
+      public void onResponse(Call call, final Response response) throws IOException
       {
-        if (isDebug) {
-          // Set a breakpoint here and modify the JS call to intercept it.
-          Log.d("NativeServices", "debuggable request");
-        }
-
         engine.getExecutor().runNoWait(new Runnable()
         {
           @Override
           public void run()
           {
-            V8Object returnValue = engine.createJsObject();
-            returnValue.add("statusCode", response.code());
-            V8Object headers = engine.createJsObject();
-            for (String hdr : response.headers().names())
-            {
-              headers.add(hdr, response.header(hdr).toString());
-            }
-            returnValue.add("headers", headers);
             try
             {
-              if (response.body().contentLength() != 0)
-              {
-                if ("json".equalsIgnoreCase(format))
-                {
-                  try
-                  {
-                    String body = response.body().string();
-                    if (body == null || body.length() == 0)
-                    {
-                      returnValue.add("body", (V8Object) null);
-                    }
-                    else
-                    {
-                      try
-                      {
-                        V8Object jsonBody = engine.v8.getObject("JSON").executeObjectFunction("parse", engine.createJsArray().push(body));
-                        returnValue.add("body", jsonBody);
-                      }
-                      catch (Exception x)
-                      {
-                        // Tough call here, but for now I think returning null is better,
-                        // though we may want to also store the body
-                        returnValue.add("body", (V8Object) null);
-                      }
-                    }
-                  }
-                  catch (V8RuntimeException pe)
-                  {
-                    callback.call(engine.getManticoreJsObject(), engine.createJsArray().push(engine.asJsError(pe)));
-                    return;
-                  }
-                  catch (ProtocolException ex)
-                  {
-                    returnValue.add("body", (V8Object) null);
-                  }
-                }
-                else if (!"binary".equalsIgnoreCase(format))
-                {
-                  if (response.body().contentLength() != 0)
-                  {
-                    returnValue.add("body", response.body().string());
-                  }
-                }
-                else
-                {
-                  if (response.body().contentLength() != 0)
-                  {
-                    byte[] responseBody = response.body().bytes();
-                    returnValue.add("body", Base64.encodeToString(responseBody, Base64.NO_WRAP));
-                  }
-                }
-              }
-              callback.call(engine.getManticoreJsObject(), engine.createJsArray().pushUndefined().push(returnValue));
+              FetchResponse fetchResponse = new FetchResponse(engine, response);
+              callback.call(engine.getManticoreJsObject(), engine.createJsArray()
+                  .pushUndefined()
+                  .push(fetchResponse.getJSInterface()));
             }
             catch (Exception x)
             {

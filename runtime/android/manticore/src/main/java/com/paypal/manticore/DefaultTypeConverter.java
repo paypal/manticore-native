@@ -169,6 +169,10 @@ public class DefaultTypeConverter implements IManticoreTypeConverter
         case V8Value.STRING:
           mixed.put(k, object.getString(k));
           break;
+        case V8Value.V8_OBJECT:
+          // TODO could be circular...
+          mixed.put(k, asNativeObject(object.getObject(k)));
+          break;
         default:
           mixed.put(k, object.getObject(k).toString());
           break;

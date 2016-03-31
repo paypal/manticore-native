@@ -22,9 +22,9 @@
 
 @property (nonatomic,strong,nonnull) JSValue *impl;
 
-- (instancetype _Nonnull)initFromJavascript:(JSValue* _Nonnull)value;
+- (instancetype _Nullable)initFromJavascript:(JSValue* _Nonnull)value;
 
-+ (void)setManticoreEngine:(PPManticoreEngine* _Nonnull)engine;
++ (void)setManticoreEngine:(PPManticoreEngine* _Nullable)engine;
 + (PPManticoreEngine* _Nullable)engine;
 
 @end

@@ -32,7 +32,7 @@ export function nativeExport(module, obj) {
   }
 }
 
-let _fetch = native.fetch || global.fetch;
+let _fetch = g.fetch;
 
 // Trick browserify to avoid pulling node-fetch into all native bundles
 // since the native bundles are in charge of providing their own fetch function

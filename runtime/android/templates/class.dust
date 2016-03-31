@@ -84,7 +84,7 @@ import com.paypal.manticore.IManticoreTypeConverter;
 {?callbacks}  //<editor-fold description="Interface declarations for callbacks">
 {/callbacks}{#callbacks}{>ifaceDecl suffix="Callback"/}{/callbacks}{?callbacks}
   //</editor-fold>
-{/callbacks}
+{/callbacks}{#methods}{?async}{>asyncCbDecl/}{/async}{/methods}
 {?events}  //<editor-fold description="Interface declarations for events">
 {/events}{#events}{>ifaceDecl suffix="Observer"/}{/events}{?events}
   //</editor-fold>
