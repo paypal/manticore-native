@@ -14,7 +14,6 @@
     {^async}{?returns}return {/returns}{/async}Engine.Js{?returns}{^async}WithReturn{/async}{/returns}(() => {
       {?returns}var returnValue = {/returns}func.Call({?isStatic}jsClass{:else}this.impl{/isStatic}, args);
     {?async}var _callback = Engine.AsJsFunction(new Func<JsValue,JsValue[],JsValue>((thisObject, cbArgs) => {
-        Object _cbError;
         if (cbArgs.Length > 0 && !cbArgs[0].IsNull() && !cbArgs[0].IsUndefined()) {
             _completer.TrySetException(new ManticoreException(cbArgs[0].AsObject()));
         } else {

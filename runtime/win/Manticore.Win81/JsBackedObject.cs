@@ -33,7 +33,7 @@ namespace Manticore
         /// </summary>
         public static ManticoreEngine Engine { get; private set; }
 
-        public static void CreateManticoreEngine(String script)
+        public static void CreateManticoreEngine(String script, String name)
         {
             if (Engine != null && Engine.IsStarted)
             {
@@ -43,7 +43,7 @@ namespace Manticore
             e.Converter = new DefaultConverter<JsBackedObject>(e, (native) => native.impl, (jsErr) => new ManticoreException(jsErr));
             // Typically, you would add your own native method implementations to
             // the ManticoreJsObject here, before you load your script
-            e.LoadScript(script);
+            e.LoadScript(script, name);
             Engine = e;
         }
     }

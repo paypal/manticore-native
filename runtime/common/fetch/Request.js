@@ -27,6 +27,7 @@ export default class Request extends Body {
       size: _init.size || _input.size || 0,
     });
 
+    this.isBase64 = !!(_init.isBase64||_input.isBase64);
     this.method = _init.method || _input.method || 'GET';
     this.headers = new Headers(_init.headers || _input.headers || {});
     this.url = url;

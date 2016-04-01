@@ -202,7 +202,8 @@ namespace Manticore
                     }
                     else if (jsv.Value.IsObject())
                     {
-                        ret[prop.Key] = jsv.Value.AsObject().ToString();
+                        // TODO protect against circular reference
+                        ret[prop.Key] = AsNativeObject(jsv.Value);
                     }
                     else if (jsv.Value.IsString())
                     {

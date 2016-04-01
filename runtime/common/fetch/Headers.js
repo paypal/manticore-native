@@ -41,7 +41,7 @@ export default class Headers {
   }
 
   set(name, value) {
-    this._headeres[name.toLowerCase()] = [value];
+    this._headers[name.toLowerCase()] = [value];
   }
 
   append(name, value) {

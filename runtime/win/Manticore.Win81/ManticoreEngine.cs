@@ -37,6 +37,7 @@ namespace Manticore
         public void Start()
         {
             jsEngine = new Engine();
+            jsEngine.ShouldCreateStackTrace = true;
             RunOnJsThread(() =>
             {
                 ManticoreJsObject = jsEngine.Object.Construct(EmptyArgs);
@@ -68,7 +69,7 @@ namespace Manticore
             _loadedPolyfill = false;
         }
 
-        public void LoadScript(String script)
+        public void LoadScript(String script, String name)
         {
             String poly = null;
             if (!_loadedPolyfill)
@@ -80,9 +81,15 @@ namespace Manticore
             {
                 if (poly != null)
                 {
-                    jsEngine.Execute(poly);
+                    jsEngine.Execute(poly, new Jint.Parser.ParserOptions
+                    {
+                        Source = "polyfill.pack.js"
+                    });
                 }
-                jsEngine.Execute(script);
+                jsEngine.Execute(script, new Jint.Parser.ParserOptions
+                {
+                    Source = name
+                });
             });
         }
 

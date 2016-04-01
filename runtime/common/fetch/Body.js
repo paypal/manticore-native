@@ -3,22 +3,8 @@
  * platforms (node-fetch is used on node, and Chrome uses fetch for reals).
  */
 export default class Body {
-  constructor(body, opts) {
-    const options = opts || {};
-
-    if (typeof(body) === 'string') {
-      this._body = {
-        text() {
-          return body;
-        },
-      };
-    } else {
-      this._body = body;
-    }
-    this.bodyUsed = false;
-    this.size = options.size || 0;
-    this.timeout = options.timeout || 0;
-    this.isBase64 = !!options.isBase64;
+  constructor(body) {
+    this._body = body;
   }
 
   /**

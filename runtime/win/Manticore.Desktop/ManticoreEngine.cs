@@ -46,7 +46,7 @@ namespace Manticore
             }
         }
 
-        public void LoadScript(String script)
+        public void LoadScript(String script, String name)
         {
             if (!loadedPolyfill)
             {
@@ -59,9 +59,9 @@ namespace Manticore
                         polyfill = reader.ReadToEnd();
                     }
                 }
-                v8.Execute(polyfill);
+                v8.Execute("polyfill.js", polyfill);
             }
-            v8.Execute(script);
+            v8.Execute(name, script);
         }
 
         public void Shutdown()

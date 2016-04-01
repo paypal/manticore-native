@@ -99,7 +99,8 @@ namespace Manticore
         public void Fetch(ManticoreEngine engine, JsValue optionsValue, JsValue callback)
         {
             var options = optionsValue.As<ObjectInstance>();
-            var hasBody = options.HasProperty("body");
+            JsValue rawBody = options.Get("body").As<FunctionInstance>().Call(options, ManticoreEngine.EmptyArgs);
+            var hasBody = rawBody.IsString() && rawBody.AsString().Length > 0;
             var request = (HttpWebRequest)WebRequest.Create(options.Get("url").AsString());
 
             request.Method = "GET";
@@ -111,31 +112,35 @@ namespace Manticore
             if (options.HasProperty("headers"))
             {
                 var headers = options.Get("headers").AsObject();
-                foreach (var p in headers.GetOwnProperties())
+                var raw = headers.Get("raw").As<FunctionInstance>().Call(headers, ManticoreEngine.EmptyArgs);
+                if (raw.IsObject())
                 {
-                    if (p.Key.Equals("Content-Type", StringComparison.OrdinalIgnoreCase))
+                    foreach (var p in raw.AsObject().GetOwnProperties())
                     {
-                        if (hasBody)
+                        if (p.Key.Equals("Content-Type", StringComparison.OrdinalIgnoreCase))
                         {
-                            request.ContentType = p.Value.Value.Value.AsString();
+                            if (hasBody)
+                            {
+                                request.ContentType = p.Value.Value.Value.AsString();
+                            }
                         }
-                    }
-                    else if (p.Key.Equals("If-Modified-Since", StringComparison.OrdinalIgnoreCase))
-                    {
-                        request.IfModifiedSince = DateTime.Parse(p.Value.Value.Value.AsString());
-                    }
-                    else
-                    {
-                        request.Headers.Add(p.Key, p.Value.Value.Value.AsString());
+                        else if (p.Key.Equals("If-Modified-Since", StringComparison.OrdinalIgnoreCase))
+                        {
+                            request.IfModifiedSince = DateTime.Parse(p.Value.Value.Value.AsString());
+                        }
+                        else
+                        {
+                            request.Headers.Add(p.Key, p.Value.Value.Value.AsString());
+                        }
                     }
                 }
             }
 
             if (hasBody)
             {
-                var body = options.Get("body").AsString();
+                var body = rawBody.AsString();
                 byte[] bodyBytes;
-                if (options.HasProperty("base64Body") && options.Get("base64Body").AsBoolean())
+                if (options.HasProperty("isBase64") && options.Get("isBase64").AsBoolean())
                 {
                     bodyBytes = Convert.FromBase64String(body);
                 }
@@ -154,7 +159,7 @@ namespace Manticore
                 }
                 catch (Exception x)
                 {
-                    // TODO fire this into JS? manticore.onError()?
+                    // TODO fire this log into JS? manticore.onError()?
                     Log("error", x.ToString(), JsValue.Null);
                     var errorBuilder = new JsErrorBuilder(engine, x);
                     if (x is WebException)
@@ -174,15 +179,10 @@ namespace Manticore
                 }
             }
 
-            String format = null;
-            if (options.HasProperty("format"))
-            {
-                format = options.Get("format").AsString();
-            }
-            sendRequest(engine, format, request, callback);
+            sendRequest(engine, request, callback);
         }
 
-        private void sendRequest(ManticoreEngine engine, String format, HttpWebRequest request, JsValue callback)
+        private void sendRequest(ManticoreEngine engine, HttpWebRequest request, JsValue callback)
         {
             request.BeginGetResponse((asyncResult) =>
             {
@@ -224,15 +224,21 @@ namespace Manticore
                     responseInfo.FastAddProperty("headers", headerCollection, false, true, false);
                 }
 
-                responseInfo.FastAddProperty("statusCode", new JsValue((int)response.StatusCode), false, true, false);
-                try
-                {
-                    DefaultConverter<JsBackedObject>.ParseResponseBody(engine, responseInfo, format, response.GetResponseStream());
-                }
-                catch (Exception ex)
-                {
-                    errorInstance = new JsErrorBuilder(engine, ex).Build();
-                }
+                responseInfo.FastAddProperty("status", new JsValue((int)response.StatusCode), false, true, false);
+                // TODO find a way to sneak this wait into the gap between returning and asking for the results
+                // json/body/text signatures probably need to change to take a callback.
+                var memStream = new MemoryStream();
+                response.GetResponseStream().CopyTo(memStream);
+                var binaryResult = memStream.ToArray();
+                responseInfo.FastAddProperty("json", engine.AsJsFunction((thisObject, args) => {
+                        return engine.jsEngine.Json.Parse(JsValue.Null, new JsValue[] { Encoding.UTF8.GetString(binaryResult) });
+                }), false, false, false);
+                responseInfo.FastAddProperty("body", engine.AsJsFunction((thisObject, args) => {
+                    return engine.jsEngine.Json.Parse(JsValue.Null, new JsValue[] { Convert.ToBase64String(binaryResult) });
+                }), false, false, false);
+                responseInfo.FastAddProperty("text", engine.AsJsFunction((thisObject, args) => {
+                    return new JsValue(Encoding.UTF8.GetString(binaryResult));
+                }), false, false, false);
                 engine.Js(() =>
                 {
                     callback.As<FunctionInstance>().Call(engine.ManticoreJsObject, new[] { errorInstance, responseInfo });
@@ -297,55 +303,54 @@ namespace Manticore
             }
 
             var urlString = options.Get("url").AsString();
-            var hasBody = options.HasProperty("body");
+            var rawBody = options.Get("nativeBody").As<ScriptFunctionInstance>().Call(options, ManticoreEngine.EmptyArgs);
+            var hasBody = rawBody.IsString() && rawBody.AsString().Length > 0;
             var request = new HttpRequestMessage(requestMethod, new Uri(urlString));
 
             if (options.HasProperty("headers"))
             {
                 var headers = options.Get("headers").AsObject();
-                foreach (var p in headers.GetOwnProperties())
+                var raw = headers.Get("raw").As<FunctionInstance>().Call(headers, ManticoreEngine.EmptyArgs);
+                if (raw.IsObject())
                 {
-                    if (p.Key.Equals("Content-Type", StringComparison.OrdinalIgnoreCase))
+                    foreach (var p in raw.AsObject().GetOwnProperties())
                     {
-                        if (hasBody)
+                        if (p.Key.Equals("Content-Type", StringComparison.OrdinalIgnoreCase))
                         {
-                            request.Content.Headers.Add(p.Key, p.Value.Value.Value.AsString());
+                            if (hasBody)
+                            {
+                                request.Content.Headers.Add(p.Key, p.Value.Value.Value.AsString());
+                            }
                         }
-                    }
-                    else
-                    {
-                        request.Headers.Add(p.Key, p.Value.Value.Value.AsString());
+                        else
+                        {
+                            request.Headers.Add(p.Key, p.Value.Value.Value.AsString());
+                        }
                     }
                 }
             }
 
             if (hasBody)
             {
-                var body = options.Get("body").AsString();
-                if (options.HasProperty("base64Body") && options.Get("base64Body").AsBoolean())
+                if (options.HasProperty("isBase64") && options.Get("isBase64").AsBoolean())
                 {
-                    request.Content = new HttpBufferContent(Convert.FromBase64String(body).AsBuffer());
+                    request.Content = new HttpBufferContent(Convert.FromBase64String(rawBody.AsString()).AsBuffer());
                 }
                 else
                 {
-                    request.Content = new HttpBufferContent(Encoding.UTF8.GetBytes(body).AsBuffer());
+                    request.Content = new HttpBufferContent(Encoding.UTF8.GetBytes(rawBody.AsString()).AsBuffer());
                 }
             }
 
-            String format = null;
-            if (options.HasProperty("format"))
-            {
-                format = options.Get("format").AsString();
-            }
             int timeout = 60000;
             if (options.HasProperty("timeout") && options.Get("timeout").IsNumber())
             {
                 timeout = (int)options.Get("timeout").AsNumber();
             }
-            sendRequest(engine, timeout, format, client, request, callback);
+            sendRequest(engine, timeout, client, request, callback);
         }
 
-        private async void sendRequest(ManticoreEngine engine, int timeout, String format, HttpClient client, HttpRequestMessage request, JsValue callback)
+        private async void sendRequest(ManticoreEngine engine, int timeout, HttpClient client, HttpRequestMessage request, JsValue callback)
         {
             var responseInfo = engine.CreateJsObject();
             HttpResponseMessage response = null;
@@ -377,41 +382,26 @@ namespace Manticore
                 responseInfo.FastAddProperty("headers", headerCollection, false, true, false);
             }
 
+            byte[] binaryResult = null;
             if (response != null)
             {
-                responseInfo.FastAddProperty("statusCode", new JsValue((int)response.StatusCode), false, true, false);
-                if ("json".Equals(format, StringComparison.OrdinalIgnoreCase))
-                {
-                    String json = await response.Content.ReadAsStringAsync();
-                    if (json != null && json.Length > 0)
-                    {
-                        try
-                        {
-                            JsValue jsObject = engine.jsEngine.Json.Parse(JsValue.Null, new JsValue[] { json });
-                            responseInfo.FastAddProperty("body", jsObject, false, true, false);
-                        }
-                        catch (ParserException px)
-                        {
-                            this.Log("DEBUG", px.ToString(), JsValue.Undefined);
-                        }
-                    }
-                }
-                else if ("utf8".Equals(format, StringComparison.OrdinalIgnoreCase))
-                {
-                    String bodyString = await response.Content.ReadAsStringAsync();
-                    responseInfo.FastAddProperty("body", new JsValue(bodyString), false, true, false);
-                }
-                else
-                {
-                    IBuffer message = await response.Content.ReadAsBufferAsync();
-                    if (message != null && message.Length > 0)
-                    {
-                        responseInfo.FastAddProperty("body", new JsValue(Convert.ToBase64String(message.ToArray())), false, true, false);
-                    }
-                }
+                responseInfo.FastAddProperty("status", new JsValue((int)response.StatusCode), false, true, false);
+                // TODO find a way to sneak this wait into the gap between returning and asking for the results
+                // json/body/text signatures probably need to change to take a callback.
+                binaryResult = (await response.Content.ReadAsBufferAsync()).ToArray();
             }
             engine.Js(() =>
             {
+                responseInfo.FastAddProperty("json", engine.AsJsFunction((thisObject, args) => {
+                    return engine.jsEngine.Json.Parse(JsValue.Null,
+                        new JsValue[] { Encoding.UTF8.GetString(binaryResult, 0, binaryResult.Length) });
+                }), false, false, false);
+                responseInfo.FastAddProperty("body", engine.AsJsFunction((thisObject, args) => {
+                    return engine.jsEngine.Json.Parse(JsValue.Null, new JsValue[] { Convert.ToBase64String(binaryResult) });
+                }), false, false, false);
+                responseInfo.FastAddProperty("text", engine.AsJsFunction((thisObject, args) => {
+                    return new JsValue(Encoding.UTF8.GetString(binaryResult, 0, binaryResult.Length));
+                }), false, false, false);
                 callback.As<FunctionInstance>().Call(engine.ManticoreJsObject, new JsValue[] { JsValue.Null, responseInfo });
             });
         }

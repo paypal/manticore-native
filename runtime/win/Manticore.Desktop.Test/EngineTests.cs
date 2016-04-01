@@ -55,7 +55,7 @@ namespace Manticore.Win81.Test
 #endif
         {
             var engine = new ManticoreEngine();
-            engine.LoadScript(SampleScript);
+            engine.LoadScript(SampleScript, "index.js");
             engine.Shutdown();
         }
 
@@ -70,7 +70,7 @@ namespace Manticore.Win81.Test
         public void Desktop_PropertyTest()
 #endif
         {
-            JsBackedObject.CreateManticoreEngine(SampleScript);
+            JsBackedObject.CreateManticoreEngine(SampleScript, "index.js");
 
             SDKTestDefault simple = new SDKTestDefault();
             Assert.AreEqual(1, simple.Test);
@@ -101,7 +101,7 @@ namespace Manticore.Win81.Test
         public void Desktop_FunctionCallTest()
 #endif
         {
-            JsBackedObject.CreateManticoreEngine(SampleScript);
+            JsBackedObject.CreateManticoreEngine(SampleScript, "index.js");
 
             var test = new SDKTest("");
             var d = test.ReturnAnObject();
@@ -121,7 +121,7 @@ namespace Manticore.Win81.Test
         public void Desktop_StaticFunctionCallTest()
 #endif
         {
-            JsBackedObject.CreateManticoreEngine(SampleScript);
+            JsBackedObject.CreateManticoreEngine(SampleScript, "index.js");
 
             var d = SDKTest.StaticMethod();
             Assert.IsNotNull(d);
@@ -139,7 +139,7 @@ namespace Manticore.Win81.Test
         public void Desktop_PreDecrementTest()
 #endif
         {
-            JsBackedObject.CreateManticoreEngine(SampleScript);
+            JsBackedObject.CreateManticoreEngine(SampleScript, "index.js");
 
             var test = new SDKTest("");
             var d = test.PreDecrement(0, 1, 10);
@@ -159,7 +159,7 @@ namespace Manticore.Win81.Test
         public void Desktop_PostDecrementTest()
 #endif
         {
-            JsBackedObject.CreateManticoreEngine(SampleScript);
+            JsBackedObject.CreateManticoreEngine(SampleScript, "index.js");
 
             var test = new SDKTest("");
             var d = test.PostDecrement(0,1,10);
@@ -179,7 +179,7 @@ namespace Manticore.Win81.Test
         public void Desktop_CallbackTest()
 #endif
         {
-            JsBackedObject.CreateManticoreEngine(SampleScript);
+            JsBackedObject.CreateManticoreEngine(SampleScript, "index.js");
 
             String testing = "Testing123";
             var tester = new SDKTest(testing);
@@ -215,7 +215,7 @@ namespace Manticore.Win81.Test
         public void Desktop_EventTest()
 #endif
         {
-            JsBackedObject.CreateManticoreEngine(SampleScript);
+            JsBackedObject.CreateManticoreEngine(SampleScript, "index.js");
 
             var tester = new SDKTest("123");
             var latch = new ManualResetEvent(false);
@@ -253,7 +253,7 @@ namespace Manticore.Win81.Test
         public void Desktop_CollectionTest()
 #endif
         {
-            JsBackedObject.CreateManticoreEngine(SampleScript);
+            JsBackedObject.CreateManticoreEngine(SampleScript, "index.js");
 
             var d = new SDKTestDefault();
             var arr = d.StringArray;
@@ -276,7 +276,7 @@ namespace Manticore.Win81.Test
         public void Desktop_ExceptionTest()
 #endif
         {
-            JsBackedObject.CreateManticoreEngine(SampleScript);
+            JsBackedObject.CreateManticoreEngine(SampleScript, "index.js");
 
             var d = new SDKTest("123");
             try
@@ -301,7 +301,7 @@ namespace Manticore.Win81.Test
         public void Desktop_DictionaryTest()
 #endif
         {
-            JsBackedObject.CreateManticoreEngine(SampleScript);
+            JsBackedObject.CreateManticoreEngine(SampleScript, "index.js");
 
             var d = new SDKTest("123");
             var dict = d.ReturnAMixedType();
@@ -322,7 +322,7 @@ namespace Manticore.Win81.Test
         public void Desktop_InheritanceTest()
 #endif
         {
-            JsBackedObject.CreateManticoreEngine(SampleScript);
+            JsBackedObject.CreateManticoreEngine(SampleScript, "index.js");
 
             var tester = new SDKTest("123");
             var derived = tester.ReturnADerivedObject();
@@ -346,10 +346,11 @@ namespace Manticore.Win81.Test
         public void Desktop_FetchTest()
 #endif
         {
-            JsBackedObject.CreateManticoreEngine(SampleScript);
+            JsBackedObject.CreateManticoreEngine(SampleScript, "index.js");
 
             var latch = new ManualResetEvent(false);
             var tester = new SDKTest("123");
+            Exception encountered = null;
             tester.GoFetch(new SDKTest.FetchedDelegate((x, r) =>
             {
                 try
@@ -360,12 +361,20 @@ namespace Manticore.Win81.Test
                     Assert.IsInstanceOfType(r["args"], typeof(IDictionary<String, Object>));
                     Assert.AreEqual(((IDictionary<String,Object>)r["args"])["foo"], "bar");
                 }
+                catch (Exception assertExc)
+                {
+                    encountered = assertExc;
+                }
                 finally
                 {
                     latch.Set();
                 }
             }));
             Assert.IsTrue(latch.WaitOne(10000));
+            if (encountered != null)
+            {
+                throw encountered;
+            }
         }
 
         [TestMethod]
@@ -379,7 +388,7 @@ namespace Manticore.Win81.Test
         public async Task Desktop_FetchPTest()
 #endif
         {
-            JsBackedObject.CreateManticoreEngine(SampleScript);
+            JsBackedObject.CreateManticoreEngine(SampleScript, "index.js");
 
             var tester = new SDKTest("123");
             var response = await tester.GoFetchP();
@@ -396,8 +405,8 @@ namespace Manticore.Win81.Test
             Assert.AreEqual("testing", dict["aString"].ToString());
             Assert.AreEqual(true, (bool)dict["aBool"]);
             Assert.IsNull(dict["aNull"]);
-            Assert.AreEqual("This is an SDK Default object: true", dict["anObject"]);
-            Assert.AreEqual("[object Object]", dict["aMixed"]);
+            Assert.IsInstanceOfType(dict["anObject"], typeof(IDictionary<String, Object>));
+            Assert.IsInstanceOfType(dict["aMixed"], typeof(IDictionary<String, Object>));
         }
 
         String SampleScript
