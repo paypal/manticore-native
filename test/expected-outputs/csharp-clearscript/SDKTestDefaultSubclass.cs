@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Manticore;
 
 /**
@@ -30,21 +31,27 @@ namespace Manticore
       this.impl = Engine.CreateJsObject("SDKTestDefaultSubclass", null);
     }
 
+
         /**
          * Test subclass
          */
-        public  bool IsItDerived() {
-            return Engine.JsWithReturn(() => {
-              dynamic returnValue =  this.impl.isItDerived();
+        public bool IsItDerived()
+        {
+            return Engine.JsWithReturn(() =>
+            {
+                dynamic returnValue = this.impl.isItDerived();
               return Engine.Converter.AsNativeBool(returnValue);
             });
         }
+
         /**
          * Test derived classes
          */
-        public static SDKTestDefault GetDerived() {
-            return Engine.JsWithReturn(() => {
-              dynamic returnValue =  Engine.GetJsClass("SDKTestDefaultSubclass").getDerived();
+        public static SDKTestDefault GetDerived()
+        {
+            return Engine.JsWithReturn(() =>
+            {
+                dynamic returnValue = Engine.GetJsClass("SDKTestDefaultSubclass").getDerived();
               return (Engine.IsNullOrUndefined(returnValue) ? null : SDKTestDefault.NativeInstanceForObject(returnValue));
             });
         }

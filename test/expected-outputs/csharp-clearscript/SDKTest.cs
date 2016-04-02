@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Manticore;
 
 /**
@@ -63,118 +64,177 @@ namespace Manticore
      */
     protected SDKTest() {}
 
+
         /**
          * Echo the argument via the callback
          */
-        public  void Echo(String arg, EchoDelegate callback) {
-            Engine.Js(() => {  this.impl.echo(Engine.Converter.AsJsString(arg),
-            WrapDelegate(callback));
+        public void Echo(String arg, EchoDelegate callback)
+        {
+            Engine.Js(() =>
+            {this.impl.echo(Engine.Converter.AsJsString(arg),
+                  WrapDelegate(callback));
             });
-        }        /**
+        }
+        /**
          * Echo the argument via return value from a callback
          */
-        public  void EchoReturn(String arg, EchoReturnDelegate callback) {
-            Engine.Js(() => {  this.impl.echoReturn(Engine.Converter.AsJsString(arg),
-            WrapDelegate(callback));
+        public void EchoReturn(String arg, EchoReturnDelegate callback)
+        {
+            Engine.Js(() =>
+            {this.impl.echoReturn(Engine.Converter.AsJsString(arg),
+                  WrapDelegate(callback));
             });
-        }        /**
+        }
+        /**
          * Echo the argument via the callback after setTimeout(10)
          */
-        public  void EchoWithSetTimeout(String arg, EchoDelegate callback) {
-            Engine.Js(() => {  this.impl.echoWithSetTimeout(Engine.Converter.AsJsString(arg),
-            WrapDelegate(callback));
+        public void EchoWithSetTimeout(String arg, EchoDelegate callback)
+        {
+            Engine.Js(() =>
+            {this.impl.echoWithSetTimeout(Engine.Converter.AsJsString(arg),
+                  WrapDelegate(callback));
             });
-        }        /**
+        }
+        /**
          * Fire an event
          */
-        public  void TriggerFakeAfterTimeout() {
-            Engine.Js(() => {  this.impl.triggerFakeAfterTimeout();
+        public void TriggerFakeAfterTimeout()
+        {
+            Engine.Js(() =>
+            {this.impl.triggerFakeAfterTimeout();
             });
-        }        /**
+        }
+        /**
          * Return a complex object.
          */
-        public  SDKTestDefault ReturnAnObject() {
-            return Engine.JsWithReturn(() => {
-              dynamic returnValue =  this.impl.returnAnObject();
+        public SDKTestDefault ReturnAnObject()
+        {
+            return Engine.JsWithReturn(() =>
+            {
+                dynamic returnValue = this.impl.returnAnObject();
               return (Engine.IsNullOrUndefined(returnValue) ? null : SDKTestDefault.NativeInstanceForObject(returnValue));
             });
-        }        /**
+        }
+        /**
          * Return a derivative of SDKTestDefault
          */
-        public  SDKTestDefault ReturnADerivedObject() {
-            return Engine.JsWithReturn(() => {
-              dynamic returnValue =  this.impl.returnADerivedObject();
+        public SDKTestDefault ReturnADerivedObject()
+        {
+            return Engine.JsWithReturn(() =>
+            {
+                dynamic returnValue = this.impl.returnADerivedObject();
               return (Engine.IsNullOrUndefined(returnValue) ? null : SDKTestDefault.NativeInstanceForObject(returnValue));
             });
-        }        /**
+        }
+        /**
          * Return one SDKTestDefault and one derived
          */
-        public  List<SDKTestDefault> ReturnBaseAndDerived() {
-            return Engine.JsWithReturn(() => {
-              dynamic returnValue =  this.impl.returnBaseAndDerived();
+        public List<SDKTestDefault> ReturnBaseAndDerived()
+        {
+            return Engine.JsWithReturn(() =>
+            {
+                dynamic returnValue = this.impl.returnBaseAndDerived();
               return Engine.Converter.ToNativeArray((object)returnValue, (element) => (Engine.IsNullOrUndefined(element) ? null : SDKTestDefault.NativeInstanceForObject(element)));
             });
-        }        /**
+        }
+        /**
          * Pre decrement within an indexer --j.
          * Create array c= [a,b], set j=1, set c[--j] = c[j]+add
          * push j to c and return c
          * expected result: c[0] is set to c[0]+add, so, [a+add,b,0]
          */
-        public  List<int> PreDecrement(int a, int b, int add) {
-            return Engine.JsWithReturn(() => {
-              dynamic returnValue =  this.impl.preDecrement(Engine.Converter.AsJsInt(a),
-            Engine.Converter.AsJsInt(b),
-            Engine.Converter.AsJsInt(add));
+        public List<int> PreDecrement(int a, int b, int add)
+        {
+            return Engine.JsWithReturn(() =>
+            {
+                dynamic returnValue = this.impl.preDecrement(Engine.Converter.AsJsInt(a),
+                  Engine.Converter.AsJsInt(b),
+                  Engine.Converter.AsJsInt(add));
               return Engine.Converter.ToNativeArray((object)returnValue, (element) => Engine.Converter.AsNativeInt(element));
             });
-        }        /**
+        }
+        /**
          * Post decrement within an indexer j--.
          * Create array c= [a,b], set j=1, set c[j--] = c[j]+add
          * push j to c and return c
          * expected result: c[1] is set to c[0]+add, so, [a,a+add, 0]
          */
-        public  List<int> PostDecrement(int a, int b, int add) {
-            return Engine.JsWithReturn(() => {
-              dynamic returnValue =  this.impl.postDecrement(Engine.Converter.AsJsInt(a),
-            Engine.Converter.AsJsInt(b),
-            Engine.Converter.AsJsInt(add));
+        public List<int> PostDecrement(int a, int b, int add)
+        {
+            return Engine.JsWithReturn(() =>
+            {
+                dynamic returnValue = this.impl.postDecrement(Engine.Converter.AsJsInt(a),
+                  Engine.Converter.AsJsInt(b),
+                  Engine.Converter.AsJsInt(add));
               return Engine.Converter.ToNativeArray((object)returnValue, (element) => Engine.Converter.AsNativeInt(element));
-            });
-        }        /**
-         * Return a JS dictionary
-         */
-        public  IDictionary<String,Object> ReturnAMixedType() {
-            return Engine.JsWithReturn(() => {
-              dynamic returnValue =  this.impl.returnAMixedType();
-              return Engine.Converter.AsNativeObject(returnValue);
-            });
-        }        /**
-         * Take a JS dictionary and return it
-         */
-        public  IDictionary<String,Object> TakeAMixedType(IDictionary<String,Object> stuff) {
-            return Engine.JsWithReturn(() => {
-              dynamic returnValue =  this.impl.takeAMixedType(Engine.Converter.AsJsObject(stuff));
-              return Engine.Converter.AsNativeObject(returnValue);
-            });
-        }        /**
-         * Throw an exception
-         */
-        public  void ThrowOne() {
-            Engine.Js(() => {  this.impl.throwOne();
-            });
-        }        /**
-         * Fetch some JSON from httpbin.org
-         */
-        public  void GoFetch(FetchedDelegate callback) {
-            Engine.Js(() => {  this.impl.goFetch(WrapDelegate(callback));
             });
         }
         /**
+         * Return a JS dictionary
+         */
+        public IDictionary<String,Object> ReturnAMixedType()
+        {
+            return Engine.JsWithReturn(() =>
+            {
+                dynamic returnValue = this.impl.returnAMixedType();
+              return Engine.Converter.AsNativeObject(returnValue);
+            });
+        }
+        /**
+         * Take a JS dictionary and return it
+         */
+        public IDictionary<String,Object> TakeAMixedType(IDictionary<String,Object> stuff)
+        {
+            return Engine.JsWithReturn(() =>
+            {
+                dynamic returnValue = this.impl.takeAMixedType(Engine.Converter.AsJsObject(stuff));
+              return Engine.Converter.AsNativeObject(returnValue);
+            });
+        }
+        /**
+         * Throw an exception
+         */
+        public void ThrowOne()
+        {
+            Engine.Js(() =>
+            {this.impl.throwOne();
+            });
+        }
+        /**
+         * Fetch some JSON from httpbin.org
+         */
+        public void GoFetch(FetchedDelegate callback)
+        {
+            Engine.Js(() =>
+            {this.impl.goFetch(WrapDelegate(callback));
+            });
+        }
+        /**
+         * Fetch some JSON with promise style interface
+         */
+        public async Task<IDictionary<String,Object>> GoFetchP()
+        {
+            var _completer = new TaskCompletionSource<IDictionary<String,Object>>();
+            Engine.Js(() =>
+            {
+                dynamic _promise = this.impl.goFetchP();
+                var _promiseCallback = new Action<dynamic,dynamic>((_err,_result) => {
+                    _completer.TrySetResult(Engine.Converter.AsNativeObject(_result));
+                });
+                Engine.ResolvePromise(_promise, _promiseCallback);
+            });
+            return await _completer.Task;
+        
+        }
+
+        /**
          * Returns a new instance of this class
          */
-        public static SDKTest StaticMethod() {
-            return Engine.JsWithReturn(() => {
-              dynamic returnValue =  Engine.GetJsClass("SDKTest").staticMethod();
+        public static SDKTest StaticMethod()
+        {
+            return Engine.JsWithReturn(() =>
+            {
+                dynamic returnValue = Engine.GetJsClass("SDKTest").staticMethod();
               return (Engine.IsNullOrUndefined(returnValue) ? null : SDKTest.NativeInstanceForObject(returnValue));
             });
         }
@@ -269,6 +329,23 @@ namespace Manticore
                 Engine.Js(() => {
                     var impl = (int)value;
                     this.impl.myStatus = impl;
+                });
+           }
+    
+        }
+
+        /**
+         * Disable SSL requests (I'm looking at you Android Junit)
+         */
+        public bool NoSsl {
+            get {
+                return Engine.JsWithReturn(() => Engine.Converter.AsNativeBool(this.impl.noSsl));
+            }
+    
+            set {
+                Engine.Js(() => {
+                    var impl = Engine.Converter.AsJsBool(value);
+                    this.impl.noSsl = impl;
                 });
            }
     

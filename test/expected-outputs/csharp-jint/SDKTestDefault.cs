@@ -4,6 +4,7 @@ using Jint.Native.Object;
 using Jint.Native.Function;
 using Jint.Runtime.Interop;
 using System;
+using System.Threading.Tasks;
 using System.Collections.Generic;
 using Manticore;
 
@@ -49,15 +50,13 @@ namespace Manticore
   /**
    * Test closure
    */
-  public  bool IsItTrue() {
-    JsValue[] args = new JsValue[] {
-      
-    };
+  public bool IsItTrue() {
+    JsValue[] args = new JsValue[] {};
     
     var func = this.impl.Get("isItTrue").As<FunctionInstance>();
-      return Engine.JsWithReturn(() => {
+    return Engine.JsWithReturn(() => {
       var returnValue = func.Call(this.impl, args);
-      return Engine.Converter.AsNativeBool(returnValue);
+    return Engine.Converter.AsNativeBool(returnValue);
     });
   }
 

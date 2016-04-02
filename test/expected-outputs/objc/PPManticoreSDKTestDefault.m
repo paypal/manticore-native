@@ -15,7 +15,7 @@
 @implementation PPManticoreSDKTestDefault
 
 
-- (instancetype _Nullable)initFromJavascript:(JSValue*)value {
+- (instancetype _Nullable)initFromJavascript:(JSValue* _Nonnull)value {
   if ((self = [super init])) {
     self.impl = value;
   }

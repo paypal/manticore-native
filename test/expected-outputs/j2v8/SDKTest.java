@@ -215,6 +215,34 @@ public class SDKTest extends JsBackedObject {
     });
   }
 
+  /**
+   * Disable SSL requests (I'm looking at you Android Junit)
+   */
+  public Boolean getNoSsl() {
+    return getEngine().getExecutor().run(new Callable<Boolean>() {
+      @Override public Boolean call() {
+        int _jsType = SDKTest.this.impl.getType("noSsl");
+        if (_jsType == V8Value.UNDEFINED || _jsType == V8Value.NULL) {
+          return null;
+        }
+        Boolean _noSsl = SDKTest.this.impl.getBoolean("noSsl");
+        return _noSsl;
+      }
+    });
+  }
+
+  /**
+   * Disable SSL requests (I'm looking at you Android Junit)
+   */
+  public void setNoSsl(final Boolean value) {
+    getEngine().getExecutor().run(new Runnable()
+    {
+      @Override public void run() {
+        SDKTest.this.impl.add("noSsl", value);
+      }
+    });
+  }
+
 
   //</editor-fold>
 
@@ -239,6 +267,43 @@ public class SDKTest extends JsBackedObject {
   }
 
   //</editor-fold>
+  /**
+   * Completion callback for goFetchP
+   */
+  public interface GoFetchPCallback {
+    void done(ManticoreException error, Map<String,? super Object> result);
+  }
+
+  /**
+   * Generate the javascript function for a callback or event
+   */
+  private static V8Object wrapPromise(final GoFetchPCallback javaInterface) {
+    return getEngine().getExecutor().run(new Callable<V8Object>() {
+      @Override public V8Object call() throws Exception {
+        V8Object _jso = getEngine().createJsObject();
+        _jso.registerJavaMethod(new JavaVoidCallback() {
+          @Override
+          public void invoke(V8Object jsThis, V8Array args)
+          {
+            ManticoreException error = null;
+            Map<String,? super Object> result = null;
+            if (args.length() > 0 && args.getType(0) != V8Value.UNDEFINED && args.getType(0) != V8Value.NULL) {
+              V8Object jsError = args.getObject(0);
+              error = getEngine().getConverter().asNative(jsError, ManticoreException.class);
+            }
+            if (args.length() > 1 && args.getType(1) != V8Value.UNDEFINED) {
+              V8Object jsResult = args.getObject(1);
+              result = getEngine().getConverter().asNativeObject(jsResult);
+            }
+            javaInterface.done(error, result);
+          }
+        }, "_");
+        V8Object fn = _jso.getObject("_");
+        _jso.release();
+        return fn;
+      }
+    });
+  }
 
   //<editor-fold description="Interface declarations for events">
   /**
@@ -256,7 +321,7 @@ public class SDKTest extends JsBackedObject {
    * Returns a new instance of this class
    */
   public static SDKTest staticMethod() {
-    return getEngine().getExecutor().run(new Callable<SDKTest>() {
+  return getEngine().getExecutor().run(new Callable<SDKTest>() {
       @Override public SDKTest call() {
         V8Array args = getEngine().getEmptyArray();
         V8Object objectToExecuteOn = getEngine().getJSClass("SDKTest");
@@ -275,7 +340,7 @@ public class SDKTest extends JsBackedObject {
    * Echo the argument via the callback
    */
   public void echo(final String arg, final EchoCallback callback) {
-    getEngine().getExecutor().run(new Runnable() {
+  getEngine().getExecutor().run(new Runnable() {
       @Override public void run() {
         V8Array args = getEngine().createJsArray()
           .push(arg)
@@ -290,7 +355,7 @@ public class SDKTest extends JsBackedObject {
    * Echo the argument via return value from a callback
    */
   public void echoReturn(final String arg, final EchoReturnCallback callback) {
-    getEngine().getExecutor().run(new Runnable() {
+  getEngine().getExecutor().run(new Runnable() {
       @Override public void run() {
         V8Array args = getEngine().createJsArray()
           .push(arg)
@@ -305,7 +370,7 @@ public class SDKTest extends JsBackedObject {
    * Echo the argument via the callback after setTimeout(10)
    */
   public void echoWithSetTimeout(final String arg, final EchoCallback callback) {
-    getEngine().getExecutor().run(new Runnable() {
+  getEngine().getExecutor().run(new Runnable() {
       @Override public void run() {
         V8Array args = getEngine().createJsArray()
           .push(arg)
@@ -320,7 +385,7 @@ public class SDKTest extends JsBackedObject {
    * Fire an event
    */
   public void triggerFakeAfterTimeout() {
-    getEngine().getExecutor().run(new Runnable() {
+  getEngine().getExecutor().run(new Runnable() {
       @Override public void run() {
         V8Array args = getEngine().getEmptyArray();
         V8Object objectToExecuteOn = SDKTest.this.impl;
@@ -333,7 +398,7 @@ public class SDKTest extends JsBackedObject {
    * Return a complex object.
    */
   public SDKTestDefault returnAnObject() {
-    return getEngine().getExecutor().run(new Callable<SDKTestDefault>() {
+  return getEngine().getExecutor().run(new Callable<SDKTestDefault>() {
       @Override public SDKTestDefault call() {
         V8Array args = getEngine().getEmptyArray();
         V8Object objectToExecuteOn = SDKTest.this.impl;
@@ -346,7 +411,7 @@ public class SDKTest extends JsBackedObject {
    * Return a derivative of SDKTestDefault
    */
   public SDKTestDefault returnADerivedObject() {
-    return getEngine().getExecutor().run(new Callable<SDKTestDefault>() {
+  return getEngine().getExecutor().run(new Callable<SDKTestDefault>() {
       @Override public SDKTestDefault call() {
         V8Array args = getEngine().getEmptyArray();
         V8Object objectToExecuteOn = SDKTest.this.impl;
@@ -359,7 +424,7 @@ public class SDKTest extends JsBackedObject {
    * Return one SDKTestDefault and one derived
    */
   public List<SDKTestDefault> returnBaseAndDerived() {
-    return getEngine().getExecutor().run(new Callable<List<SDKTestDefault>>() {
+  return getEngine().getExecutor().run(new Callable<List<SDKTestDefault>>() {
       @Override public List<SDKTestDefault> call() {
         V8Array args = getEngine().getEmptyArray();
         V8Object objectToExecuteOn = SDKTest.this.impl;
@@ -380,7 +445,7 @@ public class SDKTest extends JsBackedObject {
    * expected result: c[0] is set to c[0]+add, so, [a+add,b,0]
    */
   public List<Integer> preDecrement(final Integer a, final Integer b, final Integer add) {
-    return getEngine().getExecutor().run(new Callable<List<Integer>>() {
+  return getEngine().getExecutor().run(new Callable<List<Integer>>() {
       @Override public List<Integer> call() {
         V8Array args = getEngine().createJsArray()
           .push(a)
@@ -404,7 +469,7 @@ public class SDKTest extends JsBackedObject {
    * expected result: c[1] is set to c[0]+add, so, [a,a+add, 0]
    */
   public List<Integer> postDecrement(final Integer a, final Integer b, final Integer add) {
-    return getEngine().getExecutor().run(new Callable<List<Integer>>() {
+  return getEngine().getExecutor().run(new Callable<List<Integer>>() {
       @Override public List<Integer> call() {
         V8Array args = getEngine().createJsArray()
           .push(a)
@@ -425,7 +490,7 @@ public class SDKTest extends JsBackedObject {
    * Return a JS dictionary
    */
   public Map<String,? super Object> returnAMixedType() {
-    return getEngine().getExecutor().run(new Callable<Map<String,? super Object>>() {
+  return getEngine().getExecutor().run(new Callable<Map<String,? super Object>>() {
       @Override public Map<String,? super Object> call() {
         V8Array args = getEngine().getEmptyArray();
         V8Object objectToExecuteOn = SDKTest.this.impl;
@@ -438,7 +503,7 @@ public class SDKTest extends JsBackedObject {
    * Take a JS dictionary and return it
    */
   public Map<String,? super Object> takeAMixedType(final Map<String,? super Object> stuff) {
-    return getEngine().getExecutor().run(new Callable<Map<String,? super Object>>() {
+  return getEngine().getExecutor().run(new Callable<Map<String,? super Object>>() {
       @Override public Map<String,? super Object> call() {
         V8Array args = getEngine().createJsArray()
           .push(getEngine().getConverter().asJsObject(stuff));
@@ -452,7 +517,7 @@ public class SDKTest extends JsBackedObject {
    * Throw an exception
    */
   public void throwOne() {
-    getEngine().getExecutor().run(new Runnable() {
+  getEngine().getExecutor().run(new Runnable() {
       @Override public void run() {
         V8Array args = getEngine().getEmptyArray();
         V8Object objectToExecuteOn = SDKTest.this.impl;
@@ -465,13 +530,26 @@ public class SDKTest extends JsBackedObject {
    * Fetch some JSON from httpbin.org
    */
   public void goFetch(final FetchedCallback callback) {
-    getEngine().getExecutor().run(new Runnable() {
+  getEngine().getExecutor().run(new Runnable() {
       @Override public void run() {
         V8Array args = getEngine().createJsArray()
           .push(wrapJavaFn(callback));
         V8Object objectToExecuteOn = SDKTest.this.impl;
         objectToExecuteOn.executeVoidFunction("goFetch", args);
         
+      }
+    });
+  }
+  /**
+   * Fetch some JSON with promise style interface
+   */
+  public void goFetchP(final GoFetchPCallback callback) {
+  getEngine().getExecutor().run(new Runnable() {
+      @Override public void run() {
+        V8Array args = getEngine().getEmptyArray();
+        V8Object objectToExecuteOn = SDKTest.this.impl;
+        V8Object promise = objectToExecuteOn.executeObjectFunction("goFetchP", args);
+        getEngine().resolvePromise(promise, wrapPromise(callback));
       }
     });
   }
@@ -542,8 +620,8 @@ public class SDKTest extends JsBackedObject {
   private static V8Object wrapJavaFn(final FetchedCallback javaInterface) {
     return getEngine().getExecutor().run(new Callable<V8Object>() {
       @Override public V8Object call() throws Exception {
-        V8Object _ = getEngine().createJsObject();
-        _.registerJavaMethod(new JavaVoidCallback() {
+        V8Object _jso = getEngine().createJsObject();
+        _jso.registerJavaMethod(new JavaVoidCallback() {
           @Override
           public void invoke(V8Object jsThis, V8Array args)
           {
@@ -566,8 +644,8 @@ public class SDKTest extends JsBackedObject {
             
           }
         }, "_");
-        V8Object fn = _.getObject("_");
-        _.release();
+        V8Object fn = _jso.getObject("_");
+        _jso.release();
         return fn;
       }
     });
@@ -578,8 +656,8 @@ public class SDKTest extends JsBackedObject {
   private static V8Object wrapJavaFn(final EchoCallback javaInterface) {
     return getEngine().getExecutor().run(new Callable<V8Object>() {
       @Override public V8Object call() throws Exception {
-        V8Object _ = getEngine().createJsObject();
-        _.registerJavaMethod(new JavaVoidCallback() {
+        V8Object _jso = getEngine().createJsObject();
+        _jso.registerJavaMethod(new JavaVoidCallback() {
           @Override
           public void invoke(V8Object jsThis, V8Array args)
           {
@@ -602,8 +680,8 @@ public class SDKTest extends JsBackedObject {
             
           }
         }, "_");
-        V8Object fn = _.getObject("_");
-        _.release();
+        V8Object fn = _jso.getObject("_");
+        _jso.release();
         return fn;
       }
     });
@@ -614,8 +692,8 @@ public class SDKTest extends JsBackedObject {
   private static V8Object wrapJavaFn(final EchoReturnCallback javaInterface) {
     return getEngine().getExecutor().run(new Callable<V8Object>() {
       @Override public V8Object call() throws Exception {
-        V8Object _ = getEngine().createJsObject();
-        _.registerJavaMethod(new JavaCallback() {
+        V8Object _jso = getEngine().createJsObject();
+        _jso.registerJavaMethod(new JavaCallback() {
           @Override
           public String invoke(V8Object jsThis, V8Array args)
           {
@@ -624,8 +702,8 @@ public class SDKTest extends JsBackedObject {
             return retVal;
           }
         }, "_");
-        V8Object fn = _.getObject("_");
-        _.release();
+        V8Object fn = _jso.getObject("_");
+        _jso.release();
         return fn;
       }
     });
@@ -643,8 +721,8 @@ public class SDKTest extends JsBackedObject {
   private static V8Object wrapJavaFn(final FakeEventObserver javaInterface) {
     return getEngine().getExecutor().run(new Callable<V8Object>() {
       @Override public V8Object call() throws Exception {
-        V8Object _ = getEngine().createJsObject();
-        _.registerJavaMethod(new JavaVoidCallback() {
+        V8Object _jso = getEngine().createJsObject();
+        _jso.registerJavaMethod(new JavaVoidCallback() {
           @Override
           public void invoke(V8Object jsThis, V8Array args)
           {
@@ -660,8 +738,8 @@ public class SDKTest extends JsBackedObject {
             
           }
         }, "_");
-        V8Object fn = _.getObject("_");
-        _.release();
+        V8Object fn = _jso.getObject("_");
+        _jso.release();
         return fn;
       }
     });

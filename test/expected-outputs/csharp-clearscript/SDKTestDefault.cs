@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Manticore;
 
 /**
@@ -38,12 +39,15 @@ namespace Manticore
       this.impl = Engine.CreateJsObject("SDKTestDefault", null);
     }
 
+
         /**
          * Test closure
          */
-        public  bool IsItTrue() {
-            return Engine.JsWithReturn(() => {
-              dynamic returnValue =  this.impl.isItTrue();
+        public bool IsItTrue()
+        {
+            return Engine.JsWithReturn(() =>
+            {
+                dynamic returnValue = this.impl.isItTrue();
               return Engine.Converter.AsNativeBool(returnValue);
             });
         }

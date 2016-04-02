@@ -30,6 +30,10 @@ typedef void (^PPManticoreSDKTestEchoHandler)(PPManticoreError* error, NSString*
  */
 typedef NSString* (^PPManticoreSDKTestEchoReturnHandler)();
 
+/**
+ * Callback for PPManticore goFetchP method
+ */
+typedef void (^PPManticoreGoFetchPCallback)(PPManticoreError* error, NSDictionary* result);
  
 /**
  * Simple event

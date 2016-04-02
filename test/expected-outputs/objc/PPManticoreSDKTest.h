@@ -38,7 +38,10 @@
 @property (nonatomic,strong,nullable) PPManticoreSDKTestDefault* complexType;/**
  * fake enum for status.
  */
-@property (nonatomic,assign) PPManticoreSDKTestStatuses myStatus;
+@property (nonatomic,assign) PPManticoreSDKTestStatuses myStatus;/**
+ * Disable SSL requests (I'm looking at you Android Junit)
+ */
+@property (nonatomic,assign) BOOL noSsl;
 
 - (instancetype _Nullable)initWithStringProperty:(NSString* _Nullable)stringProperty;
     - (instancetype _Nullable)init NS_UNAVAILABLE;
@@ -122,6 +125,11 @@
  * Fetch some JSON from httpbin.org
  */
 -(void)goFetch:(PPManticoreSDKTestFetchedHandler _Nullable)callback;
+
+/**
+ * Fetch some JSON with promise style interface
+ */
+-(void)goFetchP:(PPManticoreGoFetchPCallback _Nullable) callback;
 
 
 

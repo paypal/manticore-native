@@ -4,6 +4,7 @@ using Jint.Native.Object;
 using Jint.Native.Function;
 using Jint.Runtime.Interop;
 using System;
+using System.Threading.Tasks;
 using System.Collections.Generic;
 using Manticore;
 
@@ -39,29 +40,25 @@ namespace Manticore
   /**
    * Test subclass
    */
-  public  bool IsItDerived() {
-    JsValue[] args = new JsValue[] {
-      
-    };
+  public bool IsItDerived() {
+    JsValue[] args = new JsValue[] {};
     
     var func = this.impl.Get("isItDerived").As<FunctionInstance>();
-      return Engine.JsWithReturn(() => {
+    return Engine.JsWithReturn(() => {
       var returnValue = func.Call(this.impl, args);
-      return Engine.Converter.AsNativeBool(returnValue);
+    return Engine.Converter.AsNativeBool(returnValue);
     });
   }
   /**
    * Test derived classes
    */
   public static SDKTestDefault GetDerived() {
-    JsValue[] args = new JsValue[] {
-      
-    };
+    JsValue[] args = new JsValue[] {};
     var jsClass = Engine.GetJsClass("SDKTestDefaultSubclass");
     var func = jsClass.Get("getDerived").As<FunctionInstance>();
-      return Engine.JsWithReturn(() => {
+    return Engine.JsWithReturn(() => {
       var returnValue = func.Call(jsClass, args);
-      return ((returnValue.IsNull()||returnValue.IsUndefined()) ? null : SDKTestDefault.NativeInstanceForObject(returnValue.AsObject()));
+    return ((returnValue.IsNull()||returnValue.IsUndefined()) ? null : SDKTestDefault.NativeInstanceForObject(returnValue.AsObject()));
     });
   }
 

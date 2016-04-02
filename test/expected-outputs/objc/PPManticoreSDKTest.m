@@ -32,7 +32,7 @@ PPManticoreEchoReturnWrapperBlock PPManticoreSDKTest_wrap_echoReturn_callback(PP
 @implementation PPManticoreSDKTest
 
 
-- (instancetype _Nullable)initFromJavascript:(JSValue*)value {
+- (instancetype _Nullable)initFromJavascript:(JSValue* _Nonnull)value {
   if ((self = [super init])) {
     self.impl = value;
   }
@@ -72,6 +72,7 @@ PPManticoreEchoReturnWrapperBlock PPManticoreSDKTest_wrap_echoReturn_callback(PP
     ];
     JSValue *valueToInvokeMethodOn = self.impl;
     [valueToInvokeMethodOn invokeMethod:@"echo" withArguments:args];
+    
 }
 -(void)echoReturn:(NSString*)arg callback:(PPManticoreSDKTestEchoReturnHandler)callback {
     NSArray *args = nil;
@@ -81,6 +82,7 @@ PPManticoreEchoReturnWrapperBlock PPManticoreSDKTest_wrap_echoReturn_callback(PP
     ];
     JSValue *valueToInvokeMethodOn = self.impl;
     [valueToInvokeMethodOn invokeMethod:@"echoReturn" withArguments:args];
+    
 }
 -(void)echoWithSetTimeout:(NSString*)arg callback:(PPManticoreSDKTestEchoHandler)callback {
     NSArray *args = nil;
@@ -90,12 +92,14 @@ PPManticoreEchoReturnWrapperBlock PPManticoreSDKTest_wrap_echoReturn_callback(PP
     ];
     JSValue *valueToInvokeMethodOn = self.impl;
     [valueToInvokeMethodOn invokeMethod:@"echoWithSetTimeout" withArguments:args];
+    
 }
 -(void)triggerFakeAfterTimeout {
     NSArray *args = nil;
 
     JSValue *valueToInvokeMethodOn = self.impl;
     [valueToInvokeMethodOn invokeMethod:@"triggerFakeAfterTimeout" withArguments:args];
+    
 }
 -(PPManticoreSDKTestDefault*)returnAnObject {
     NSArray *args = nil;
@@ -161,6 +165,7 @@ PPManticoreEchoReturnWrapperBlock PPManticoreSDKTest_wrap_echoReturn_callback(PP
 
     JSValue *valueToInvokeMethodOn = self.impl;
     [valueToInvokeMethodOn invokeMethod:@"throwOne" withArguments:args];
+    
 }
 -(void)goFetch:(PPManticoreSDKTestFetchedHandler)callback {
     NSArray *args = nil;
@@ -169,6 +174,19 @@ PPManticoreSDKTest_wrap_fetched_callback(callback)
     ];
     JSValue *valueToInvokeMethodOn = self.impl;
     [valueToInvokeMethodOn invokeMethod:@"goFetch" withArguments:args];
+    
+}
+-(void)goFetchP:(PPManticoreGoFetchPCallback _Nullable) callback {
+    NSArray *args = nil;
+
+    JSValue *valueToInvokeMethodOn = self.impl;
+    JSValue *promise = [valueToInvokeMethodOn invokeMethod:@"goFetchP" withArguments:args];
+    [[PPManticoreSDKTest engine] resolvePromise:promise toCallback:^(JSValue *error, JSValue *result) {
+        callback(
+          [[PPManticoreSDKTest engine] attachNativeObject:error ofType:[PPManticoreError class]],
+          [[PPManticoreSDKTest engine].converter toNativeObject:result]
+        );
+    }];
 }
 
 +(PPManticoreSDKTest*)staticMethod {
@@ -225,6 +243,14 @@ PPManticoreSDKTest_wrap_fetched_callback(callback)
 
 -(void)setMyStatus:(PPManticoreSDKTestStatuses)myStatus {
   self.impl[@"myStatus"] = @(myStatus);
+}
+
+-(BOOL)noSsl {
+  return [[PPManticoreSDKTest engine].converter toNativeBool:self.impl[@"noSsl"]];
+}
+
+-(void)setNoSsl:(BOOL)noSsl {
+  self.impl[@"noSsl"] = [[PPManticoreSDKTest engine].converter toJsBool:noSsl];
 }
 
 -(PPManticoreFakeEventSignal)addFakeEventListener:(PPManticoreFakeEventEvent)listener {

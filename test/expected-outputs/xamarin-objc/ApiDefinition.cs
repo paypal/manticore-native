@@ -68,6 +68,12 @@ namespace Manticore
     SDKTestStatuses MyStatus { get; set; }
 
     /**
+     * Disable SSL requests (I'm looking at you Android Junit)
+     */
+    [Export ("noSsl")]
+    bool NoSsl { get; set; }
+
+    /**
      * Echo the argument via the callback
      */
     [Export ("echo:callback:")]
@@ -150,6 +156,12 @@ namespace Manticore
      */
     [Export ("goFetch:")]
     void GoFetch(SDKTestFetchedHandler callback);
+
+    /**
+     * Fetch some JSON with promise style interface
+     */
+    [Export ("goFetchP")]
+    NSDictionary GoFetchP();
 
 
     /**

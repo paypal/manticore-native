@@ -364,7 +364,7 @@ public class SDKTestDefault extends JsBackedObject {
    * Test closure
    */
   public Boolean isItTrue() {
-    return getEngine().getExecutor().run(new Callable<Boolean>() {
+  return getEngine().getExecutor().run(new Callable<Boolean>() {
       @Override public Boolean call() {
         V8Array args = getEngine().getEmptyArray();
         V8Object objectToExecuteOn = SDKTestDefault.this.impl;

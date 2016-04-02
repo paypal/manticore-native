@@ -4,6 +4,7 @@ using Jint.Native.Object;
 using Jint.Native.Function;
 using Jint.Runtime.Interop;
 using System;
+using System.Threading.Tasks;
 using System.Collections.Generic;
 using Manticore;
 
@@ -72,96 +73,88 @@ namespace Manticore
   /**
    * Echo the argument via the callback
    */
-  public  void Echo(String arg, EchoDelegate callback) {
+  public void Echo(String arg, EchoDelegate callback) {
     JsValue[] args = new JsValue[] {
       Engine.Converter.AsJsString(arg),
     WrapDelegate(callback)
     };
     
     var func = this.impl.Get("echo").As<FunctionInstance>();
-      Engine.Js(() => {
+    Engine.Js(() => {
       func.Call(this.impl, args);
-      
+    
     });
   }  /**
    * Echo the argument via return value from a callback
    */
-  public  void EchoReturn(String arg, EchoReturnDelegate callback) {
+  public void EchoReturn(String arg, EchoReturnDelegate callback) {
     JsValue[] args = new JsValue[] {
       Engine.Converter.AsJsString(arg),
     WrapDelegate(callback)
     };
     
     var func = this.impl.Get("echoReturn").As<FunctionInstance>();
-      Engine.Js(() => {
+    Engine.Js(() => {
       func.Call(this.impl, args);
-      
+    
     });
   }  /**
    * Echo the argument via the callback after setTimeout(10)
    */
-  public  void EchoWithSetTimeout(String arg, EchoDelegate callback) {
+  public void EchoWithSetTimeout(String arg, EchoDelegate callback) {
     JsValue[] args = new JsValue[] {
       Engine.Converter.AsJsString(arg),
     WrapDelegate(callback)
     };
     
     var func = this.impl.Get("echoWithSetTimeout").As<FunctionInstance>();
-      Engine.Js(() => {
+    Engine.Js(() => {
       func.Call(this.impl, args);
-      
+    
     });
   }  /**
    * Fire an event
    */
-  public  void TriggerFakeAfterTimeout() {
-    JsValue[] args = new JsValue[] {
-      
-    };
+  public void TriggerFakeAfterTimeout() {
+    JsValue[] args = new JsValue[] {};
     
     var func = this.impl.Get("triggerFakeAfterTimeout").As<FunctionInstance>();
-      Engine.Js(() => {
+    Engine.Js(() => {
       func.Call(this.impl, args);
-      
+    
     });
   }  /**
    * Return a complex object.
    */
-  public  SDKTestDefault ReturnAnObject() {
-    JsValue[] args = new JsValue[] {
-      
-    };
+  public SDKTestDefault ReturnAnObject() {
+    JsValue[] args = new JsValue[] {};
     
     var func = this.impl.Get("returnAnObject").As<FunctionInstance>();
-      return Engine.JsWithReturn(() => {
+    return Engine.JsWithReturn(() => {
       var returnValue = func.Call(this.impl, args);
-      return ((returnValue.IsNull()||returnValue.IsUndefined()) ? null : SDKTestDefault.NativeInstanceForObject(returnValue.AsObject()));
+    return ((returnValue.IsNull()||returnValue.IsUndefined()) ? null : SDKTestDefault.NativeInstanceForObject(returnValue.AsObject()));
     });
   }  /**
    * Return a derivative of SDKTestDefault
    */
-  public  SDKTestDefault ReturnADerivedObject() {
-    JsValue[] args = new JsValue[] {
-      
-    };
+  public SDKTestDefault ReturnADerivedObject() {
+    JsValue[] args = new JsValue[] {};
     
     var func = this.impl.Get("returnADerivedObject").As<FunctionInstance>();
-      return Engine.JsWithReturn(() => {
+    return Engine.JsWithReturn(() => {
       var returnValue = func.Call(this.impl, args);
-      return ((returnValue.IsNull()||returnValue.IsUndefined()) ? null : SDKTestDefault.NativeInstanceForObject(returnValue.AsObject()));
+    return ((returnValue.IsNull()||returnValue.IsUndefined()) ? null : SDKTestDefault.NativeInstanceForObject(returnValue.AsObject()));
     });
   }  /**
    * Return one SDKTestDefault and one derived
    */
-  public  List<SDKTestDefault> ReturnBaseAndDerived() {
-    JsValue[] args = new JsValue[] {
-      
-    };
+  public List<SDKTestDefault> ReturnBaseAndDerived() {
+    JsValue[] args = new JsValue[] {};
     
     var func = this.impl.Get("returnBaseAndDerived").As<FunctionInstance>();
-      return Engine.JsWithReturn(() => {
+    return Engine.JsWithReturn(() => {
       var returnValue = func.Call(this.impl, args);
-      return Engine.Converter.ToNativeArray(returnValue, new Func<JsValue,SDKTestDefault>((element) => ((element.IsNull()||element.IsUndefined()) ? null : SDKTestDefault.NativeInstanceForObject(element.AsObject()))));
+    return Engine.Converter.ToNativeArray(returnValue, new Func<JsValue,SDKTestDefault>((element) => ((element.IsNull()||element.IsUndefined()) ? null : SDKTestDefault.NativeInstanceForObject(element.AsObject()))));
     });
   }  /**
    * Pre decrement within an indexer --j.
@@ -169,7 +162,7 @@ namespace Manticore
          * push j to c and return c
          * expected result: c[0] is set to c[0]+add, so, [a+add,b,0]
    */
-  public  List<int> PreDecrement(int a, int b, int add) {
+  public List<int> PreDecrement(int a, int b, int add) {
     JsValue[] args = new JsValue[] {
       Engine.Converter.AsJsInt(a),
     Engine.Converter.AsJsInt(b),
@@ -177,9 +170,9 @@ namespace Manticore
     };
     
     var func = this.impl.Get("preDecrement").As<FunctionInstance>();
-      return Engine.JsWithReturn(() => {
+    return Engine.JsWithReturn(() => {
       var returnValue = func.Call(this.impl, args);
-      return Engine.Converter.ToNativeArray(returnValue, new Func<JsValue,int>((element) => Engine.Converter.AsNativeInt(element)));
+    return Engine.Converter.ToNativeArray(returnValue, new Func<JsValue,int>((element) => Engine.Converter.AsNativeInt(element)));
     });
   }  /**
    * Post decrement within an indexer j--.
@@ -187,7 +180,7 @@ namespace Manticore
          * push j to c and return c
          * expected result: c[1] is set to c[0]+add, so, [a,a+add, 0]
    */
-  public  List<int> PostDecrement(int a, int b, int add) {
+  public List<int> PostDecrement(int a, int b, int add) {
     JsValue[] args = new JsValue[] {
       Engine.Converter.AsJsInt(a),
     Engine.Converter.AsJsInt(b),
@@ -195,75 +188,93 @@ namespace Manticore
     };
     
     var func = this.impl.Get("postDecrement").As<FunctionInstance>();
-      return Engine.JsWithReturn(() => {
+    return Engine.JsWithReturn(() => {
       var returnValue = func.Call(this.impl, args);
-      return Engine.Converter.ToNativeArray(returnValue, new Func<JsValue,int>((element) => Engine.Converter.AsNativeInt(element)));
+    return Engine.Converter.ToNativeArray(returnValue, new Func<JsValue,int>((element) => Engine.Converter.AsNativeInt(element)));
     });
   }  /**
    * Return a JS dictionary
    */
-  public  IDictionary<string,object> ReturnAMixedType() {
-    JsValue[] args = new JsValue[] {
-      
-    };
+  public IDictionary<string,object> ReturnAMixedType() {
+    JsValue[] args = new JsValue[] {};
     
     var func = this.impl.Get("returnAMixedType").As<FunctionInstance>();
-      return Engine.JsWithReturn(() => {
+    return Engine.JsWithReturn(() => {
       var returnValue = func.Call(this.impl, args);
-      return Engine.Converter.AsNativeObject(returnValue);
+    return Engine.Converter.AsNativeObject(returnValue);
     });
   }  /**
    * Take a JS dictionary and return it
    */
-  public  IDictionary<string,object> TakeAMixedType(IDictionary<string,object> stuff) {
+  public IDictionary<string,object> TakeAMixedType(IDictionary<string,object> stuff) {
     JsValue[] args = new JsValue[] {
       Engine.Converter.AsJsObject(stuff)
     };
     
     var func = this.impl.Get("takeAMixedType").As<FunctionInstance>();
-      return Engine.JsWithReturn(() => {
+    return Engine.JsWithReturn(() => {
       var returnValue = func.Call(this.impl, args);
-      return Engine.Converter.AsNativeObject(returnValue);
+    return Engine.Converter.AsNativeObject(returnValue);
     });
   }  /**
    * Throw an exception
    */
-  public  void ThrowOne() {
-    JsValue[] args = new JsValue[] {
-      
-    };
+  public void ThrowOne() {
+    JsValue[] args = new JsValue[] {};
     
     var func = this.impl.Get("throwOne").As<FunctionInstance>();
-      Engine.Js(() => {
+    Engine.Js(() => {
       func.Call(this.impl, args);
-      
+    
     });
   }  /**
    * Fetch some JSON from httpbin.org
    */
-  public  void GoFetch(FetchedDelegate callback) {
+  public void GoFetch(FetchedDelegate callback) {
     JsValue[] args = new JsValue[] {
       WrapDelegate(callback)
     };
     
     var func = this.impl.Get("goFetch").As<FunctionInstance>();
-      Engine.Js(() => {
+    Engine.Js(() => {
       func.Call(this.impl, args);
-      
+    
     });
+  }  /**
+   * Fetch some JSON with promise style interface
+   */
+  public async Task<IDictionary<string,object>> GoFetchP() {
+    var _completer = new TaskCompletionSource<IDictionary<string,object>>();
+    JsValue[] args = new JsValue[] {};
+    
+    var func = this.impl.Get("goFetchP").As<FunctionInstance>();
+    Engine.Js(() => {
+      var returnValue = func.Call(this.impl, args);
+    var _callback = Engine.AsJsFunction(new Func<JsValue,JsValue[],JsValue>((thisObject, cbArgs) => {
+        if (cbArgs.Length > 0 && !cbArgs[0].IsNull() && !cbArgs[0].IsUndefined()) {
+            _completer.TrySetException(new ManticoreException(cbArgs[0].AsObject()));
+        } else {
+          if (cbArgs.Length > 1 && !cbArgs[1].IsNull() && !cbArgs[1].IsUndefined()) {
+            _completer.TrySetResult(Engine.Converter.AsNativeObject(cbArgs[1]));
+          }
+        }
+        return JsValue.Undefined;
+      }));
+      Engine.ResolvePromise(returnValue, _callback);
+    
+    });
+    return await _completer.Task;
   }
   /**
    * Returns a new instance of this class
    */
   public static SDKTest StaticMethod() {
-    JsValue[] args = new JsValue[] {
-      
-    };
+    JsValue[] args = new JsValue[] {};
     var jsClass = Engine.GetJsClass("SDKTest");
     var func = jsClass.Get("staticMethod").As<FunctionInstance>();
-      return Engine.JsWithReturn(() => {
+    return Engine.JsWithReturn(() => {
       var returnValue = func.Call(jsClass, args);
-      return ((returnValue.IsNull()||returnValue.IsUndefined()) ? null : SDKTest.NativeInstanceForObject(returnValue.AsObject()));
+    return ((returnValue.IsNull()||returnValue.IsUndefined()) ? null : SDKTest.NativeInstanceForObject(returnValue.AsObject()));
     });
   }
 
@@ -358,6 +369,23 @@ namespace Manticore
       var jsValue = (int)value;
       Engine.Js(() => {
         this.impl.Put("myStatus", jsValue, true);
+      });
+    }
+    
+  }
+
+  public bool NoSsl {
+    get {
+      return Engine.JsWithReturn(() => {
+        var noSsl = this.impl.Get("noSsl");
+        return Engine.Converter.AsNativeBool(noSsl);
+      });
+    }
+    
+    set {
+      var jsValue = Engine.Converter.AsJsBool(value);
+      Engine.Js(() => {
+        this.impl.Put("noSsl", jsValue, true);
       });
     }
     

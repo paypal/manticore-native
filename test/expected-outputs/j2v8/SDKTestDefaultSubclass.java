@@ -59,7 +59,7 @@ public class SDKTestDefaultSubclass extends SDKTestDefault {
    * Test derived classes
    */
   public static SDKTestDefault getDerived() {
-    return getEngine().getExecutor().run(new Callable<SDKTestDefault>() {
+  return getEngine().getExecutor().run(new Callable<SDKTestDefault>() {
       @Override public SDKTestDefault call() {
         V8Array args = getEngine().getEmptyArray();
         V8Object objectToExecuteOn = getEngine().getJSClass("SDKTestDefaultSubclass");
@@ -78,7 +78,7 @@ public class SDKTestDefaultSubclass extends SDKTestDefault {
    * Test subclass
    */
   public Boolean isItDerived() {
-    return getEngine().getExecutor().run(new Callable<Boolean>() {
+  return getEngine().getExecutor().run(new Callable<Boolean>() {
       @Override public Boolean call() {
         V8Array args = getEngine().getEmptyArray();
         V8Object objectToExecuteOn = SDKTestDefaultSubclass.this.impl;
