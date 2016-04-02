@@ -4,8 +4,8 @@
   private static V8Object wrapJavaFn(final {@firstCap}{name}{/firstCap}{suffix} javaInterface) {
     return getEngine().getExecutor().run(new Callable<V8Object>() {~lb}
       @Override public V8Object call() throws Exception {
-        V8Object _ = getEngine().createJsObject();
-        _.registerJavaMethod(new Java{^returns}Void{/returns}Callback() {
+        V8Object _jso = getEngine().createJsObject();
+        _jso.registerJavaMethod(new Java{^returns}Void{/returns}Callback() {
           @Override
           public {?returns}{@type}{returns.type}{/type}{:else}void{/returns} invoke(V8Object jsThis, V8Array args)
           {
@@ -21,8 +21,8 @@
             {?returns}return {>toJs target="{returns.type}" arg="retVal"/};{/returns}
           }
         }, "_");
-        V8Object fn = _.getObject("_");
-        _.release();
+        V8Object fn = _jso.getObject("_");
+        _jso.release();
         return fn;
       }
     });

@@ -11,8 +11,8 @@
   private static V8Object wrapPromise(final {@firstCap}{name}{/firstCap}Callback javaInterface) {
     return getEngine().getExecutor().run(new Callable<V8Object>() {~lb}
       @Override public V8Object call() throws Exception {
-        V8Object _ = getEngine().createJsObject();
-        _.registerJavaMethod(new JavaVoidCallback() {
+        V8Object _jso = getEngine().createJsObject();
+        _jso.registerJavaMethod(new JavaVoidCallback() {
           @Override
           public void invoke(V8Object jsThis, V8Array args)
           {
@@ -29,8 +29,8 @@
             javaInterface.done(error, result);
           }
         }, "_");
-        V8Object fn = _.getObject("_");
-        _.release();
+        V8Object fn = _jso.getObject("_");
+        _jso.release();
         return fn;
       }
     });
