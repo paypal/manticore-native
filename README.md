@@ -90,10 +90,10 @@ Platform Support
 Platform | Version | CI Status | Distro | Version
 -------- | ------- |------ | ------ | -------
 iOS      | 7.0+ | [![Build Status](https://travis-ci.com/paypal/paypal-manticore.svg?token=zgKPydNJ3A6t49VkNfPv&branch=master)](https://travis-ci.com/paypal/paypal-manticore) | CocoaPods | 1.0.0
-MacOS    | 10.9+ | - | CocoaPods | 1.0.0
-Android  | API 19+ | - | JCenter | 1.0.0
+MacOS    | 10.9+ | [![Build Status](https://travis-ci.com/paypal/paypal-manticore.svg?token=zgKPydNJ3A6t49VkNfPv&branch=master)](https://travis-ci.com/paypal/paypal-manticore)- | CocoaPods | 1.0.0
+Android  | API 19+ | [![Build Status](https://travis-ci.com/paypal/paypal-manticore.svg?token=zgKPydNJ3A6t49VkNfPv&branch=master)](https://travis-ci.com/paypal/paypal-manticore) | JCenter | 1.0.0
 Windows  | XP (.Net4) | - | NuGet | 1.0.0
 Windows  | 7,8,Vista (v8) | - | NuGet | 1.0.0
 Windows  | 8.1, 8.1 Phone, 10 (jint) | - | NuGet | 1.0.0
 ChromeOS/Chrome App | 32 | - | npm | 1.0.0
-Node.js | 0.12 | - | npm | 1.0.0
+Node.js | 0.12 | [![Build Status](https://travis-ci.com/paypal/paypal-manticore.svg?token=zgKPydNJ3A6t49VkNfPv&branch=master)](https://travis-ci.com/paypal/paypal-manticore) | npm | 1.0.0
