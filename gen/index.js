@@ -99,8 +99,7 @@ export async function generate(templateDirectory, config, outputDirectory, optio
   const typeInformation = {};
   let globbedFiles = files;
 
-  if ((require('os').platform() === 'win32' && options.glob !== false) ||
-    options.glob === true) {
+  if (require('os').platform() === 'win32' || options.glob === true) {
     let targ = [];
     for (const file of files) {
       targ = targ.concat(glob.sync(file));
