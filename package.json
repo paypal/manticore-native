@@ -4,9 +4,6 @@
   "description": "A runtime to expose Javascript classes, logic and code to native components",
   "main": "build/index.js",
   "bin": "./build/gen/index.js",
-  "config": {
-    "win": "runtime/win/generated"
-  },
   "scripts": {
     "lint": "eslint .",
     "precommit-lint": "eslint .; true",
@@ -17,8 +14,8 @@
     "objc-testjs": "mkdirp output/objc && babel-node -- gen/index.js -q ./runtime/objc/templates ./output/objc test/js-source/*.js",
     "android-polyfill": "babel-node ./mantify.js runtime/android/manticore/src/main/res/raw/polyfill_pack.js runtime/android/js/polyfill.js",
     "android-testjs": "babel-node -- gen/index.js -q ./runtime/android/templates ./runtime/android/manticore/src/test/java/com/paypal/manticore/ test/js-source/*.js",
-    "win-polyfill": "babel-node ./mantify.js $npm_package_config_win/polyfill.clearscript.pack.js runtime/win/js/polyfill.clearscript.js && babel-node ./mantify.js $npm_package_config_win/polyfill.jint.pack.js runtime/win/js/polyfill.jint.js",
-    "win-testjs": "mkdirp $npm_package_config_win/jint $npm_package_config_win/ClearScript && babel-node -- gen/index.js -q ./runtime/win/templates/jint $npm_package_config_win/jint test/js-source/*.js && babel-node -- gen/index.js -q ./runtime/win/templates/clearscript $npm_package_config_win/ClearScript test/js-source/*.js",
+    "win-polyfill": "babel-node ./mantify.js runtime/win/generated/polyfill.clearscript.pack.js runtime/win/js/polyfill.clearscript.js && babel-node ./mantify.js runtime/win/generated/polyfill.jint.pack.js runtime/win/js/polyfill.jint.js",
+    "win-testjs": "mkdirp runtime/win/generated/jint runtime/win/generated/ClearScript && babel-node -- gen/index.js -q ./runtime/win/templates/jint runtime/win/generated/jint test/js-source/*.js && babel-node -- gen/index.js -q ./runtime/win/templates/clearscript runtime/win/generated/ClearScript test/js-source/*.js",
     "build": "babel index.js --out-dir build && babel gen --out-dir build/gen",
     "dev": "git submodule update --init --recursive && npm run build-testjs && npm run objc-polyfill && npm run android-polyfill && npm run win-polyfill && npm run objc-testjs && npm run android-testjs && npm run win-testjs"
   },
