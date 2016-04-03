@@ -34,7 +34,7 @@ then
   npm run android-testjs
   find . -name polyfill_pack.js
   cd runtime/android
-  ./gradlew testDebug --stacktrace --info
+  ./gradlew --stacktrace --info clean :manticore:generateDebugSources :manticore:mockableAndroidJar :manticore:prepareDebugUnitTestDependencies :manticore:generateDebugAndroidTestSources testDebug
 else
   echo "=*=*=*=*=*=*=*=*=*=*=*=* MISSING BUILD_ITEM env var =*=*=*=*=*=*=*=*=*=*=*=*"
 fi
