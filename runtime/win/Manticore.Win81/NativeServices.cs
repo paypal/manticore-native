@@ -99,7 +99,7 @@ namespace Manticore
         public void Fetch(ManticoreEngine engine, JsValue optionsValue, JsValue callback)
         {
             var options = optionsValue.As<ObjectInstance>();
-            JsValue rawBody = options.Get("body").As<FunctionInstance>().Call(options, ManticoreEngine.EmptyArgs);
+            JsValue rawBody = options.Get("nativeBody").As<FunctionInstance>().Call(options, ManticoreEngine.EmptyArgs);
             var hasBody = rawBody.IsString() && rawBody.AsString().Length > 0;
             var request = (HttpWebRequest)WebRequest.Create(options.Get("url").AsString());
 
@@ -213,10 +213,10 @@ namespace Manticore
                     return;
                 }
 
-                var responseInfo = new ObjectInstance(engine.jsEngine);
+                var responseInfo = engine.CreateJsObject();
                 if (response.Headers.Count > 0)
                 {
-                    var headerCollection = new ObjectInstance(engine.jsEngine);
+                    var headerCollection = engine.CreateJsObject();
                     foreach (var kv in response.Headers.AllKeys)
                     {
                         headerCollection.FastAddProperty(kv, new JsValue(response.Headers[kv]), false, true, false);

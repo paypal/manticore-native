@@ -1,11 +1,7 @@
 export default class Headers {
   constructor(headers) {
     this._headers = {};
-    for (const prop in headers) {
-      if (!headers.hasOwnProperty(prop)) {
-        continue;
-      }
-
+    for (const prop of Object.getOwnPropertyNames(headers)) {
       const typ = typeof headers[prop];
       const v = headers[prop];
       if (typ === 'string') {

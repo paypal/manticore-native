@@ -96,7 +96,7 @@ namespace Manticore
         protected Exception ConvertException(JavaScriptException jse)
         {
             // TODO return better stuff.
-            var jsv = new ObjectInstance(jsEngine);
+            var jsv = CreateJsObject();
             jsv.FastAddProperty("message", new JsValue(jse.Message), false, true, false);
             return new ManticoreException(jsv);
         }
@@ -162,10 +162,7 @@ namespace Manticore
 
         public ObjectInstance GetJsClass(String name)
         {
-            return JsWithReturn(() =>
-            {
-                return _exports.Get(name).As<ObjectInstance>();
-            });
+            return JsWithReturn(() => _exports.Get(name).As<ObjectInstance>());
         }
 
         public ClrFunctionInstance AsJsFunction(Func<JsValue, JsValue[], JsValue> clrFunction)

@@ -11,10 +11,7 @@ const options = {};
 mkdirp.sync(path.dirname(output));
 
 let b = browserify(files, options)
-.transform('babelify', {
-  presets: ['es2015'],
-  plugins: ['syntax-async-functions', 'transform-regenerator'],
-});
+.transform('babelify', JSON.parse(fs.readFileSync(path.join(__dirname, '.babelrc'))));
 
 if (process.env.UGLIFYIFY) {
   b = b.transform({

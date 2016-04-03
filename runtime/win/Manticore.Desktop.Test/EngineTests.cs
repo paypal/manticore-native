@@ -389,13 +389,13 @@ namespace Manticore.Win81.Test
 #endif
         {
             JsBackedObject.CreateManticoreEngine(SampleScript, "index.js");
-
             var tester = new SDKTest("123");
             var response = await tester.GoFetchP();
             Assert.IsNotNull(response);
             Assert.IsNotNull(response["args"]);
             Assert.IsInstanceOfType(response["args"], typeof(IDictionary<String, Object>));
             Assert.AreEqual(((IDictionary<String, Object>)response["args"])["baz"], "bop");
+            JsBackedObject.Engine.Shutdown();
         }
 
         private void Verify(IDictionary<String, Object> dict)
