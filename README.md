@@ -90,7 +90,7 @@ Platform Support
 Platform | Version | CI Status | Distro | Version
 -------- | ------- |------ | ------ | -------
 iOS      | 7.0+ | [![Build Status](https://travis-ci.com/paypal/paypal-manticore.svg?token=zgKPydNJ3A6t49VkNfPv&branch=master)](https://travis-ci.com/paypal/paypal-manticore) | CocoaPods | 1.0.0
-MacOS    | 10.9+ | [![Build Status](https://travis-ci.com/paypal/paypal-manticore.svg?token=zgKPydNJ3A6t49VkNfPv&branch=master)](https://travis-ci.com/paypal/paypal-manticore)- | CocoaPods | 1.0.0
+MacOS    | 10.9+ | [![Build Status](https://travis-ci.com/paypal/paypal-manticore.svg?token=zgKPydNJ3A6t49VkNfPv&branch=master)](https://travis-ci.com/paypal/paypal-manticore) | CocoaPods | 1.0.0
 Android  | API 19+ | [![Build Status](https://travis-ci.com/paypal/paypal-manticore.svg?token=zgKPydNJ3A6t49VkNfPv&branch=master)](https://travis-ci.com/paypal/paypal-manticore) | JCenter | 1.0.0
 Windows  | XP (.Net4) | - | NuGet | 1.0.0
 Windows  | 7,8,Vista (v8) | - | NuGet | 1.0.0
