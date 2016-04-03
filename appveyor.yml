@@ -6,7 +6,8 @@ install:
   - npm install -g npm@3
   - npm install
   - git submodule update --init --recursive
-
+  - nuget restore runtime/win/Manticore.sln
+  
 build:
   project: runtime/win/Manticore.sln
   
