@@ -32,6 +32,7 @@ then
   npm run build-testjs
   npm run android-polyfill
   npm run android-testjs
+  find . -name polyfill_pack.js
   cd runtime/android
   ./gradlew testDebug --stacktrace --info
 else
