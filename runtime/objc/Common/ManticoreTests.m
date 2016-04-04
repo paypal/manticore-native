@@ -20,10 +20,13 @@
 #import "PPManticoreSDKTest.h"
 #import "PPManticoreError.h"
 
-@interface ManticoreTests : XCTestCase
+@interface ManticoreTests : XCTestCase <
+  PPManticorePluginDelegate
+>
 
 @property (nonatomic, strong) PPManticoreEngine *engine;
 @property (nonatomic, strong) PPManticoreSDKTest *t;
+@property (nonatomic, strong) NSMutableString *delegateCalls;
 
 @end
 
@@ -78,6 +81,35 @@
     XCTAssertEqualObjects(t.blankDecimal, [NSDecimalNumber decimalNumberWithString:@"12"], @"blankDecimal should now be 12.");
     XCTAssertEqualObjects(t.now, [NSDate dateWithTimeIntervalSince1970:0], @"now should now be 1970");
     XCTAssertEqualObjects(t.stringArray, (@[@"d", @"e"]), @"stringArray should now be ['d', 'e']");
+}
+
+- (void)testPlugin {
+    PPManticoreEngine *engine = [[PPManticoreEngine alloc] init];
+    self.delegateCalls = [NSMutableString new];
+    PPManticorePlugin *plugin = [[PPManticorePlugin alloc] initWithDelegate:self forEngine:engine];
+    [engine loadScript:@"{}" withName:@"testerscript"];
+    [self.engine loadScript:@"{}" withName:@"testerscript"];
+    plugin = nil;
+    [engine loadScript:@"{}" withName:@"foobar"];
+    XCTAssertEqualObjects(@"WILLLOADPOLY,DIDLOADPOLY,WILLLOADSCRIPT,testerscriptDIDLOADSCRIPT,testerscript", self.delegateCalls);
+}
+
+-(void)willLoadPolyfill:(PPManticoreEngine *)engine {
+    [self.delegateCalls appendString:@"WILLLOADPOLY,"];
+}
+
+-(void)didLoadPolyfill:(PPManticoreEngine *)engine {
+    [self.delegateCalls appendString:@"DIDLOADPOLY,"];
+}
+
+-(void)engine:(PPManticoreEngine *)engine willLoadScript:(NSString *)script withName:(NSString *)name {
+    [self.delegateCalls appendString:@"WILLLOADSCRIPT,"];
+    [self.delegateCalls appendString:name];
+}
+
+-(void)engine:(PPManticoreEngine *)engine didLoadScript:(NSString *)script withName:(NSString *)name {
+    [self.delegateCalls appendString:@"DIDLOADSCRIPT,"];
+    [self.delegateCalls appendString:name];
 }
 
 - (void)testEcho {

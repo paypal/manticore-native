@@ -18,6 +18,7 @@
 
 #import "PPManticoreTypeConverter.h"
 #import "PPManticoreEventHolder.h"
+#import "PPManticorePlugin.h"
 
 @interface PPManticoreEngine : NSObject
 

@@ -13,22 +13,29 @@
  |  the specific language governing permissions and limitations under the License.                                     |
  \*-------------------------------------------------------------------------------------------------------------------*/
 
-#import <JavaScriptCore/JavaScriptCore.h>
-#import "PPManticoreEngine.h"
-#import "PPManticoreNativeInterface.h"
+#import <Foundation/Foundation.h>
 
-#define WILL_LOAD_POLYFILL_NOTIFICATION @"Manticore.WillLoadPolyfill"
-#define DID_LOAD_POLYFILL_NOTIFICATION  @"Manticore.DidLoadPolyfill"
-#define WILL_LOAD_SCRIPT_NOTIFICATION   @"Manticore.WillLoadScript"
-#define DID_LOAD_SCRIPT_NOTIFICATION    @"Manticore.DidLoadScript"
+@class PPManticoreEngine;
 
-#define SCRIPT_NAME_KEY @"ScriptName"
-#define SCRIPT_KEY      @"Script"
+/**
+ * Exposing these elements of the loading cycle allows you to inject your own code
+ * at appropriate points. Typically this is used to expose new native functionality
+ * to the javascript. Note that if you load script, your own didLoadScript event
+ * will get called, so make sure to not infinitely do so.
+ */
+@protocol PPManticorePluginDelegate <NSObject>
+@optional
+-(void)willLoadPolyfill:(PPManticoreEngine* _Nonnull) engine;
+-(void)didLoadPolyfill:(PPManticoreEngine* _Nonnull) engine;
 
-@interface PPManticoreEngine (Private)
+-(void)engine:(PPManticoreEngine* _Nonnull) engine willLoadScript:(NSString* _Nonnull) script withName:(NSString* _Nullable)name;
+-(void)engine:(PPManticoreEngine* _Nonnull) engine didLoadScript:(NSString* _Nonnull) script withName:(NSString* _Nullable)name;
+@end
 
-@property (nonatomic,strong) JSContext *jsEngine;
-@property (nonatomic,strong) JSValue *exports;
-@property (nonatomic,strong) PPManticoreNativeInterface *native;
-
+/**
+ * This class basically exists to give you a pleasant delegate interface to a 
+ * multicast event model (from NSNotificationCenter)
+ */
+@interface PPManticorePlugin : NSObject
+-(instancetype _Nonnull)initWithDelegate:(id<PPManticorePluginDelegate> _Nonnull)delegate forEngine:(PPManticoreEngine* _Nullable)engine;
 @end

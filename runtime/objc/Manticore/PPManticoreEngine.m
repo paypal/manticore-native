@@ -45,13 +45,31 @@
         NSBundle *bundle = [NSBundle bundleWithURL:bundleUrl];
         NSString *jsPath = [bundle pathForResource:@"polyfill.pack" ofType:@"js"];
         NSString *js = [NSString stringWithContentsOfFile:jsPath encoding:NSUTF8StringEncoding error:nil];
-        [self loadScript:js withName:@"manticore://polyfill.pack.js"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:WILL_LOAD_POLYFILL_NOTIFICATION object:self];
+        if ([self.jsEngine respondsToSelector:@selector(evaluateScript:withSourceURL:)]) {
+            [self.jsEngine evaluateScript:js withSourceURL:[NSURL URLWithString:@"manticore://polyfill.pack.js"]];
+        } else {
+            [self.jsEngine evaluateScript:js];
+        }
+        [[NSNotificationCenter defaultCenter] postNotificationName:DID_LOAD_POLYFILL_NOTIFICATION object:self];
     }
+    [[NSNotificationCenter defaultCenter] postNotificationName:WILL_LOAD_SCRIPT_NOTIFICATION
+                                                        object:self
+                                                      userInfo:@{
+                                                                 SCRIPT_NAME_KEY: name?:[NSNull null],
+                                                                 SCRIPT_KEY: script?:[NSNull null]
+                                                                 }];
     if ([self.jsEngine respondsToSelector:@selector(evaluateScript:withSourceURL:)]) {
         [self.jsEngine evaluateScript:script withSourceURL:[NSURL URLWithString:name]];
     } else {
         [self.jsEngine evaluateScript:script];
     }
+    [[NSNotificationCenter defaultCenter] postNotificationName:DID_LOAD_SCRIPT_NOTIFICATION
+                                                        object:self
+                                                      userInfo:@{
+                                                                 SCRIPT_NAME_KEY: name?:[NSNull null],
+                                                                 SCRIPT_KEY: script
+                                                                 }];
 }
 
 -(JSValue*)createJSObject:(NSString*)jsClassName withArguments:(NSArray*)args {
