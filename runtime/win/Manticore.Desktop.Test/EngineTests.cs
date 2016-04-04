@@ -432,7 +432,7 @@ namespace Manticore.Test
 #if WINDOWS_APP
                 return new StreamReader(typeof(EngineTests).GetTypeInfo().Assembly.GetManifestResourceStream("Manticore.Test.index.pack.js")).ReadToEnd();
 #elif WINDOWS_PHONE_APP
-                return new StreamReader(typeof(EngineTests).GetTypeInfo().Assembly.GetManifestResourceStream("Manticore.WP81.Test.index.pack.js")).ReadToEnd();
+                return new StreamReader(typeof(EngineTests).GetTypeInfo().Assembly.GetManifestResourceStream("Manticore.Test.index.pack.js")).ReadToEnd();
 #else
 #if DOTNET_4
                 String src = "Manticore.Net4.Test.index.pack.js";

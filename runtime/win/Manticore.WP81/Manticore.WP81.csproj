@@ -9,7 +9,7 @@
     <ProjectGuid>{6942E051-BE83-49B0-86B0-7177A86C10EF}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Manticore.WP81</RootNamespace>
+    <RootNamespace>Manticore</RootNamespace>
     <AssemblyName>Manticore.WP81</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformVersion>8.1</TargetPlatformVersion>
@@ -108,6 +108,11 @@
       <Link>NativeServices.cs</Link>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="..\generated\polyfill.jint.pack.js">
+      <Link>polyfill.jint.pack.js</Link>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '12.0' ">
     <VisualStudioVersion>12.0</VisualStudioVersion>
