@@ -1,25 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Reflection;
 using System.IO;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 
-#if NETFX_CORE
-using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
-using System.Threading.Tasks;
-#else
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-#endif
+using Xunit;
 
-namespace Manticore.Win81.Test
+namespace Manticore.Test
 {
-    [TestClass]
-    public class EngineTests
+    public class EngineTests : IDisposable
     {
-        [TestCleanup]
-        public void Cleanup()
+        public void Dispose()
         {
             if (JsBackedObject.Engine != null)
             {
@@ -27,7 +19,7 @@ namespace Manticore.Win81.Test
             }
         }
 
-        [TestMethod]
+        [Fact]
 #if WINDOWS_PHONE_APP
         public void Phone_MakeEngineTest()
 #elif WINDOWS_APP
@@ -39,11 +31,11 @@ namespace Manticore.Win81.Test
 #endif
         {
             var engine = new ManticoreEngine();
-            Assert.IsNotNull(engine);
+            Assert.NotNull(engine);
             engine.Shutdown();
         }
 
-        [TestMethod]
+        [Fact]
 #if WINDOWS_PHONE_APP
         public void Phone_LoadJsTest()
 #elif WINDOWS_APP
@@ -59,7 +51,7 @@ namespace Manticore.Win81.Test
             engine.Shutdown();
         }
 
-        [TestMethod]
+        [Fact]
 #if WINDOWS_PHONE_APP
         public void Phone_PropertyTest()
 #elif WINDOWS_APP
@@ -73,24 +65,26 @@ namespace Manticore.Win81.Test
             JsBackedObject.CreateManticoreEngine(SampleScript, "index.js");
 
             SDKTestDefault simple = new SDKTestDefault();
-            Assert.AreEqual(1, simple.Test);
-            Assert.IsTrue(simple.ItsTrue);
-            Assert.IsFalse(simple.ItsFalse);
-            Assert.IsNull(simple.BlankDecimal);
-            Assert.AreEqual(0, simple.BlankInt);
-            Assert.AreEqual(1, simple.IntOne);
-            Assert.AreEqual(Decimal.Parse("100.01"), simple.DecimalHundredOhOne);
+            Assert.Equal(1, simple.Test);
+            Assert.True(simple.ItsTrue);
+            Assert.False(simple.ItsFalse);
+            Assert.Null(simple.BlankDecimal);
+            Assert.Equal(0, simple.BlankInt);
+            Assert.Equal(1, simple.IntOne);
+            Assert.Equal(Decimal.Parse("100.01"), simple.DecimalHundredOhOne);
 
             SDKTest tester = new SDKTest("STRINGISHERE");
-            Assert.AreEqual(1, tester.ItsOne);
-            Assert.AreEqual("STRINGISHERE", tester.StringProperty);
-            Assert.IsNull(tester.AccessorString);
-            Assert.IsNotNull(tester.ComplexType);
-            Assert.AreEqual(Decimal.Parse("100.01"), tester.ComplexType
+            Assert.Equal(1, tester.ItsOne);
+            Assert.Equal("STRINGISHERE", tester.StringProperty);
+            Assert.Null(tester.AccessorString);
+            Assert.NotNull(tester.ComplexType);
+            Assert.Equal(Decimal.Parse("100.01"), tester.ComplexType
                 .DecimalHundredOhOne);
+
+            JsBackedObject.Engine.Shutdown();
         }
 
-        [TestMethod]
+        [Fact]
 #if WINDOWS_PHONE_APP
         public void Phone_FunctionCallTest()
 #elif WINDOWS_APP
@@ -105,12 +99,14 @@ namespace Manticore.Win81.Test
 
             var test = new SDKTest("");
             var d = test.ReturnAnObject();
-            Assert.IsNotNull(d);
-            Assert.IsInstanceOfType(d, typeof(SDKTestDefault));
-            Assert.IsTrue(d.IsItTrue());
+            Assert.NotNull(d);
+            Assert.IsAssignableFrom(typeof(SDKTestDefault), d);
+            Assert.True(d.IsItTrue());
+
+            JsBackedObject.Engine.Shutdown();
         }
 
-        [TestMethod]
+        [Fact]
 #if WINDOWS_PHONE_APP
         public void Phone_StaticFunctionCallTest()
 #elif WINDOWS_APP
@@ -124,11 +120,13 @@ namespace Manticore.Win81.Test
             JsBackedObject.CreateManticoreEngine(SampleScript, "index.js");
 
             var d = SDKTest.StaticMethod();
-            Assert.IsNotNull(d);
-            Assert.IsInstanceOfType(d, typeof(SDKTest));
+            Assert.NotNull(d);
+            Assert.IsAssignableFrom(typeof(SDKTest), d);
+
+            JsBackedObject.Engine.Shutdown();
         }
 
-        [TestMethod]
+        [Fact]
 #if WINDOWS_PHONE_APP
         public void Phone_PreDecrementTest()
 #elif WINDOWS_APP
@@ -143,12 +141,14 @@ namespace Manticore.Win81.Test
 
             var test = new SDKTest("");
             var d = test.PreDecrement(0, 1, 10);
-            Assert.AreEqual(10, d[0]);
-            Assert.AreEqual(1, d[1]);
-            Assert.AreEqual(0, d[2]);
+            Assert.Equal(10, d[0]);
+            Assert.Equal(1, d[1]);
+            Assert.Equal(0, d[2]);
+
+            JsBackedObject.Engine.Shutdown();
         }
 
-        [TestMethod]
+        [Fact]
 #if WINDOWS_PHONE_APP
         public void Phone_PostDecrementTest()
 #elif WINDOWS_APP
@@ -163,12 +163,14 @@ namespace Manticore.Win81.Test
 
             var test = new SDKTest("");
             var d = test.PostDecrement(0,1,10);
-            Assert.AreEqual(0, d[0]);
-            Assert.AreEqual(10, d[1]);
-            Assert.AreEqual(0, d[2]);
+            Assert.Equal(0, d[0]);
+            Assert.Equal(10, d[1]);
+            Assert.Equal(0, d[2]);
+
+            JsBackedObject.Engine.Shutdown();
         }
 
-        [TestMethod]
+        [Fact]
 #if WINDOWS_PHONE_APP
         public void Phone_CallbackTest()
 #elif WINDOWS_APP
@@ -187,24 +189,26 @@ namespace Manticore.Win81.Test
             var latch = new ManualResetEvent(false);
             tester.Echo(testing, (e, a) =>
             {
-                Assert.IsNull(e);
-                Assert.AreEqual(testing, a);
+                Assert.Null(e);
+                Assert.Equal(testing, a);
                 latch.Set();
             });
-            Assert.IsTrue(latch.WaitOne(1000));
+            Assert.True(latch.WaitOne(1000));
             latch.Reset();
 
             tester.EchoWithSetTimeout(testing, (e, a) =>
             {
-                Assert.IsNull(e);
-                Assert.AreEqual(testing, a);
+                Assert.Null(e);
+                Assert.Equal(testing, a);
                 latch.Set();
             });
-            Assert.IsTrue(latch.WaitOne(1000));
+            Assert.True(latch.WaitOne(1000));
             latch.Reset();
+
+            JsBackedObject.Engine.Shutdown();
         }
 
-        [TestMethod]
+        [Fact]
 #if WINDOWS_PHONE_APP
         public void Phone_EventTest()
 #elif WINDOWS_APP
@@ -222,15 +226,15 @@ namespace Manticore.Win81.Test
             var calledOnce = false;
             var fakeDelegate = new SDKTest.FakeEventDelegate((sender, item) =>
             {
-                Assert.IsFalse(calledOnce);
+                Assert.False(calledOnce);
                 calledOnce = true;
-                Assert.IsNotNull(item);
-                Assert.AreEqual(1, item.Test);
+                Assert.NotNull(item);
+                Assert.Equal(1, item.Test);
                 latch.Set();
             });
             tester.FakeEvent += fakeDelegate;
             tester.TriggerFakeAfterTimeout();
-            Assert.IsTrue(latch.WaitOne(1000));
+            Assert.True(latch.WaitOne(1000));
             latch.Reset();
 
             tester.FakeEvent -= fakeDelegate;
@@ -240,9 +244,11 @@ namespace Manticore.Win81.Test
 #else
             Thread.Sleep(1000);
 #endif
+
+            JsBackedObject.Engine.Shutdown();
         }
 
-        [TestMethod]
+        [Fact]
 #if WINDOWS_PHONE_APP
         public void Phone_CollectionTest()
 #elif WINDOWS_APP
@@ -258,14 +264,16 @@ namespace Manticore.Win81.Test
             var d = new SDKTestDefault();
             var arr = d.StringArray;
 
-            Assert.AreEqual(3, arr.Count);
+            Assert.Equal(3, arr.Count);
 
             arr.Add("helloworld");
             d.StringArray = arr;
-            Assert.AreEqual(4, d.StringArray.Count);
+            Assert.Equal(4, d.StringArray.Count);
+
+            JsBackedObject.Engine.Shutdown();
         }
 
-        [TestMethod]
+        [Fact]
 #if WINDOWS_PHONE_APP
         public void Phone_ExceptionTest()
 #elif WINDOWS_APP
@@ -282,15 +290,17 @@ namespace Manticore.Win81.Test
             try
             {
                 d.ThrowOne();
-                Assert.Fail();
+                Assert.True(false);
             }
             catch (ManticoreException)
             {
                 // That's what we wanted.
             }
+
+            JsBackedObject.Engine.Shutdown();
         }
 
-        [TestMethod]
+        [Fact]
 #if WINDOWS_PHONE_APP
         public void Phone_DictionaryTest()
 #elif WINDOWS_APP
@@ -309,9 +319,11 @@ namespace Manticore.Win81.Test
             Verify(dict);
 
             Verify(d.TakeAMixedType(dict));
+
+            JsBackedObject.Engine.Shutdown();
         }
 
-        [TestMethod]
+        [Fact]
 #if WINDOWS_PHONE_APP
         public void Phone_InheritanceTest()
 #elif WINDOWS_APP
@@ -326,16 +338,18 @@ namespace Manticore.Win81.Test
 
             var tester = new SDKTest("123");
             var derived = tester.ReturnADerivedObject();
-            Assert.IsTrue(derived is SDKTestDefault);
-            Assert.IsTrue(derived is SDKTestDefaultSubclass);
+            Assert.True(derived is SDKTestDefault);
+            Assert.True(derived is SDKTestDefaultSubclass);
             var both = tester.ReturnBaseAndDerived();
-            Assert.IsTrue(both[0] is SDKTestDefault);
-            Assert.IsFalse(both[0] is SDKTestDefaultSubclass);
-            Assert.IsTrue(both[1] is SDKTestDefault);
-            Assert.IsTrue(both[1] is SDKTestDefaultSubclass);
+            Assert.True(both[0] is SDKTestDefault);
+            Assert.False(both[0] is SDKTestDefaultSubclass);
+            Assert.True(both[1] is SDKTestDefault);
+            Assert.True(both[1] is SDKTestDefaultSubclass);
+
+            JsBackedObject.Engine.Shutdown();
         }
 
-        [TestMethod]
+        [Fact]
 #if WINDOWS_PHONE_APP
         public void Phone_FetchTest()
 #elif WINDOWS_APP
@@ -355,11 +369,11 @@ namespace Manticore.Win81.Test
             {
                 try
                 {
-                    Assert.IsNull(x);
-                    Assert.IsNotNull(r);
-                    Assert.IsNotNull(r["args"]);
-                    Assert.IsInstanceOfType(r["args"], typeof(IDictionary<String, Object>));
-                    Assert.AreEqual(((IDictionary<String,Object>)r["args"])["foo"], "bar");
+                    Assert.Null(x);
+                    Assert.NotNull(r);
+                    Assert.NotNull(r["args"]);
+                    Assert.IsAssignableFrom(typeof(IDictionary<String, Object>), r["args"]);
+                    Assert.Equal(((IDictionary<String,Object>)r["args"])["foo"], "bar");
                 }
                 catch (Exception assertExc)
                 {
@@ -370,14 +384,16 @@ namespace Manticore.Win81.Test
                     latch.Set();
                 }
             }));
-            Assert.IsTrue(latch.WaitOne(10000));
+            Assert.True(latch.WaitOne(10000));
             if (encountered != null)
             {
                 throw encountered;
             }
+
+            JsBackedObject.Engine.Shutdown();
         }
 
-        [TestMethod]
+        [Fact]
 #if WINDOWS_PHONE_APP
         public async Task Phone_FetchPTest()
 #elif WINDOWS_APP
@@ -391,22 +407,22 @@ namespace Manticore.Win81.Test
             JsBackedObject.CreateManticoreEngine(SampleScript, "index.js");
             var tester = new SDKTest("123");
             var response = await tester.GoFetchP();
-            Assert.IsNotNull(response);
-            Assert.IsNotNull(response["args"]);
-            Assert.IsInstanceOfType(response["args"], typeof(IDictionary<String, Object>));
-            Assert.AreEqual(((IDictionary<String, Object>)response["args"])["baz"], "bop");
+            Assert.NotNull(response);
+            Assert.NotNull(response["args"]);
+            Assert.IsAssignableFrom(typeof(IDictionary<String, Object>), response["args"]);
+            Assert.Equal(((IDictionary<String, Object>)response["args"])["baz"], "bop");
             JsBackedObject.Engine.Shutdown();
         }
 
         private void Verify(IDictionary<String, Object> dict)
         {
-            Assert.AreEqual(4, (int)dict["anInt"]);
-            Assert.AreEqual(1.1, (double)dict["aFloat"]);
-            Assert.AreEqual("testing", dict["aString"].ToString());
-            Assert.AreEqual(true, (bool)dict["aBool"]);
-            Assert.IsNull(dict["aNull"]);
-            Assert.IsInstanceOfType(dict["anObject"], typeof(IDictionary<String, Object>));
-            Assert.IsInstanceOfType(dict["aMixed"], typeof(IDictionary<String, Object>));
+            Assert.Equal(4, (int)dict["anInt"]);
+            Assert.Equal(1.1, (double)dict["aFloat"]);
+            Assert.Equal("testing", dict["aString"].ToString());
+            Assert.Equal(true, (bool)dict["aBool"]);
+            Assert.Null(dict["aNull"]);
+            Assert.IsAssignableFrom(typeof(IDictionary<String, Object>), dict["anObject"]);
+            Assert.IsAssignableFrom(typeof(IDictionary<String, Object>), dict["aMixed"]);
         }
 
         String SampleScript
@@ -414,7 +430,7 @@ namespace Manticore.Win81.Test
             get
             {
 #if WINDOWS_APP
-                return new StreamReader(typeof(EngineTests).GetTypeInfo().Assembly.GetManifestResourceStream("Manticore.Win81.Test.index.pack.js")).ReadToEnd();
+                return new StreamReader(typeof(EngineTests).GetTypeInfo().Assembly.GetManifestResourceStream("Manticore.Test.index.pack.js")).ReadToEnd();
 #elif WINDOWS_PHONE_APP
                 return new StreamReader(typeof(EngineTests).GetTypeInfo().Assembly.GetManifestResourceStream("Manticore.WP81.Test.index.pack.js")).ReadToEnd();
 #else
