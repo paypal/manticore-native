@@ -384,7 +384,7 @@ namespace Manticore.Test
                     latch.Set();
                 }
             }));
-            Assert.True(latch.WaitOne(10000));
+            Assert.True(latch.WaitOne(30000));
             if (encountered != null)
             {
                 throw encountered;
