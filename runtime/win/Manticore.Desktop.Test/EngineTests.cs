@@ -1,32 +1,75 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 
 using Xunit;
+using Xunit.Abstractions;
 
 namespace Manticore.Test
 {
-    public class EngineTests : IDisposable
+    public class EngineFixture : IDisposable
     {
+        public EngineFixture()
+        {
+            JsBackedObject.CreateManticoreEngine(SampleScript, "index.js");
+        }
+
         public void Dispose()
         {
-            if (JsBackedObject.Engine != null)
+            JsBackedObject.Engine.Shutdown();
+        }
+
+        string SampleScript
+        {
+            get
             {
-                JsBackedObject.Engine.Shutdown();
+#if WINDOWS_APP
+                return new StreamReader(typeof(EngineTests).GetTypeInfo().Assembly.GetManifestResourceStream("Manticore.Test.index.pack.js")).ReadToEnd();
+#elif WINDOWS_PHONE_APP
+                return new StreamReader(typeof(EngineTests).GetTypeInfo().Assembly.GetManifestResourceStream("Manticore.Test.index.pack.js")).ReadToEnd();
+#else
+#if DOTNET_4
+                String src = "Manticore.Net4.Test.index.pack.js";
+#else
+                String src = "Manticore.Desktop.Test.index.pack.js";
+#endif
+                String javascript;
+                using (Stream s = Assembly.GetExecutingAssembly().GetManifestResourceStream(src))
+                {
+                    using (StreamReader reader = new StreamReader(s))
+                    {
+                        javascript = reader.ReadToEnd();
+                    }
+                }
+                return javascript;
+#endif
             }
+        }
+    }
+
+    public class EngineTests : IClassFixture<EngineFixture>
+    {
+        public EngineTests(EngineFixture fixture, ITestOutputHelper output)
+        {
+            output.WriteLine("Creating test instance");
         }
 
         [Fact]
 #if WINDOWS_PHONE_APP
+        [Trait("Category", "WinPhone")]
         public void Phone_MakeEngineTest()
 #elif WINDOWS_APP
+        [Trait("Category", "WinStore")]
         public void Win81_MakeEngineTest()
 #elif DOTNET_4
+        [Trait("Category", "Net4")]
         public void Net4_MakeEngineTest()
 #else
+        [Trait("Category", "Desktop")]
         public void Desktop_MakeEngineTest()
 #endif
         {
@@ -37,33 +80,39 @@ namespace Manticore.Test
 
         [Fact]
 #if WINDOWS_PHONE_APP
+        [Trait("Category", "WinPhone")]
         public void Phone_LoadJsTest()
 #elif WINDOWS_APP
+        [Trait("Category", "WinStore")]
         public void Win81_LoadJsTest()
 #elif DOTNET_4
+        [Trait("Category", "Net4")]
         public void Net4_LoadJsTest()
 #else
+        [Trait("Category", "Desktop")]
         public void Desktop_LoadJsTest()
 #endif
         {
             var engine = new ManticoreEngine();
-            engine.LoadScript(SampleScript, "index.js");
+            engine.LoadScript("{}", "index.js");
             engine.Shutdown();
         }
 
         [Fact]
 #if WINDOWS_PHONE_APP
+        [Trait("Category", "WinPhone")]
         public void Phone_PropertyTest()
 #elif WINDOWS_APP
+        [Trait("Category", "WinStore")]
         public void Win81_PropertyTest()
 #elif DOTNET_4
+        [Trait("Category", "Net4")]
         public void Net4_PropertyTest()
 #else
+        [Trait("Category", "Desktop")]
         public void Desktop_PropertyTest()
 #endif
         {
-            JsBackedObject.CreateManticoreEngine(SampleScript, "index.js");
-
             SDKTestDefault simple = new SDKTestDefault();
             Assert.Equal(1, simple.Test);
             Assert.True(simple.ItsTrue);
@@ -80,109 +129,107 @@ namespace Manticore.Test
             Assert.NotNull(tester.ComplexType);
             Assert.Equal(Decimal.Parse("100.01"), tester.ComplexType
                 .DecimalHundredOhOne);
-
-            JsBackedObject.Engine.Shutdown();
         }
 
         [Fact]
 #if WINDOWS_PHONE_APP
+        [Trait("Category", "WinPhone")]
         public void Phone_FunctionCallTest()
 #elif WINDOWS_APP
+        [Trait("Category", "WinStore")]
         public void Win81_FunctionCallTest()
 #elif DOTNET_4
+        [Trait("Category", "Net4")]
         public void Net4_FunctionCallTest()
 #else
+        [Trait("Category", "Desktop")]
         public void Desktop_FunctionCallTest()
 #endif
         {
-            JsBackedObject.CreateManticoreEngine(SampleScript, "index.js");
-
             var test = new SDKTest("");
             var d = test.ReturnAnObject();
             Assert.NotNull(d);
             Assert.IsAssignableFrom(typeof(SDKTestDefault), d);
             Assert.True(d.IsItTrue());
-
-            JsBackedObject.Engine.Shutdown();
         }
 
         [Fact]
 #if WINDOWS_PHONE_APP
+        [Trait("Category", "WinPhone")]
         public void Phone_StaticFunctionCallTest()
 #elif WINDOWS_APP
+        [Trait("Category", "WinStore")]
         public void Win81_StaticFunctionCallTest()
 #elif DOTNET_4
+        [Trait("Category", "Net4")]
         public void Net4_StaticFunctionCallTest()
 #else
+        [Trait("Category", "Desktop")]
         public void Desktop_StaticFunctionCallTest()
 #endif
         {
-            JsBackedObject.CreateManticoreEngine(SampleScript, "index.js");
-
             var d = SDKTest.StaticMethod();
             Assert.NotNull(d);
             Assert.IsAssignableFrom(typeof(SDKTest), d);
-
-            JsBackedObject.Engine.Shutdown();
         }
 
         [Fact]
 #if WINDOWS_PHONE_APP
+        [Trait("Category", "WinPhone")]
         public void Phone_PreDecrementTest()
 #elif WINDOWS_APP
+        [Trait("Category", "WinStore")]
         public void Win81_PreDecrementTest()
 #elif DOTNET_4
+        [Trait("Category", "Net4")]
         public void Net4_PreDecrementTest()
 #else
+        [Trait("Category", "Desktop")]
         public void Desktop_PreDecrementTest()
 #endif
         {
-            JsBackedObject.CreateManticoreEngine(SampleScript, "index.js");
-
             var test = new SDKTest("");
             var d = test.PreDecrement(0, 1, 10);
             Assert.Equal(10, d[0]);
             Assert.Equal(1, d[1]);
             Assert.Equal(0, d[2]);
-
-            JsBackedObject.Engine.Shutdown();
         }
 
         [Fact]
 #if WINDOWS_PHONE_APP
+        [Trait("Category", "WinPhone")]
         public void Phone_PostDecrementTest()
 #elif WINDOWS_APP
+        [Trait("Category", "WinStore")]
         public void Win81_PostDecrementTest()
 #elif DOTNET_4
         public void Net4_PostDecrementTest()
 #else
+        [Trait("Category", "Desktop")]
         public void Desktop_PostDecrementTest()
 #endif
         {
-            JsBackedObject.CreateManticoreEngine(SampleScript, "index.js");
-
             var test = new SDKTest("");
             var d = test.PostDecrement(0,1,10);
             Assert.Equal(0, d[0]);
             Assert.Equal(10, d[1]);
             Assert.Equal(0, d[2]);
-
-            JsBackedObject.Engine.Shutdown();
         }
 
         [Fact]
 #if WINDOWS_PHONE_APP
+        [Trait("Category", "WinPhone")]
         public void Phone_CallbackTest()
 #elif WINDOWS_APP
+        [Trait("Category", "WinStore")]
         public void Win81_CallbackTest()
 #elif DOTNET_4
+        [Trait("Category", "Net4")]
         public void Net4_CallbackTest()
 #else
         public void Desktop_CallbackTest()
 #endif
         {
-            JsBackedObject.CreateManticoreEngine(SampleScript, "index.js");
-
             String testing = "Testing123";
             var tester = new SDKTest(testing);
 
@@ -204,23 +251,23 @@ namespace Manticore.Test
             });
             Assert.True(latch.WaitOne(1000));
             latch.Reset();
-
-            JsBackedObject.Engine.Shutdown();
         }
 
         [Fact]
 #if WINDOWS_PHONE_APP
+        [Trait("Category", "WinPhone")]
         public void Phone_EventTest()
 #elif WINDOWS_APP
+        [Trait("Category", "WinStore")]
         public void Win81_EventTest()
 #elif DOTNET_4
+        [Trait("Category", "Net4")]
         public void Net4_EventTest()
 #else
+        [Trait("Category", "Desktop")]
         public void Desktop_EventTest()
 #endif
         {
-            JsBackedObject.CreateManticoreEngine(SampleScript, "index.js");
-
             var tester = new SDKTest("123");
             var latch = new ManualResetEvent(false);
             var calledOnce = false;
@@ -244,23 +291,23 @@ namespace Manticore.Test
 #else
             Thread.Sleep(1000);
 #endif
-
-            JsBackedObject.Engine.Shutdown();
         }
 
         [Fact]
 #if WINDOWS_PHONE_APP
+        [Trait("Category", "WinPhone")]
         public void Phone_CollectionTest()
 #elif WINDOWS_APP
+        [Trait("Category", "WinStore")]
         public void Win81_CollectionTest()
 #elif DOTNET_4
+        [Trait("Category", "Net4")]
         public void Net4_CollectionTest()
 #else
+        [Trait("Category", "Desktop")]
         public void Desktop_CollectionTest()
 #endif
         {
-            JsBackedObject.CreateManticoreEngine(SampleScript, "index.js");
-
             var d = new SDKTestDefault();
             var arr = d.StringArray;
 
@@ -269,23 +316,23 @@ namespace Manticore.Test
             arr.Add("helloworld");
             d.StringArray = arr;
             Assert.Equal(4, d.StringArray.Count);
-
-            JsBackedObject.Engine.Shutdown();
         }
 
         [Fact]
 #if WINDOWS_PHONE_APP
+        [Trait("Category", "WinPhone")]
         public void Phone_ExceptionTest()
 #elif WINDOWS_APP
+        [Trait("Category", "WinStore")]
         public void Win81_ExceptionTest()
 #elif DOTNET_4
+        [Trait("Category", "Net4")]
         public void Net4_ExceptionTest()
 #else
+        [Trait("Category", "Desktop")]
         public void Desktop_ExceptionTest()
 #endif
         {
-            JsBackedObject.CreateManticoreEngine(SampleScript, "index.js");
-
             var d = new SDKTest("123");
             try
             {
@@ -296,46 +343,45 @@ namespace Manticore.Test
             {
                 // That's what we wanted.
             }
-
-            JsBackedObject.Engine.Shutdown();
         }
 
         [Fact]
 #if WINDOWS_PHONE_APP
+        [Trait("Category", "WinPhone")]
         public void Phone_DictionaryTest()
 #elif WINDOWS_APP
+        [Trait("Category", "WinStore")]
         public void Win81_DictionaryTest()
 #elif DOTNET_4
+        [Trait("Category", "Net4")]
         public void Net4_DictionaryTest()
 #else
+        [Trait("Category", "Desktop")]
         public void Desktop_DictionaryTest()
 #endif
         {
-            JsBackedObject.CreateManticoreEngine(SampleScript, "index.js");
-
             var d = new SDKTest("123");
             var dict = d.ReturnAMixedType();
 
             Verify(dict);
 
             Verify(d.TakeAMixedType(dict));
-
-            JsBackedObject.Engine.Shutdown();
         }
 
         [Fact]
 #if WINDOWS_PHONE_APP
+        [Trait("Category", "WinPhone")]
         public void Phone_InheritanceTest()
 #elif WINDOWS_APP
+        [Trait("Category", "WinStore")]
         public void Win81_InheritanceTest()
 #elif DOTNET_4
         public void Net4_InheritanceTest()
 #else
+        [Trait("Category", "Desktop")]
         public void Desktop_InheritanceTest()
 #endif
         {
-            JsBackedObject.CreateManticoreEngine(SampleScript, "index.js");
-
             var tester = new SDKTest("123");
             var derived = tester.ReturnADerivedObject();
             Assert.True(derived is SDKTestDefault);
@@ -345,23 +391,23 @@ namespace Manticore.Test
             Assert.False(both[0] is SDKTestDefaultSubclass);
             Assert.True(both[1] is SDKTestDefault);
             Assert.True(both[1] is SDKTestDefaultSubclass);
-
-            JsBackedObject.Engine.Shutdown();
         }
 
         [Fact]
 #if WINDOWS_PHONE_APP
+        [Trait("Category", "WinPhone")]
         public void Phone_FetchTest()
 #elif WINDOWS_APP
+        [Trait("Category", "WinStore")]
         public void Win81_FetchTest()
 #elif DOTNET_4
+        [Trait("Category", "Net4")]
         public void Net4_FetchTest()
 #else
+        [Trait("Category", "Desktop")]
         public void Desktop_FetchTest()
 #endif
         {
-            JsBackedObject.CreateManticoreEngine(SampleScript, "index.js");
-
             var latch = new ManualResetEvent(false);
             var tester = new SDKTest("123");
             Exception encountered = null;
@@ -389,29 +435,29 @@ namespace Manticore.Test
             {
                 throw encountered;
             }
-
-            JsBackedObject.Engine.Shutdown();
         }
 
         [Fact]
 #if WINDOWS_PHONE_APP
+        [Trait("Category", "WinPhone")]
         public async Task Phone_FetchPTest()
 #elif WINDOWS_APP
+        [Trait("Category", "WinStore")]
         public async Task Win81_FetchPTest()
 #elif DOTNET_4
+        [Trait("Category", "Net4")]
         public async void Net4_FetchPTest()
 #else
+        [Trait("Category", "Desktop")]
         public async Task Desktop_FetchPTest()
 #endif
         {
-            JsBackedObject.CreateManticoreEngine(SampleScript, "index.js");
             var tester = new SDKTest("123");
             var response = await tester.GoFetchP();
             Assert.NotNull(response);
             Assert.NotNull(response["args"]);
             Assert.IsAssignableFrom(typeof(IDictionary<String, Object>), response["args"]);
             Assert.Equal(((IDictionary<String, Object>)response["args"])["baz"], "bop");
-            JsBackedObject.Engine.Shutdown();
         }
 
         private void Verify(IDictionary<String, Object> dict)
@@ -424,33 +470,5 @@ namespace Manticore.Test
             Assert.IsAssignableFrom(typeof(IDictionary<String, Object>), dict["anObject"]);
             Assert.IsAssignableFrom(typeof(IDictionary<String, Object>), dict["aMixed"]);
         }
-
-        String SampleScript
-        {
-            get
-            {
-#if WINDOWS_APP
-                return new StreamReader(typeof(EngineTests).GetTypeInfo().Assembly.GetManifestResourceStream("Manticore.Test.index.pack.js")).ReadToEnd();
-#elif WINDOWS_PHONE_APP
-                return new StreamReader(typeof(EngineTests).GetTypeInfo().Assembly.GetManifestResourceStream("Manticore.Test.index.pack.js")).ReadToEnd();
-#else
-#if DOTNET_4
-                String src = "Manticore.Net4.Test.index.pack.js";
-#else
-                String src = "Manticore.Desktop.Test.index.pack.js";
-#endif
-                String javascript;
-                using (Stream s = Assembly.GetExecutingAssembly().GetManifestResourceStream(src))
-                {
-                    using (StreamReader reader = new StreamReader(s))
-                    {
-                        javascript = reader.ReadToEnd();
-                    }
-                }
-                return javascript;
-#endif
-            }
-        }
-
     }
 }
