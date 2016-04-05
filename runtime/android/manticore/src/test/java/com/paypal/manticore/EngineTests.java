@@ -15,7 +15,6 @@
 package com.paypal.manticore;
 
 import java.math.BigDecimal;
-import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -28,7 +27,6 @@ import java.util.concurrent.TimeUnit;
 import android.content.Context;
 import com.eclipsesource.v8.V8Value;
 import junit.framework.Assert;
-import junit.framework.AssertionFailedError;
 import okhttp3.ConnectionSpec;
 import okhttp3.OkHttpClient;
 
@@ -36,7 +34,7 @@ public class EngineTests
 {
   public void makeEngineTest(Context context)
   {
-    ManticoreEngine me = new ManticoreEngine(context);
+    ManticoreEngine me = new ManticoreEngine().start(context);
     Assert.assertNotNull(me);
     me.shutDown();
   }
@@ -44,21 +42,62 @@ public class EngineTests
 
   public void loadJsTest(Context context, String script)
   {
-    final ManticoreEngine me = new ManticoreEngine(context);
+    final ManticoreEngine me = new ManticoreEngine();
 
-    me.loadScript(script, "index.pack.js");
-
-    me.getExecutor().run(new Runnable()
+    for (int i = 0; i < 2; i++)
     {
-      @Override
-      public void run()
+      me.start(context);
+      me.loadScript(script, "index.pack.js");
+      me.getExecutor().run(new Runnable()
       {
-        Assert.assertEquals(me.v8.getType("SDKTest"), V8Value.V8_FUNCTION);
-      }
-    });
-    me.shutDown();
+        @Override
+        public void run()
+        {
+          Assert.assertEquals(me.v8.getType("SDKTest"), V8Value.V8_FUNCTION);
+        }
+      });
+      me.shutDown();
+    }
   }
 
+  public void pluginTest(Context context, String script) {
+    final StringBuilder builder = new StringBuilder();
+    IManticoreObserver observer = new IManticoreObserver()
+    {
+      @Override
+      public void willLoadPolyfill(ManticoreEngine engine)
+      {
+        builder.append("willLoadPoly,");
+      }
+
+
+      @Override
+      public void didLoadPolyfill(ManticoreEngine engine)
+      {
+        builder.append("didLoadPoly,");
+      }
+
+
+      @Override
+      public void willLoadScript(ManticoreEngine engine, String script, String name)
+      {
+        builder.append("willLoadScript,").append(name).append(',');
+      }
+
+
+      @Override
+      public void didLoadScript(ManticoreEngine engine, String script, String name)
+      {
+        builder.append("didLoadScript,").append(name).append(',');
+      }
+    };
+
+    ManticoreEngine me = new ManticoreEngine().start(context);
+    me.addObserver(observer);
+    me.loadScript(script, "index.pack.js");
+    me.shutDown();
+    Assert.assertEquals("willLoadPoly,didLoadPoly,willLoadScript,index.pack.js,didLoadScript,index.pack.js,", builder.toString());
+  }
 
   public void verifyDefaults(SDKTestDefault simple)
   {
@@ -259,15 +298,6 @@ public class EngineTests
     });
   }
 
-
-  public void invoiceTest(Runnable runnable)
-  {
-    JsBackedObject.createManticoreEngine(BaseTest._mockContext, BaseTest._testJs, "index.pack.js");
-
-    JsBackedObject.getEngine().getExecutor().run(runnable);
-  }
-
-
   public void dateTest(Context context, String script)
   {
     JsBackedObject.createManticoreEngine(context, script, "index.pack.js");
@@ -288,7 +318,7 @@ public class EngineTests
   private void verify(Map<String, ? super Object> dict)
   {
     Assert.assertEquals(4, (int) dict.get("anInt"));
-    Assert.assertEquals(1.1, (double) dict.get("aFloat"));
+    Assert.assertEquals(1.1, dict.get("aFloat"));
     Assert.assertEquals("testing", dict.get("aString").toString());
     Assert.assertEquals(true, (boolean) dict.get("aBool"));
     Assert.assertNull(dict.get("aNull"));
@@ -303,13 +333,10 @@ public class EngineTests
 
     SDKTest t = new SDKTest("testing");
     SDKTestDefault def = t.returnADerivedObject();
-    Assert.assertTrue(def instanceof SDKTestDefault);
     Assert.assertTrue(def instanceof SDKTestDefaultSubclass);
     List<SDKTestDefault> both = t.returnBaseAndDerived();
     Assert.assertEquals(2, both.size());
-    Assert.assertTrue(both.get(0) instanceof SDKTestDefault);
     Assert.assertFalse(both.get(0) instanceof SDKTestDefaultSubclass);
-    Assert.assertTrue(both.get(1) instanceof SDKTestDefault);
     Assert.assertTrue(both.get(1) instanceof SDKTestDefaultSubclass);
   }
 
@@ -329,6 +356,7 @@ public class EngineTests
     t.goFetch(new SDKTest.FetchedCallback()
     {
       @Override
+      @SuppressWarnings("unchecked")
       public void fetched(ManticoreException error, Map<String, ? super Object> response)
       {
         try
@@ -376,6 +404,7 @@ public class EngineTests
     t.goFetchP(new SDKTest.GoFetchPCallback()
     {
       @Override
+      @SuppressWarnings("unchecked")
       public void done(ManticoreException error, Map<String, ? super Object> response)
       {
         try

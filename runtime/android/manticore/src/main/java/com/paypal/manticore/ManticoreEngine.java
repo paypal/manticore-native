@@ -19,6 +19,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 
 import android.content.Context;
 import android.os.Build;
@@ -49,11 +51,23 @@ public class ManticoreEngine
   V8Object exports;
   NativeServices nativeServices;
   IManticoreTypeConverter converter;
+  List<IManticoreObserver> plugins;
+  String polyfillToLoad;
+  boolean started = false;
 
-  public ManticoreEngine(final Context androidContext) {
+  public ManticoreEngine() {
     executor = new JsExecutor();
     converter = new DefaultTypeConverter(this);
+  }
 
+
+  /**
+   * You must call start before loading scripts into the engine.
+   * @param androidContext The context in which to load the polyfills and other dependencies
+   * @return this, for easier chaining.
+   */
+  public ManticoreEngine start(final Context androidContext) {
+    started = true;
     executor.run(new Runnable()
     {
       @Override
@@ -98,23 +112,72 @@ public class ManticoreEngine
         } catch (IOException x) {
           Log.e("manticore", "Failed to load polyfill", x);
         }
-        v8.executeVoidScript(fullJs.toString(), "polyfill_pack.js", 0);
+        polyfillToLoad = fullJs.toString();
       }
     });
+    return this;
   }
 
-  public void loadScript(final String script, final String name) {
+
+  /**
+   * Load script into the engine with a given name
+   * @param script The Javascript to load
+   * @param name A name for stack traces
+   * @return this, for easier chaining
+   */
+  public ManticoreEngine loadScript(final String script, final String name) {
+    final String poly = polyfillToLoad;
+    this.polyfillToLoad = null;
     executor.run(new Runnable()
     {
       @Override
       public void run()
       {
+        List<IManticoreObserver> observers = null;
+        if (poly != null) {
+          observers = ManticoreEngine.this.plugins;
+          if (observers != null) {
+            for (IManticoreObserver o : observers)
+            {
+              o.willLoadPolyfill(ManticoreEngine.this);
+            }
+          }
+          v8.executeVoidScript(poly.toString(), "polyfill_pack.js", 0);
+          observers = ManticoreEngine.this.plugins;
+          if (observers != null) {
+            for (IManticoreObserver o : observers)
+            {
+              o.didLoadPolyfill(ManticoreEngine.this);
+            }
+          }
+        }
+        observers = ManticoreEngine.this.plugins;
+        if (observers != null) {
+          for (IManticoreObserver o : observers)
+          {
+            o.willLoadScript(ManticoreEngine.this, script, name);
+          }
+        }
         v8.executeVoidScript(script, name, 0);
+        observers = ManticoreEngine.this.plugins;
+        if (observers != null) {
+          for (IManticoreObserver o : observers)
+          {
+            o.didLoadScript(ManticoreEngine.this, script, name);
+          }
+        }
       }
     });
+    return this;
   }
 
+
+  /**
+   * Force a shutdown of all the v8 services. The object will NOT
+   * be usable after this.
+   */
   public void shutDown() {
+    started = false;
     v8.terminateExecution();
     v8 = null;
     exports = null;
@@ -191,5 +254,31 @@ public class ManticoreEngine
 
   public V8Object getJsObject(String objectName) {
     return v8.getObject(objectName);
+  }
+
+
+  /**
+   * Add an object that will be notified of Manticore engine events. Note that
+   * these events are handled syncrhonously - loading/execution will not continue
+   * until the methods return.
+   * @param observer The observer to be notified
+   */
+  public void addObserver(IManticoreObserver observer) {
+    if (this.plugins == null) {
+      this.plugins = new ArrayList<>();
+    }
+    this.plugins.add(observer);
+  }
+
+  /**
+   * Remove an observer for manticore engine events
+   * @param observer The observer previously passed to addObserver
+   * @return true if found and removed, false otherwise
+   */
+  public boolean removeObserver(IManticoreObserver observer) {
+    if (this.plugins != null) {
+      return this.plugins.remove(observer);
+    }
+    return false;
   }
 }

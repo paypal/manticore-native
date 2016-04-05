@@ -52,7 +52,7 @@ public class JsBackedObject
    * @param script
    */
   public static void createManticoreEngine(Context context, String script, String name) {
-    ManticoreEngine me = new ManticoreEngine(context);
+    ManticoreEngine me = new ManticoreEngine().start(context);
     me.setConverter(new DefaultTypeConverter(me));
     // Make sure to set the engine before loading the script because some JS things may call
     // BACK into Java upon loading and you need an engine to do stuff with those calls.

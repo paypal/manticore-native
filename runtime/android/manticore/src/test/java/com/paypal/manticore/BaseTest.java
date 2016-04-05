@@ -147,6 +147,11 @@ public class BaseTest
     new EngineTests().loadJsTest(_mockContext, _testJs);
   }
 
+  @Test
+  public void pluginTest()
+  {
+    new EngineTests().pluginTest(_mockContext, _testJs);
+  }
 
   @Test
   public void propertyTest()
