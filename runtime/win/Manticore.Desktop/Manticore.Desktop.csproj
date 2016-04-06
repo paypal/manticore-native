@@ -55,6 +55,7 @@
     <Compile Include="JsBackedObject.cs" />
     <Compile Include="NativeServices.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ScriptEventArgs.cs" />
     <Compile Include="SingleThreadedReentrantScheduler.cs" />
   </ItemGroup>
   <ItemGroup>

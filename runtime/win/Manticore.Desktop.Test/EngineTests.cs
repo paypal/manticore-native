@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-
 using Xunit;
 using Xunit.Abstractions;
 
@@ -458,6 +458,32 @@ namespace Manticore.Test
             Assert.NotNull(response["args"]);
             Assert.IsAssignableFrom(typeof(IDictionary<String, Object>), response["args"]);
             Assert.Equal(((IDictionary<String, Object>)response["args"])["baz"], "bop");
+        }
+
+        [Fact]
+#if WINDOWS_PHONE_APP
+        [Trait("Category", "WinPhone")]
+        public async Task Phone_PluginTest()
+#elif WINDOWS_APP
+        [Trait("Category", "WinStore")]
+        public async Task Win81_PluginTest()
+#elif DOTNET_4
+        [Trait("Category", "Net4")]
+        public async void Net4_PluginTest()
+#else
+        [Trait("Category", "Desktop")]
+        public async Task Desktop_PluginTest()
+#endif
+        {
+            var engine = new ManticoreEngine().Start();
+            StringBuilder builder = new StringBuilder();
+            engine.WillLoadPolyfill += (s,a) => builder.Append("willLoadPoly,");
+            engine.DidLoadPolyfill += (s, a) => builder.Append("didLoadPoly,");
+            engine.WillLoadScript += (s, a) => builder.Append("willLoadScript,").Append(a.Name).Append(',');
+            engine.DidLoadScript += (s, a) => builder.Append("didLoadScript,").Append(a.Name).Append(',');
+            engine.LoadScript("{}", "testScript.js");
+            Assert.Equal(builder.ToString(), "willLoadPoly,didLoadPoly,willLoadScript,testScript.js,didLoadScript,testScript.js,");
+            engine.Shutdown();
         }
 
         private void Verify(IDictionary<String, Object> dict)

@@ -18,6 +18,11 @@ namespace Manticore
 {
     public class ManticoreEngine
     {
+        public event EventHandler WillLoadPolyfill;
+        public event EventHandler DidLoadPolyfill;
+        public event ScriptEventHandler WillLoadScript;
+        public event ScriptEventHandler DidLoadScript;
+
         public static JsValue[] EmptyArgs = { };
         public IJsTypeConverter Converter { get; set; }
         public Engine jsEngine { get; private set; }
@@ -34,7 +39,7 @@ namespace Manticore
             Start();
         }
 
-        public void Start()
+        public ManticoreEngine Start()
         {
             jsEngine = new Engine();
             jsEngine.ShouldCreateStackTrace = true;
@@ -47,6 +52,7 @@ namespace Manticore
                 jsEngine.Global.FastAddProperty("exports", _exports, false, false, false);
                 _nativeServices.Register(this);
             });
+            return this;
         }
 
         public bool IsStarted
@@ -81,15 +87,32 @@ namespace Manticore
             {
                 if (poly != null)
                 {
+                    if (this.WillLoadPolyfill != null)
+                    {
+                        this.WillLoadPolyfill(this, EventArgs.Empty);
+                    }
                     jsEngine.Execute(poly, new Jint.Parser.ParserOptions
                     {
                         Source = "polyfill.pack.js"
                     });
+                    if (this.DidLoadPolyfill != null)
+                    {
+                        this.DidLoadPolyfill(this, EventArgs.Empty);
+                    }
+                }
+                ScriptEventArgs args = new ScriptEventArgs(name, script);
+                if (this.WillLoadScript != null)
+                {
+                    this.WillLoadScript(this, args);
                 }
                 jsEngine.Execute(script, new Jint.Parser.ParserOptions
                 {
                     Source = name
                 });
+                if (this.DidLoadScript != null)
+                {
+                    this.DidLoadScript(this, args);
+                }
             });
         }
 

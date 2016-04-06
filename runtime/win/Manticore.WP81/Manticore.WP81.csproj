@@ -92,6 +92,9 @@
     <Compile Include="..\Manticore.Desktop\ManticoreException.cs">
       <Link>ManticoreException.cs</Link>
     </Compile>
+    <Compile Include="..\Manticore.Desktop\ScriptEventArgs.cs">
+      <Link>ScriptEventArgs.cs</Link>
+    </Compile>
     <Compile Include="..\Manticore.Win81\DefaultConverter.cs">
       <Link>DefaultConverter.cs</Link>
     </Compile>

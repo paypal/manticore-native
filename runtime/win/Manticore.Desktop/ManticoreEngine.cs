@@ -14,6 +14,11 @@ namespace Manticore
 {
     public class ManticoreEngine
     {
+        public event EventHandler WillLoadPolyfill;
+        public event EventHandler DidLoadPolyfill;
+        public event ScriptEventHandler WillLoadScript;
+        public event ScriptEventHandler DidLoadScript;
+
         private bool loadedPolyfill;
 
         public IJsTypeConverter Converter { get; set; }
@@ -28,7 +33,7 @@ namespace Manticore
             Start();
         }
 
-        public void Start()
+        public ManticoreEngine Start()
         {
             v8 = new V8ScriptEngine();
             v8.AccessContext = typeof(ManticoreEngine);
@@ -36,6 +41,7 @@ namespace Manticore
             ManticoreJsObject = v8.Script.manticore;            
             v8.Script.global = v8.Script;
             nativeServices.Register(this);
+            return this;
         }
 
         public bool IsStarted
@@ -59,9 +65,26 @@ namespace Manticore
                         polyfill = reader.ReadToEnd();
                     }
                 }
+                if (this.WillLoadPolyfill != null)
+                {
+                    this.WillLoadPolyfill(this, EventArgs.Empty);
+                }
                 v8.Execute("polyfill.js", polyfill);
+                if (this.DidLoadPolyfill != null)
+                {
+                    this.DidLoadPolyfill(this, EventArgs.Empty);
+                }
+            }
+            ScriptEventArgs args = new ScriptEventArgs(name, script);
+            if (this.WillLoadScript != null)
+            {
+                this.WillLoadScript(this, args);
             }
             v8.Execute(name, script);
+            if (this.DidLoadScript != null)
+            {
+                this.DidLoadScript(this, args);
+            }
         }
 
         public void Shutdown()
