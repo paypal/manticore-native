@@ -68,28 +68,6 @@ returned are still the same thin shims over JavaScript -- where all calls to pro
 there is no "synchronization" of values or events or anything - **there is only one truth, and it lives in the JavaScript environment**.
 
 
-
-
-# ISSUES
-
-there are still places where we have language specific knowledge in the generator (but it should be factored out).
-
-DustJS seemed great at the time we wrote this whole thing, but we don't really love it anymore. There's probably a better templating language for a case like this where whitespace matters (for example) - so you should suggest it to us.
-
-`basenames` and `extensions` need to be updated
-
-use varname library instead of the really weird .toUpperCase in the dust helpers
-
-specify templates dir SEPARATELY from config.json, and let config.json be anything
-
-continue to work on docs for adding manticore to project
-
-add hello world example file
-
-fix objc stack trace to pull lines from input js
-
-
-
 License
 =======
 
