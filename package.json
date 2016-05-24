@@ -58,11 +58,7 @@
     "eslint-config-airbnb": "^6.2.0",
     "eslint-plugin-react": "^4.2.3",
     "mkdirp": "^0.5.1",
-    "pre-commit": "^1.1.2",
     "tape": "^4.5.1",
     "uglifyify": "^3.0.1"
-  },
-  "pre-commit": [
-    "precommit-lint"
-  ]
+  }
 }
