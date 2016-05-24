@@ -1,5 +1,5 @@
 {
-  "name": "paypal-manticore",
+  "name": "manticore-native",
   "version": "1.0.0",
   "description": "A runtime to expose Javascript classes, logic and code to native components",
   "main": "build/index.js",
@@ -21,7 +21,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.paypal.com/RetailSDK-NewGen/paypal-manticore"
+    "url": "https://github.com/paypal/manticore-native"
   },
   "keywords": [
     "nodejs",
