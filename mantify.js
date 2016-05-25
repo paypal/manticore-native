@@ -19,8 +19,8 @@ if (require('os').platform() === 'win32') {
 
 mkdirp.sync(path.dirname(output));
 
-let b = browserify(files, options)
-.transform('babelify', JSON.parse(fs.readFileSync(path.join(__dirname, '.babelrc'))));
+const babelRc = JSON.parse(fs.readFileSync(path.join(__dirname, '.babelrc')));
+let b = browserify(files, options).transform('babelify', babelRc);
 
 if (process.env.UGLIFYIFY) {
   b = b.transform({
