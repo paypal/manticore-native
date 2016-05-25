@@ -1,4 +1,4 @@
-Manticore
+Manticore [![Gitter](https://badges.gitter.im/paypal/manticore-native.svg)](https://gitter.im/paypal/manticore-native)
 =========
 
 A cross platform Javascript runtime environment, built specifically for native mobile development and enabled by code generation.
