@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "A runtime to expose Javascript classes, logic and code to native components",
   "main": "build/index.js",
-  "bin": "./build/gen/index.js",
+  "bin": {
+    "manticore-gen": "./build/gen/index.js"
+  },
   "scripts": {
     "lint": "eslint .",
     "precommit-lint": "eslint .; true",
