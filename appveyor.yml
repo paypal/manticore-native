@@ -1,24 +1,29 @@
 version: 1.0.{build}
-init:
-- ps: Install-Product node $env:nodejs_version
+
+branches:
+  # blacklist
+  except:
+    - gh-pages
+
+pull_requests:
+  do_not_increment_build_number: true
+
 environment:
   nodejs_version: 4.4
   AppxPackageSigningEnabled: false
+
+install:
+  - ps: Install-Product node $env:nodejs_version
+  - git submodule update --init --recursive
+  - npm install -g npm@3
+  - npm install
+  - npm run build-testjs
+  - npm run win-polyfill
+  - npm run win-testjs
+
 before_build:
-- cmd: >-
-    git submodule update --init --recursive
+  - ps: nuget restore runtime\win\Manticore.sln
 
-    npm install -g npm@3
-
-    npm install
-
-    npm run build-testjs
-
-    npm run win-polyfill
-
-    npm run win-testjs
-
-    nuget restore runtime\win\Manticore.sln
 build:
   project: runtime/win/Manticore.sln
   verbosity: minimal
