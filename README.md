@@ -9,10 +9,6 @@ A cross platform Javascript runtime environment, built specifically for native m
 * The ability to completely hide the fact that it's "Javascript all the way down" from your code consumers
 
 
-```
-npm install manticore-native
-```
-
 ### Code Portability
 
 If you wrote a single library in JavaScript, here are all the platforms where Manticore could help you compile it into native code:
