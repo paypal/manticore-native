@@ -7,26 +7,34 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2395020A1CF8C7FF00BFE8CD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 239502091CF8C7FF00BFE8CD /* AppDelegate.swift */; };
+		2395020F1CF8C7FF00BFE8CD /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2395020D1CF8C7FF00BFE8CD /* MainMenu.xib */; };
+		239502251CF8C94A00BFE8CD /* ManticoreTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C710883E1B3B4C2E005A3B40 /* ManticoreTests.m */; };
+		239502261CF8C99C00BFE8CD /* PPManticoreSDKTest.m in Sources */ = {isa = PBXBuildFile; fileRef = C7E783A71CA6DB0D0087B3AB /* PPManticoreSDKTest.m */; };
+		239502271CF8C9A000BFE8CD /* PPManticoreSDKTestDefault.m in Sources */ = {isa = PBXBuildFile; fileRef = C7E783A91CA6DB0D0087B3AB /* PPManticoreSDKTestDefault.m */; };
+		239502281CF8C9A300BFE8CD /* PPManticoreSDKTestDefaultSubclass.m in Sources */ = {isa = PBXBuildFile; fileRef = C7E783AB1CA6DB0D0087B3AB /* PPManticoreSDKTestDefaultSubclass.m */; };
+		239502291CF8CA0900BFE8CD /* index.pack.js in Resources */ = {isa = PBXBuildFile; fileRef = C7E783A21CA6D8E20087B3AB /* index.pack.js */; };
 		71E55478D03B8919858AADC1 /* libPods-ManticoreContainer-iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F2FEEFF29EC2CD5B3B4BD45 /* libPods-ManticoreContainer-iOS.a */; };
+		8B13F64B26C878BBB6024048 /* libPods-ManticoreContainer-OSX.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B88FFDD027264D2C052CC7B /* libPods-ManticoreContainer-OSX.a */; };
+		8D7A5544A7BC595A08911E86 /* libPods-ManticoreContainer-OSXTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D12A152920C7E132908764A4 /* libPods-ManticoreContainer-OSXTests.a */; };
 		9F57C4052EEBCB6197F7BEDE /* libPods-ManticoreContainer-iOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B3455A643FD45811D9073CC /* libPods-ManticoreContainer-iOSTests.a */; };
-		BB53B6415FF6E429C2639D1B /* libPods-ManticoreContainer-OSXTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D12A152920C7E132908764A4 /* libPods-ManticoreContainer-OSXTests.a */; };
 		C71088401B3B4C2E005A3B40 /* ManticoreTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C710883E1B3B4C2E005A3B40 /* ManticoreTests.m */; };
-		C71088411B3B4C2E005A3B40 /* ManticoreTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C710883E1B3B4C2E005A3B40 /* ManticoreTests.m */; };
 		C71088541B3B55AC005A3B40 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C71088531B3B55AC005A3B40 /* main.m */; };
-		C710885A1B3BBDCC005A3B40 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C71088531B3B55AC005A3B40 /* main.m */; };
 		C7D3B84B1CA9B80E000A4D84 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C7D3B8491CA9B7C8000A4D84 /* Default-568h@2x.png */; };
 		C7E783AC1CA6DB0D0087B3AB /* PPManticoreSDKTest.m in Sources */ = {isa = PBXBuildFile; fileRef = C7E783A71CA6DB0D0087B3AB /* PPManticoreSDKTest.m */; };
-		C7E783AD1CA6DB0D0087B3AB /* PPManticoreSDKTest.m in Sources */ = {isa = PBXBuildFile; fileRef = C7E783A71CA6DB0D0087B3AB /* PPManticoreSDKTest.m */; };
 		C7E783AE1CA6DB0D0087B3AB /* PPManticoreSDKTestDefault.m in Sources */ = {isa = PBXBuildFile; fileRef = C7E783A91CA6DB0D0087B3AB /* PPManticoreSDKTestDefault.m */; };
-		C7E783AF1CA6DB0D0087B3AB /* PPManticoreSDKTestDefault.m in Sources */ = {isa = PBXBuildFile; fileRef = C7E783A91CA6DB0D0087B3AB /* PPManticoreSDKTestDefault.m */; };
 		C7E783B01CA6DB0D0087B3AB /* PPManticoreSDKTestDefaultSubclass.m in Sources */ = {isa = PBXBuildFile; fileRef = C7E783AB1CA6DB0D0087B3AB /* PPManticoreSDKTestDefaultSubclass.m */; };
-		C7E783B11CA6DB0D0087B3AB /* PPManticoreSDKTestDefaultSubclass.m in Sources */ = {isa = PBXBuildFile; fileRef = C7E783AB1CA6DB0D0087B3AB /* PPManticoreSDKTestDefaultSubclass.m */; };
-		C7E783B41CA6DCA00087B3AB /* index.pack.js in Resources */ = {isa = PBXBuildFile; fileRef = C7E783A21CA6D8E20087B3AB /* index.pack.js */; };
 		C7E783B51CA6DCA10087B3AB /* index.pack.js in Resources */ = {isa = PBXBuildFile; fileRef = C7E783A21CA6D8E20087B3AB /* index.pack.js */; };
-		E1CFF674CB9FEC92EAF893E3 /* libPods-ManticoreContainer-OSX.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B88FFDD027264D2C052CC7B /* libPods-ManticoreContainer-OSX.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		239502201CF8C92E00BFE8CD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C71087E71B3B493D005A3B40 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 239502061CF8C7FF00BFE8CD;
+			remoteInfo = "ManticoreContainer-OSX";
+		};
 		C71088091B3B493E005A3B40 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = C71087E71B3B493D005A3B40 /* Project object */;
@@ -34,17 +42,17 @@
 			remoteGlobalIDString = C71087EE1B3B493D005A3B40;
 			remoteInfo = "ManticoreContainer-iOS";
 		};
-		C710882F1B3B4991005A3B40 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = C71087E71B3B493D005A3B40 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = C710881B1B3B4991005A3B40;
-			remoteInfo = "ManticoreContainer-OSX";
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		160B0AF1EBC4A474B764CA56 /* Pods-ManticoreContainer-iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ManticoreContainer-iOS.release.xcconfig"; path = "../Pods/Target Support Files/Pods-ManticoreContainer-iOS/Pods-ManticoreContainer-iOS.release.xcconfig"; sourceTree = "<group>"; };
+		239502071CF8C7FF00BFE8CD /* ManticoreContainer-OSX.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ManticoreContainer-OSX.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		239502091CF8C7FF00BFE8CD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		2395020B1CF8C7FF00BFE8CD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		2395020E1CF8C7FF00BFE8CD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		239502101CF8C7FF00BFE8CD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2395021B1CF8C92D00BFE8CD /* ManticoreContainer-OSXTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ManticoreContainer-OSXTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2395021F1CF8C92E00BFE8CD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		40D01BF9521A75C6C6FD05CB /* Pods-ManticoreContainer-iOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ManticoreContainer-iOSTests.release.xcconfig"; path = "../Pods/Target Support Files/Pods-ManticoreContainer-iOSTests/Pods-ManticoreContainer-iOSTests.release.xcconfig"; sourceTree = "<group>"; };
 		524323E504BFD53F9A66CBC8 /* Pods-ManticoreContainer-OSX.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ManticoreContainer-OSX.debug.xcconfig"; path = "../Pods/Target Support Files/Pods-ManticoreContainer-OSX/Pods-ManticoreContainer-OSX.debug.xcconfig"; sourceTree = "<group>"; };
 		57DB44BFDEBAF87C36D4FB4F /* Pods-ManticoreContainer-OSX.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ManticoreContainer-OSX.release.xcconfig"; path = "../Pods/Target Support Files/Pods-ManticoreContainer-OSX/Pods-ManticoreContainer-OSX.release.xcconfig"; sourceTree = "<group>"; };
@@ -59,14 +67,12 @@
 		C71087F31B3B493E005A3B40 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C71088081B3B493E005A3B40 /* ManticoreContainer-iOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ManticoreContainer-iOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C710880D1B3B493E005A3B40 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		C710881C1B3B4991005A3B40 /* ManticoreContainer-OSX.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ManticoreContainer-OSX.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C710881F1B3B4991005A3B40 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		C710882E1B3B4991005A3B40 /* ManticoreContainer-OSXTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ManticoreContainer-OSXTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C71088331B3B4991005A3B40 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C710883E1B3B4C2E005A3B40 /* ManticoreTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ManticoreTests.m; path = ../../Common/ManticoreTests.m; sourceTree = "<group>"; };
 		C71088531B3B55AC005A3B40 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = SOURCE_ROOT; };
 		C7D3B8491CA9B7C8000A4D84 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "../Default-568h@2x.png"; sourceTree = "<group>"; };
-		C7E783A21CA6D8E20087B3AB /* index.pack.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = index.pack.js; path = ../../../../output/index.pack.js; sourceTree = "<group>"; };
+		C7E783A21CA6D8E20087B3AB /* index.pack.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = index.pack.js; path = ../../../output/index.pack.js; sourceTree = SOURCE_ROOT; };
 		C7E783A41CA6DB0D0087B3AB /* PayPalManticoreImports.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PayPalManticoreImports.h; path = ../../../../output/objc/PayPalManticoreImports.h; sourceTree = "<group>"; };
 		C7E783A51CA6DB0D0087B3AB /* PayPalManticoreTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PayPalManticoreTypes.h; path = ../../../../output/objc/PayPalManticoreTypes.h; sourceTree = "<group>"; };
 		C7E783A61CA6DB0D0087B3AB /* PPManticoreSDKTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PPManticoreSDKTest.h; path = ../../../../output/objc/PPManticoreSDKTest.h; sourceTree = "<group>"; };
@@ -79,6 +85,22 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		239502041CF8C7FF00BFE8CD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8B13F64B26C878BBB6024048 /* libPods-ManticoreContainer-OSX.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		239502181CF8C92D00BFE8CD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8D7A5544A7BC595A08911E86 /* libPods-ManticoreContainer-OSXTests.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C71087EC1B3B493D005A3B40 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -95,25 +117,28 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		C71088191B3B4991005A3B40 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				E1CFF674CB9FEC92EAF893E3 /* libPods-ManticoreContainer-OSX.a in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		C710882B1B3B4991005A3B40 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				BB53B6415FF6E429C2639D1B /* libPods-ManticoreContainer-OSXTests.a in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		239502081CF8C7FF00BFE8CD /* ManticoreContainer-OSX */ = {
+			isa = PBXGroup;
+			children = (
+				239502091CF8C7FF00BFE8CD /* AppDelegate.swift */,
+				2395020B1CF8C7FF00BFE8CD /* Assets.xcassets */,
+				2395020D1CF8C7FF00BFE8CD /* MainMenu.xib */,
+				239502101CF8C7FF00BFE8CD /* Info.plist */,
+			);
+			path = "ManticoreContainer-OSX";
+			sourceTree = "<group>";
+		};
+		2395021C1CF8C92E00BFE8CD /* ManticoreContainer-OSXTests */ = {
+			isa = PBXGroup;
+			children = (
+				2395021F1CF8C92E00BFE8CD /* Info.plist */,
+			);
+			path = "ManticoreContainer-OSXTests";
+			sourceTree = "<group>";
+		};
 		B8F1CDEFBAFCC96BDB11EC90 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -130,6 +155,8 @@
 			children = (
 				C71087F11B3B493D005A3B40 /* ManticoreContainer */,
 				C710880B1B3B493E005A3B40 /* ManticoreContainer-iOSTests */,
+				239502081CF8C7FF00BFE8CD /* ManticoreContainer-OSX */,
+				2395021C1CF8C92E00BFE8CD /* ManticoreContainer-OSXTests */,
 				C71087F01B3B493D005A3B40 /* Products */,
 				E6F725C2FE5619F3A755B5C0 /* Pods */,
 				B8F1CDEFBAFCC96BDB11EC90 /* Frameworks */,
@@ -141,8 +168,8 @@
 			children = (
 				C71087EF1B3B493D005A3B40 /* ManticoreContainer-iOS.app */,
 				C71088081B3B493E005A3B40 /* ManticoreContainer-iOSTests.xctest */,
-				C710881C1B3B4991005A3B40 /* ManticoreContainer-OSX.app */,
-				C710882E1B3B4991005A3B40 /* ManticoreContainer-OSXTests.xctest */,
+				239502071CF8C7FF00BFE8CD /* ManticoreContainer-OSX.app */,
+				2395021B1CF8C92D00BFE8CD /* ManticoreContainer-OSXTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -237,6 +264,47 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		239502061CF8C7FF00BFE8CD /* ManticoreContainer-OSX */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 239502111CF8C7FF00BFE8CD /* Build configuration list for PBXNativeTarget "ManticoreContainer-OSX" */;
+			buildPhases = (
+				F31A2E936E5398B65D899BBD /* Check Pods Manifest.lock */,
+				239502031CF8C7FF00BFE8CD /* Sources */,
+				239502041CF8C7FF00BFE8CD /* Frameworks */,
+				239502051CF8C7FF00BFE8CD /* Resources */,
+				B3ECB9FB45EEE9460D387839 /* Embed Pods Frameworks */,
+				DFAA7EAE6BD2AB05C7749D24 /* Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "ManticoreContainer-OSX";
+			productName = "ManticoreContainer-OSX";
+			productReference = 239502071CF8C7FF00BFE8CD /* ManticoreContainer-OSX.app */;
+			productType = "com.apple.product-type.application";
+		};
+		2395021A1CF8C92D00BFE8CD /* ManticoreContainer-OSXTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 239502221CF8C92E00BFE8CD /* Build configuration list for PBXNativeTarget "ManticoreContainer-OSXTests" */;
+			buildPhases = (
+				C1D559100102520FDB4FE2A3 /* Check Pods Manifest.lock */,
+				239502171CF8C92D00BFE8CD /* Sources */,
+				239502181CF8C92D00BFE8CD /* Frameworks */,
+				239502191CF8C92D00BFE8CD /* Resources */,
+				461B47BC91600365C05A63FF /* Embed Pods Frameworks */,
+				6995B01CA3593E87ACA3F1D2 /* Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				239502211CF8C92E00BFE8CD /* PBXTargetDependency */,
+			);
+			name = "ManticoreContainer-OSXTests";
+			productName = "ManticoreContainer-OSXTests";
+			productReference = 2395021B1CF8C92D00BFE8CD /* ManticoreContainer-OSXTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		C71087EE1B3B493D005A3B40 /* ManticoreContainer-iOS */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = C71088121B3B493E005A3B40 /* Build configuration list for PBXNativeTarget "ManticoreContainer-iOS" */;
@@ -278,69 +346,29 @@
 			productReference = C71088081B3B493E005A3B40 /* ManticoreContainer-iOSTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		C710881B1B3B4991005A3B40 /* ManticoreContainer-OSX */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = C71088361B3B4991005A3B40 /* Build configuration list for PBXNativeTarget "ManticoreContainer-OSX" */;
-			buildPhases = (
-				16BC5D102F56F46576947D97 /* Check Pods Manifest.lock */,
-				C71088181B3B4991005A3B40 /* Sources */,
-				C71088191B3B4991005A3B40 /* Frameworks */,
-				C710881A1B3B4991005A3B40 /* Resources */,
-				76797010720BE255CCF620C9 /* Copy Pods Resources */,
-				13E19262CE9670047C32013D /* Embed Pods Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = "ManticoreContainer-OSX";
-			productName = "ManticoreContainer-OSX";
-			productReference = C710881C1B3B4991005A3B40 /* ManticoreContainer-OSX.app */;
-			productType = "com.apple.product-type.application";
-		};
-		C710882D1B3B4991005A3B40 /* ManticoreContainer-OSXTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = C71088391B3B4991005A3B40 /* Build configuration list for PBXNativeTarget "ManticoreContainer-OSXTests" */;
-			buildPhases = (
-				B38AA911DE53088BB397D207 /* Check Pods Manifest.lock */,
-				C710882A1B3B4991005A3B40 /* Sources */,
-				C710882B1B3B4991005A3B40 /* Frameworks */,
-				C710882C1B3B4991005A3B40 /* Resources */,
-				7A4E5208EF5A99BDAD862DB5 /* Copy Pods Resources */,
-				D85FA842A4FC8E7AC0B62BEA /* Embed Pods Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				C71088301B3B4991005A3B40 /* PBXTargetDependency */,
-			);
-			name = "ManticoreContainer-OSXTests";
-			productName = "ManticoreContainer-OSXTests";
-			productReference = C710882E1B3B4991005A3B40 /* ManticoreContainer-OSXTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		C71087E71B3B493D005A3B40 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 0720;
 				LastUpgradeCheck = 0720;
 				ORGANIZATIONNAME = PayPal;
 				TargetAttributes = {
+					239502061CF8C7FF00BFE8CD = {
+						CreatedOnToolsVersion = 7.2;
+					};
+					2395021A1CF8C92D00BFE8CD = {
+						CreatedOnToolsVersion = 7.2;
+						TestTargetID = 239502061CF8C7FF00BFE8CD;
+					};
 					C71087EE1B3B493D005A3B40 = {
 						CreatedOnToolsVersion = 6.3.2;
 					};
 					C71088071B3B493E005A3B40 = {
 						CreatedOnToolsVersion = 6.3.2;
 						TestTargetID = C71087EE1B3B493D005A3B40;
-					};
-					C710881B1B3B4991005A3B40 = {
-						CreatedOnToolsVersion = 6.3.2;
-					};
-					C710882D1B3B4991005A3B40 = {
-						CreatedOnToolsVersion = 6.3.2;
-						TestTargetID = C710881B1B3B4991005A3B40;
 					};
 				};
 			};
@@ -359,13 +387,29 @@
 			targets = (
 				C71087EE1B3B493D005A3B40 /* ManticoreContainer-iOS */,
 				C71088071B3B493E005A3B40 /* ManticoreContainer-iOSTests */,
-				C710881B1B3B4991005A3B40 /* ManticoreContainer-OSX */,
-				C710882D1B3B4991005A3B40 /* ManticoreContainer-OSXTests */,
+				239502061CF8C7FF00BFE8CD /* ManticoreContainer-OSX */,
+				2395021A1CF8C92D00BFE8CD /* ManticoreContainer-OSXTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		239502051CF8C7FF00BFE8CD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				239502291CF8CA0900BFE8CD /* index.pack.js in Resources */,
+				2395020F1CF8C7FF00BFE8CD /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		239502191CF8C92D00BFE8CD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C71087ED1B3B493D005A3B40 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -376,21 +420,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		C71088061B3B493E005A3B40 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		C710881A1B3B4991005A3B40 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				C7E783B41CA6DCA00087B3AB /* index.pack.js in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		C710882C1B3B4991005A3B40 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -430,7 +459,7 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		13E19262CE9670047C32013D /* Embed Pods Frameworks */ = {
+		461B47BC91600365C05A63FF /* Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -442,22 +471,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/../Pods/Target Support Files/Pods-ManticoreContainer-OSX/Pods-ManticoreContainer-OSX-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		16BC5D102F56F46576947D97 /* Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "\"${SRCROOT}/../Pods/Target Support Files/Pods-ManticoreContainer-OSXTests/Pods-ManticoreContainer-OSXTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		59CE7E6ED3B0EC09FE134548 /* Embed Pods Frameworks */ = {
@@ -475,22 +489,7 @@
 			shellScript = "\"${SRCROOT}/../Pods/Target Support Files/Pods-ManticoreContainer-iOSTests/Pods-ManticoreContainer-iOSTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		76797010720BE255CCF620C9 /* Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/../Pods/Target Support Files/Pods-ManticoreContainer-OSX/Pods-ManticoreContainer-OSX-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		7A4E5208EF5A99BDAD862DB5 /* Copy Pods Resources */ = {
+		6995B01CA3593E87ACA3F1D2 /* Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -520,7 +519,22 @@
 			shellScript = "\"${SRCROOT}/../Pods/Target Support Files/Pods-ManticoreContainer-iOSTests/Pods-ManticoreContainer-iOSTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		B38AA911DE53088BB397D207 /* Check Pods Manifest.lock */ = {
+		B3ECB9FB45EEE9460D387839 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/../Pods/Target Support Files/Pods-ManticoreContainer-OSX/Pods-ManticoreContainer-OSX-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C1D559100102520FDB4FE2A3 /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -535,19 +549,34 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		D85FA842A4FC8E7AC0B62BEA /* Embed Pods Frameworks */ = {
+		DFAA7EAE6BD2AB05C7749D24 /* Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Embed Pods Frameworks";
+			name = "Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/../Pods/Target Support Files/Pods-ManticoreContainer-OSXTests/Pods-ManticoreContainer-OSXTests-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/../Pods/Target Support Files/Pods-ManticoreContainer-OSX/Pods-ManticoreContainer-OSX-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F31A2E936E5398B65D899BBD /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		F4465870D97D22D8E91AAAF3 /* Embed Pods Frameworks */ = {
@@ -583,6 +612,25 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		239502031CF8C7FF00BFE8CD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2395020A1CF8C7FF00BFE8CD /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		239502171CF8C92D00BFE8CD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				239502251CF8C94A00BFE8CD /* ManticoreTests.m in Sources */,
+				239502271CF8C9A000BFE8CD /* PPManticoreSDKTestDefault.m in Sources */,
+				239502261CF8C99C00BFE8CD /* PPManticoreSDKTest.m in Sources */,
+				239502281CF8C9A300BFE8CD /* PPManticoreSDKTestDefaultSubclass.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C71087EB1B3B493D005A3B40 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -602,41 +650,102 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		C71088181B3B4991005A3B40 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				C710885A1B3BBDCC005A3B40 /* main.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		C710882A1B3B4991005A3B40 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				C7E783AD1CA6DB0D0087B3AB /* PPManticoreSDKTest.m in Sources */,
-				C71088411B3B4C2E005A3B40 /* ManticoreTests.m in Sources */,
-				C7E783AF1CA6DB0D0087B3AB /* PPManticoreSDKTestDefault.m in Sources */,
-				C7E783B11CA6DB0D0087B3AB /* PPManticoreSDKTestDefaultSubclass.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		239502211CF8C92E00BFE8CD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 239502061CF8C7FF00BFE8CD /* ManticoreContainer-OSX */;
+			targetProxy = 239502201CF8C92E00BFE8CD /* PBXContainerItemProxy */;
+		};
 		C710880A1B3B493E005A3B40 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = C71087EE1B3B493D005A3B40 /* ManticoreContainer-iOS */;
 			targetProxy = C71088091B3B493E005A3B40 /* PBXContainerItemProxy */;
 		};
-		C71088301B3B4991005A3B40 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = C710881B1B3B4991005A3B40 /* ManticoreContainer-OSX */;
-			targetProxy = C710882F1B3B4991005A3B40 /* PBXContainerItemProxy */;
-		};
 /* End PBXTargetDependency section */
 
+/* Begin PBXVariantGroup section */
+		2395020D1CF8C7FF00BFE8CD /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2395020E1CF8C7FF00BFE8CD /* Base */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
 /* Begin XCBuildConfiguration section */
+		239502121CF8C7FF00BFE8CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 524323E504BFD53F9A66CBC8 /* Pods-ManticoreContainer-OSX.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				INFOPLIST_FILE = "ManticoreContainer-OSX/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.paypal.ManticoreContainer-OSX";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		239502131CF8C7FF00BFE8CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 57DB44BFDEBAF87C36D4FB4F /* Pods-ManticoreContainer-OSX.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = "ManticoreContainer-OSX/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.paypal.ManticoreContainer-OSX";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		239502231CF8C92E00BFE8CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8F22021895C5EBB7F3C66A1F /* Pods-ManticoreContainer-OSXTests.debug.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				INFOPLIST_FILE = "ManticoreContainer-OSXTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.paypal.ManticoreContainer-OSXTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ManticoreContainer-OSX.app/Contents/MacOS/ManticoreContainer-OSX";
+			};
+			name = Debug;
+		};
+		239502241CF8C92E00BFE8CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 86391349964E7147B0D219E8 /* Pods-ManticoreContainer-OSXTests.release.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = "ManticoreContainer-OSXTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.paypal.ManticoreContainer-OSXTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ManticoreContainer-OSX.app/Contents/MacOS/ManticoreContainer-OSX";
+			};
+			name = Release;
+		};
 		C71088101B3B493E005A3B40 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -778,91 +887,27 @@
 			};
 			name = Release;
 		};
-		C71088371B3B4991005A3B40 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 524323E504BFD53F9A66CBC8 /* Pods-ManticoreContainer-OSX.debug.xcconfig */;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "-";
-				COMBINE_HIDPI_IMAGES = YES;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = "ManticoreContainer-OSX/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.paypal.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx;
-			};
-			name = Debug;
-		};
-		C71088381B3B4991005A3B40 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 57DB44BFDEBAF87C36D4FB4F /* Pods-ManticoreContainer-OSX.release.xcconfig */;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "-";
-				COMBINE_HIDPI_IMAGES = YES;
-				INFOPLIST_FILE = "ManticoreContainer-OSX/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.paypal.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx;
-			};
-			name = Release;
-		};
-		C710883A1B3B4991005A3B40 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8F22021895C5EBB7F3C66A1F /* Pods-ManticoreContainer-OSXTests.debug.xcconfig */;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				COMBINE_HIDPI_IMAGES = YES;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-					"$(inherited)",
-				);
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = "ManticoreContainer-OSXTests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.11;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.paypal.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ManticoreContainer-OSX.app/Contents/MacOS/ManticoreContainer-OSX";
-			};
-			name = Debug;
-		};
-		C710883B1B3B4991005A3B40 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 86391349964E7147B0D219E8 /* Pods-ManticoreContainer-OSXTests.release.xcconfig */;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				COMBINE_HIDPI_IMAGES = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = "ManticoreContainer-OSXTests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.11;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.paypal.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ManticoreContainer-OSX.app/Contents/MacOS/ManticoreContainer-OSX";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		239502111CF8C7FF00BFE8CD /* Build configuration list for PBXNativeTarget "ManticoreContainer-OSX" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				239502121CF8C7FF00BFE8CD /* Debug */,
+				239502131CF8C7FF00BFE8CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		239502221CF8C92E00BFE8CD /* Build configuration list for PBXNativeTarget "ManticoreContainer-OSXTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				239502231CF8C92E00BFE8CD /* Debug */,
+				239502241CF8C92E00BFE8CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		C71087EA1B3B493D005A3B40 /* Build configuration list for PBXProject "ManticoreContainer" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -886,24 +931,6 @@
 			buildConfigurations = (
 				C71088161B3B493E005A3B40 /* Debug */,
 				C71088171B3B493E005A3B40 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		C71088361B3B4991005A3B40 /* Build configuration list for PBXNativeTarget "ManticoreContainer-OSX" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				C71088371B3B4991005A3B40 /* Debug */,
-				C71088381B3B4991005A3B40 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		C71088391B3B4991005A3B40 /* Build configuration list for PBXNativeTarget "ManticoreContainer-OSXTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				C710883A1B3B4991005A3B40 /* Debug */,
-				C710883B1B3B4991005A3B40 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

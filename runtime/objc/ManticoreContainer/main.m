@@ -7,8 +7,6 @@
 
 #import <Foundation/Foundation.h>
 
-#if TARGET_OS_IPHONE
-
 #import <UIKit/UIKit.h>
 
 int main(int argc, char * argv[]) {
@@ -17,12 +15,3 @@ int main(int argc, char * argv[]) {
     }
 }
 
-#else
-
-#import <Cocoa/Cocoa.h>
-
-int main(int argc, const char * argv[]) {
-    return NSApplicationMain(argc, argv);
-}
-
-#endif

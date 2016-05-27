@@ -17,10 +17,12 @@
 #import "PPManticoreEngine.h"
 #import "PPManticoreNativeInterface.h"
 
-#define WILL_LOAD_POLYFILL_NOTIFICATION @"Manticore.WillLoadPolyfill"
-#define DID_LOAD_POLYFILL_NOTIFICATION  @"Manticore.DidLoadPolyfill"
-#define WILL_LOAD_SCRIPT_NOTIFICATION   @"Manticore.WillLoadScript"
-#define DID_LOAD_SCRIPT_NOTIFICATION    @"Manticore.DidLoadScript"
+
+
+static NSString *WILL_LOAD_POLYFILL_NOTIFICATION = @"Manticore.WillLoadPolyfill";
+static NSString *DID_LOAD_POLYFILL_NOTIFICATION = @"Manticore.DidLoadPolyfill";
+static NSString *WILL_LOAD_SCRIPT_NOTIFICATION = @"Manticore.WillLoadScript";
+static NSString *DID_LOAD_SCRIPT_NOTIFICATION = @"Manticore.DidLoadScript";
 
 #define SCRIPT_NAME_KEY @"ScriptName"
 #define SCRIPT_KEY      @"Script"

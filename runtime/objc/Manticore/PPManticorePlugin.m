@@ -42,6 +42,10 @@
     return self;
 }
 
+-(void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 -(void)willLoadPolyfill:(NSNotification *)notification {
     [self.delegate willLoadPolyfill:notification.object];
 }

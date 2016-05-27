@@ -1,8 +1,12 @@
 #!/bin/bash
+: ${BUILD_ITEM:=$1}  # allow "travis.sh objc" shorthand instead of "BUILD_ITEM=objc travis.sh"
+set -o pipefail
 
-if [ "$BUILD_ITEM" == "mac" ]
+
+echo "=*=*=*=*=*=*=*=*=*=*=*=* BUILDING $BUILD_ITEM =*=*=*=*=*=*=*=*=*=*=*=*"
+if [ "$BUILD_ITEM" == "objc" ]
 then
-  echo "=*=*=*=*=*=*=*=*=*=*=*=* BUILDING mac =*=*=*=*=*=*=*=*=*=*=*=*"
+  set -ex
   node -v
   npm -v
   brew update
@@ -14,17 +18,18 @@ then
   npm run objc-polyfill
   npm run objc-testjs
   cd runtime/objc
-#  instruments -s devices
+  pod install
+  instruments -s devices
   xcodebuild test -workspace Manticore.xcworkspace -scheme ManticoreContainer-OSX | tee xcodebuild-osx.log | xcpretty
   xcodebuild test -workspace Manticore.xcworkspace -scheme ManticoreContainer-iOS -destination 'platform=iOS Simulator,name=iPhone 6,OS=9.3' | tee xcodebuild9.log | xcpretty
 elif [ "$BUILD_ITEM" == "node" ]
 then
-  echo "=*=*=*=*=*=*=*=*=*=*=*=* BUILDING node =*=*=*=*=*=*=*=*=*=*=*=*"
+  set -ex
   npm run lint
   npm test
-elif [ "$BUILD_ITEM" == "android" ]
+elif [ "$BUILD_ITEM" == "java" ]
 then
-  echo "=*=*=*=*=*=*=*=*=*=*=*=* BUILDING android =*=*=*=*=*=*=*=*=*=*=*=*"
+  set -ex
   . /home/travis/.nvm/nvm.sh
   nvm install 4.4
   npm install -g npm@3
@@ -36,5 +41,6 @@ then
   cd runtime/android
   ./gradlew --stacktrace --info clean :manticore:generateDebugSources :manticore:mockableAndroidJar :manticore:prepareDebugUnitTestDependencies :manticore:generateDebugAndroidTestSources testDebug
 else
-  echo "=*=*=*=*=*=*=*=*=*=*=*=* MISSING BUILD_ITEM env var =*=*=*=*=*=*=*=*=*=*=*=*"
+  echo "The environment variable BUILD_ITEM contained the unrecognized value '$BUILD_ITEM'"
+  exit 1
 fi

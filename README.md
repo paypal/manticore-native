@@ -1,4 +1,4 @@
-Manticore
+Manticore [![Gitter](https://badges.gitter.im/paypal/manticore-native.svg)](https://gitter.im/paypal/manticore-native)
 =========
 
 A cross platform Javascript runtime environment, built specifically for native mobile development and enabled by code generation.
@@ -19,14 +19,14 @@ If you wrote a single library in JavaScript, here are all the platforms where Ma
 
 Platform | Version                   | Native | Distro    | Version | CI Status |
 -------- | -------                   | ------ |  ------   | ------- |:------    |
-iOS      | 7.0+                      | Obj C  | CocoaPods | 1.0.0   | [![Build Status](https://travis-ci.com/paypal/paypal-manticore.svg?token=zgKPydNJ3A6t49VkNfPv&branch=master)](https://travis-ci.com/paypal/paypal-manticore)
-MacOS    | 10.9+                     | Obj C  | CocoaPods | 1.0.0   | [![Build Status](https://travis-ci.com/paypal/paypal-manticore.svg?token=zgKPydNJ3A6t49VkNfPv&branch=master)](https://travis-ci.com/paypal/paypal-manticore)
-Android  | API 19+                   | Java   | JCenter   | 1.0.0   | [![Build Status](https://travis-ci.com/paypal/paypal-manticore.svg?token=zgKPydNJ3A6t49VkNfPv&branch=master)](https://travis-ci.com/paypal/paypal-manticore)
-Windows  | XP (.Net4)                | C#     | NuGet     | 1.0.0   | [![Build status](https://ci.appveyor.com/api/projects/status/e67m7icv3538oo4n/branch/master?svg=true)](https://ci.appveyor.com/project/djMaxM/paypal-manticore/branch/master)
-Windows  | 7,8,Vista (v8  )          | C#     | NuGet     | 1.0.0   | [![Build status](https://ci.appveyor.com/api/projects/status/e67m7icv3538oo4n/branch/master?svg=true)](https://ci.appveyor.com/project/djMaxM/paypal-manticore/branch/master)
-Windows  | 8.1, 8.1 Phone, 10 (jint) | C#     | NuGet     | 1.0.0   | [![Build status](https://ci.appveyor.com/api/projects/status/e67m7icv3538oo4n/branch/master?svg=true)](https://ci.appveyor.com/project/djMaxM/paypal-manticore/branch/master)
+iOS      | 7.0+                      | Obj C  | CocoaPods | 1.0.0   | [![Build Status](https://travis-ci.org/paypal/manticore-native.svg?branch=master)](https://travis-ci.org/paypal/manticore-native)
+MacOS    | 10.9+                     | Obj C  | CocoaPods | 1.0.0   | [![Build Status](https://travis-ci.org/paypal/manticore-native.svg?branch=master)](https://travis-ci.org/paypal/manticore-native)
+Android  | API 19+                   | Java   | JCenter   | 1.0.0   | [![Build Status](https://travis-ci.org/paypal/manticore-native.svg?branch=master)](https://travis-ci.org/paypal/manticore-native)
+Windows  | XP (.Net4)                | C#     | NuGet     | 1.0.0   | [![Build status](https://ci.appveyor.com/api/projects/status/sm23ige74y836v48?svg=true)](https://ci.appveyor.com/project/ifreecarve/manticore-native/branch/master)
+Windows  | 7,8,Vista (v8  )          | C#     | NuGet     | 1.0.0   | [![Build status](https://ci.appveyor.com/api/projects/status/sm23ige74y836v48?svg=true)](https://ci.appveyor.com/project/ifreecarve/manticore-native/branch/master)
+Windows  | 8.1, 8.1 Phone, 10 (jint) | C#     | NuGet     | 1.0.0   | [![Build status](https://ci.appveyor.com/api/projects/status/sm23ige74y836v48?svg=true)](https://ci.appveyor.com/project/ifreecarve/manticore-native/branch/master)
 ChromeOS | 32                        | JS     | npm       | 1.0.0   |
-Node.js  | 0.12                      | JS     | npm       | 1.0.0   | [![Build Status](https://travis-ci.com/paypal/paypal-manticore.svg?token=zgKPydNJ3A6t49VkNfPv&branch=master)](https://travis-ci.com/paypal/paypal-manticore)
+Node.js  | 0.12                      | JS     | npm       | 1.0.0   | [![Build Status](https://travis-ci.org/paypal/manticore-native.svg?branch=master)](https://travis-ci.org/paypal/manticore-native)
 
 
 How It Works
@@ -66,28 +66,6 @@ native calls that dive into the JavaScript layer and convert types
 back and forth. For primitive types this conversion is "simple." For other Manticore or non-native types, the objects
 returned are still the same thin shims over JavaScript -- where all calls to properties and methods will be sent. This means
 there is no "synchronization" of values or events or anything - **there is only one truth, and it lives in the JavaScript environment**.
-
-
-
-
-# ISSUES
-
-there are still places where we have language specific knowledge in the generator (but it should be factored out).
-
-DustJS seemed great at the time we wrote this whole thing, but we don't really love it anymore. There's probably a better templating language for a case like this where whitespace matters (for example) - so you should suggest it to us.
-
-`basenames` and `extensions` need to be updated
-
-use varname library instead of the really weird .toUpperCase in the dust helpers
-
-specify templates dir SEPARATELY from config.json, and let config.json be anything
-
-continue to work on docs for adding manticore to project
-
-add hello world example file
-
-fix objc stack trace to pull lines from input js
-
 
 
 License
