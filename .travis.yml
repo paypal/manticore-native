@@ -20,7 +20,5 @@ matrix:
           - build-tools-23.0.2
           - android-23
 
-podfile: runtime/objc/Podfile
-
 script:
   - ./ci/travis.sh
