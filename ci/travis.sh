@@ -1,8 +1,8 @@
 #!/bin/bash
 
-if [ "$BUILD_ITEM" == "mac" ]
+if [ "$BUILD_ITEM" == "objc" ]
 then
-  echo "=*=*=*=*=*=*=*=*=*=*=*=* BUILDING mac =*=*=*=*=*=*=*=*=*=*=*=*"
+  echo "=*=*=*=*=*=*=*=*=*=*=*=* BUILDING objc =*=*=*=*=*=*=*=*=*=*=*=*"
   node -v
   npm -v
   brew update
@@ -22,9 +22,9 @@ then
   echo "=*=*=*=*=*=*=*=*=*=*=*=* BUILDING node =*=*=*=*=*=*=*=*=*=*=*=*"
   npm run lint
   npm test
-elif [ "$BUILD_ITEM" == "android" ]
+elif [ "$BUILD_ITEM" == "java" ]
 then
-  echo "=*=*=*=*=*=*=*=*=*=*=*=* BUILDING android =*=*=*=*=*=*=*=*=*=*=*=*"
+  echo "=*=*=*=*=*=*=*=*=*=*=*=* BUILDING java =*=*=*=*=*=*=*=*=*=*=*=*"
   . /home/travis/.nvm/nvm.sh
   nvm install 4.4
   npm install -g npm@3
@@ -37,4 +37,6 @@ then
   ./gradlew --stacktrace --info clean :manticore:generateDebugSources :manticore:mockableAndroidJar :manticore:prepareDebugUnitTestDependencies :manticore:generateDebugAndroidTestSources testDebug
 else
   echo "=*=*=*=*=*=*=*=*=*=*=*=* MISSING BUILD_ITEM env var =*=*=*=*=*=*=*=*=*=*=*=*"
+  echo "The environment variable BUILD_ITEM contained the unrecognized value '$BUILD_ITEM'"
+  exit 1
 fi
