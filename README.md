@@ -15,13 +15,13 @@ If you wrote a single library in JavaScript, here are all the platforms where Ma
 
 Platform | Version                   | Native | Distro    | Version | CI Status |
 -------- | -------                   | ------ |  ------   | ------- |:------    |
-iOS      | 7.0+                      | Obj C  | CocoaPods | none    | [![Build Status](https://travis-ci.org/paypal/manticore-native.svg?branch=master)](https://travis-ci.org/paypal/manticore-native)
-MacOS    | 10.9+                     | Obj C  | CocoaPods | none    | [![Build Status](https://travis-ci.org/paypal/manticore-native.svg?branch=master)](https://travis-ci.org/paypal/manticore-native)
-Android  | API 19+                   | Java   | JCenter   | none    | [![Build Status](https://travis-ci.org/paypal/manticore-native.svg?branch=master)](https://travis-ci.org/paypal/manticore-native)
+iOS      | 7.0+                      | Obj C  | CocoaPods | none    | [![Build Status](https://badges.herokuapp.com/travis/paypal/manticore-native?env=BUILD_ITEM=objc&label=build&branch=master)](https://travis-ci.org/paypal/manticore-native)
+MacOS    | 10.9+                     | Obj C  | CocoaPods | none    | [![Build Status](https://badges.herokuapp.com/travis/paypal/manticore-native?env=BUILD_ITEM=objc&label=build&branch=master)](https://travis-ci.org/paypal/manticore-native)
+Android  | API 19+                   | Java   | JCenter   | none    | [![Build Status](https://badges.herokuapp.com/travis/paypal/manticore-native?env=BUILD_ITEM=java&label=build&branch=master)](https://travis-ci.org/paypal/manticore-native)
 Windows  | XP (.Net4)                | C#     | NuGet     | none    | [![Build status](https://ci.appveyor.com/api/projects/status/sm23ige74y836v48?svg=true)](https://ci.appveyor.com/project/ifreecarve/manticore-native/branch/master)
 Windows  | 7,8,Vista (v8  )          | C#     | NuGet     | none    | [![Build status](https://ci.appveyor.com/api/projects/status/sm23ige74y836v48?svg=true)](https://ci.appveyor.com/project/ifreecarve/manticore-native/branch/master)
 Windows  | 8.1, 8.1 Phone, 10 (jint) | C#     | NuGet     | none    | [CI not running](https://github.com/paypal/manticore-native/issues/14)
-_codegen_| 0.12                      | JS     | npm       | none    | [![Build Status](https://travis-ci.org/paypal/manticore-native.svg?branch=master)](https://travis-ci.org/paypal/manticore-native)
+_codegen_| 0.12                      | JS     | npm       | none    | [![Build Status](https://badges.herokuapp.com/travis/paypal/manticore-native?env=BUILD_ITEM=node&label=build&branch=master)](https://travis-ci.org/paypal/manticore-native)
 
 
 How It Works
