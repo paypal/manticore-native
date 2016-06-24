@@ -2,7 +2,7 @@ import * as infra from './infra';
 import fs from 'fs';
 import path from 'path';
 import glob from 'glob';
-import { generate } from '../gen/index';
+import { generate } from '../lib/manticore-gen/index';
 
 const filePattern = path.join(__dirname, 'js-source/*.js');
 const inputFiles = glob.sync(filePattern).sort();

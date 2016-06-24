@@ -1,0 +1,7 @@
+#!/usr/bin/env node
+var path = require('path');
+var built =  path.join(__dirname, '..', 'build', 'mantify', 'index.js');
+var mantify = require(built);
+var process = require('process');
+
+mantify.run(process.argv);

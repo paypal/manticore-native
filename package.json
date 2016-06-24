@@ -4,21 +4,22 @@
   "description": "A runtime to expose Javascript classes, logic and code to native components",
   "main": "build/index.js",
   "bin": {
-    "manticore-gen": "./build/gen/index.js"
+    "manticore-gen": "./bin/manticore-gen",
+    "mantify": "./bin/mantify"
   },
   "scripts": {
-    "lint": "eslint .",
+    "lint": "eslint index.js lib bin",
     "precommit-lint": "eslint .; true",
     "test": "babel-node ./node_modules/.bin/tape test/**/test_*.js",
     "testSome": "babel-node ./node_modules/.bin/tape",
-    "build-testjs": "babel-node ./mantify.js ./output/index.pack.js test/js-source/index.js",
-    "objc-polyfill": "babel-node ./mantify.js runtime/objc/js/polyfill.pack.js runtime/objc/js/polyfill.js",
-    "objc-testjs": "mkdirp output/objc && babel-node -- gen/index.js -q ./runtime/objc/templates ./output/objc test/js-source/*.js",
-    "android-polyfill": "babel-node ./mantify.js runtime/android/manticore/src/main/res/raw/polyfill_pack.js runtime/android/js/polyfill.js",
-    "android-testjs": "babel-node -- gen/index.js -q ./runtime/android/templates ./runtime/android/manticore/src/test/java/com/paypal/manticore/ test/js-source/*.js",
-    "win-polyfill": "babel-node ./mantify.js runtime/win/generated/polyfill.clearscript.pack.js runtime/win/js/polyfill.clearscript.js && babel-node ./mantify.js runtime/win/generated/polyfill.jint.pack.js runtime/win/js/polyfill.jint.js",
-    "win-testjs": "mkdirp runtime/win/generated/jint runtime/win/generated/ClearScript && babel-node -- gen/index.js -q ./runtime/win/templates/jint runtime/win/generated/jint test/js-source/*.js && babel-node -- gen/index.js -q ./runtime/win/templates/clearscript runtime/win/generated/ClearScript test/js-source/*.js",
-    "build": "babel index.js --out-dir build && babel gen --out-dir build/gen",
+    "build-testjs": "babel-node ./bin/mantify ./output/index.pack.js test/js-source/index.js",
+    "objc-polyfill": "babel-node ./bin/mantify runtime/objc/js/polyfill.pack.js runtime/objc/js/polyfill.js",
+    "objc-testjs": "mkdirp output/objc && babel-node -- ./bin/manticore-gen -q ./runtime/objc/templates ./output/objc test/js-source/*.js",
+    "android-polyfill": "babel-node ./bin/mantify runtime/android/manticore/src/main/res/raw/polyfill_pack.js runtime/android/js/polyfill.js",
+    "android-testjs": "babel-node -- ./bin/manticore-gen -q ./runtime/android/templates ./runtime/android/manticore/src/test/java/com/paypal/manticore/ test/js-source/*.js",
+    "win-polyfill": "babel-node ./bin/mantify runtime/win/generated/polyfill.clearscript.pack.js runtime/win/js/polyfill.clearscript.js && babel-node ./bin/mantify runtime/win/generated/polyfill.jint.pack.js runtime/win/js/polyfill.jint.js",
+    "win-testjs": "mkdirp runtime/win/generated/jint runtime/win/generated/ClearScript && babel-node -- ./bin/manticore-gen -q ./runtime/win/templates/jint runtime/win/generated/jint test/js-source/*.js && babel-node -- ./bin/manticore-gen -q ./runtime/win/templates/clearscript runtime/win/generated/ClearScript test/js-source/*.js",
+    "build": "babel index.js --out-dir build && babel lib --out-dir build",
     "dev": "git submodule update --init --recursive && npm run build-testjs && npm run objc-polyfill && npm run android-polyfill && npm run win-polyfill && npm run objc-testjs && npm run android-testjs && npm run win-testjs"
   },
   "repository": {

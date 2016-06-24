@@ -1,0 +1,10 @@
+#!/usr/bin/env node
+var path = require('path');
+var process = require('process');
+var built =  path.join(__dirname, '..', 'build', 'manticore-gen', 'index.js');
+var gen = require(built);
+gen.run(process.argv)
+  .catch((e) => {
+    console.error('Generation failed', e.message, e.stack);
+    process.exit(-1);
+  });

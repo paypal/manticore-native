@@ -36,7 +36,7 @@ uses DustJS templates to render the native code.
 
 As such, there is a different template for each language, which you can customize or replace.
 
-For more information, see the [README in /gen](gen/README.md).
+For more information, see the [README in lib/manticore-gen](lib/manticore-gen/README.md).
 
 
 ### Pre-Compilation: Generating Runtime JavaScript

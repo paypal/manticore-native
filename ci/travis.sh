@@ -41,6 +41,6 @@ then
   cd runtime/android
   ./gradlew --stacktrace --info clean :manticore:generateDebugSources :manticore:mockableAndroidJar :manticore:prepareDebugUnitTestDependencies :manticore:generateDebugAndroidTestSources testDebug
 else
-  echo "The environment variable BUILD_ITEM contained the unrecognized value '$BUILD_ITEM'"
+  echo "The environment variable BUILD_ITEM contained the unrecognized value '$BUILD_ITEM' (expected {objc, java, node})"
   exit 1
 fi
