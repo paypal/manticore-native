@@ -24,3 +24,15 @@ npm-debug.log
 .DS_Store
 report.xml
 test.tap
+
+ManticoreNative.podspec
+Mantify.md
+README.md
+appveyor.yml
+
+build
+ci
+examples
+
+output
+runtime
