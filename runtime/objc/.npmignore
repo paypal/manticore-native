@@ -1,0 +1,11 @@
+Common
+Manticore
+Manticore.xcworkspace
+ManticoreContainer
+Podfile
+Podfile.lock
+Pods
+README.md
+js
+xcodebuild-osx.log
+xcodebuild9.log
