@@ -1,7 +1,8 @@
 {
   "name": "hello-world-ios",
   "dependencies": {
+    "hello-world": "file:../js/",
     "manticore-native": "file:../../../../",
-    "hello-world": "file:../js/"
+    "webpack": "^1.13.1"
   }
 }
