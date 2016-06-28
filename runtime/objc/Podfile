@@ -4,20 +4,20 @@ xcodeproj 'ManticoreContainer/ManticoreContainer'
 
 target 'ManticoreContainer-iOS', :exclusive => true do
   platform :ios, '7.0'
-  pod 'PayPalManticore', :path => '../../'
+  pod 'ManticoreNative', :path => '../../'
 end
 
 target 'ManticoreContainer-iOSTests', :exclusive => true do
   platform :ios, '7.0'
-  pod 'PayPalManticore', :path => '../../'
+  pod 'ManticoreNative', :path => '../../'
 end
 
 target 'ManticoreContainer-OSX', :exclusive => true do
   platform :osx, '10.9'
-  pod 'PayPalManticore', :path => '../../'
+  pod 'ManticoreNative', :path => '../../'
 end
 
 target 'ManticoreContainer-OSXTests', :exclusive => true do
   platform :osx, '10.9'
-  pod 'PayPalManticore', :path => '../../'
+  pod 'ManticoreNative', :path => '../../'
 end

@@ -14,7 +14,7 @@
 #endif
 
 #import <XCTest/XCTest.h>
-#import <PayPalManticore/PPManticoreEngine.h>
+#import <ManticoreNative/PPManticoreEngine.h>
 #import "PPManticoreSDKTestDefault.h"
 #import "PPManticoreSDKTestDefaultSubclass.h"
 #import "PPManticoreSDKTest.h"
