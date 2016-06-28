@@ -1,0 +1,5 @@
+
+xcodeproj 'Hello Manticore/Hello Manticore.xcodeproj'
+
+pod 'ManticoreNative', :path => '../../../../', :inhibit_warnings => true
+pod 'ManticoreGenerated', :path => 'generated/', :inhibit_warnings => true

@@ -23,12 +23,16 @@ export const native = (() => {
  * Export a set of objects to the native layer, as well as
  * adding them to your module exports (for JS platforms)
  * @param module Your module (e.g. put "module" here)
- * @param obj The object containing items to export
+ * @param exportsObj The object containing items to export
  */
-export function nativeExport(module, obj) {
+export function nativeExport(module, exportsObj) {
+  // const exportsObj = (exports === undefined ? module.exports : exports); // won't work; don't try
+  if (exportsObj === null || typeof exportsObj !== 'object') {
+    throw new Error(`nativeExport expected exports to be an object, got ${typeof exportsObj}`);
+  }
   const nativeExports = g.exports || closure.exports;
-  for (const k of Object.getOwnPropertyNames(obj)) {
-    nativeExports[k] = module.exports[k] = obj[k];
+  for (const k of Object.getOwnPropertyNames(exportsObj)) {
+    nativeExports[k] = module.exports[k] = exportsObj[k];
   }
 }
 

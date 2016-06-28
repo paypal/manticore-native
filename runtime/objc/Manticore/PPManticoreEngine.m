@@ -41,7 +41,7 @@
 - (void)loadScript:(NSString *)script withName:(NSString *)name {
     if (!self.loadedPolyfill) {
         self.loadedPolyfill = YES;
-        NSURL *bundleUrl = [[NSBundle mainBundle] URLForResource:@"PayPalManticoreResources" withExtension:@"bundle"];
+        NSURL *bundleUrl = [[NSBundle mainBundle] URLForResource:@"ManticoreNativeResources" withExtension:@"bundle"];
         NSBundle *bundle = [NSBundle bundleWithURL:bundleUrl];
         NSString *jsPath = [bundle pathForResource:@"polyfill.pack" ofType:@"js"];
         NSString *js = [NSString stringWithContentsOfFile:jsPath encoding:NSUTF8StringEncoding error:nil];
@@ -110,7 +110,7 @@
 
 -(JSValue*)resolveJSClass:(NSString*)jsClassName {
     JSValue *jsvalue = self.exports[jsClassName];
-    NSAssert(!jsvalue.isUndefined, @"You need to add %@ to global.exports", jsClassName);
+    NSAssert(!jsvalue.isUndefined, @"You need to add a manticore nativeExport of %@", jsClassName);
     return jsvalue;
 }
 

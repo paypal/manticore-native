@@ -1,0 +1,7 @@
+{
+  "name": "hello-world-ios",
+  "dependencies": {
+    "manticore-native": "file:../../../../",
+    "hello-world": "file:../js/"
+  }
+}

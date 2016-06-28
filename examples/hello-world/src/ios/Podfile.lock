@@ -1,0 +1,20 @@
+PODS:
+  - ManticoreGenerated (0.0.1):
+    - ManticoreNative (~> 1.0.0)
+  - ManticoreNative (1.0.0)
+
+DEPENDENCIES:
+  - ManticoreGenerated (from `generated/`)
+  - ManticoreNative (from `../../../../`)
+
+EXTERNAL SOURCES:
+  ManticoreGenerated:
+    :path: generated/
+  ManticoreNative:
+    :path: ../../../../
+
+SPEC CHECKSUMS:
+  ManticoreGenerated: fcd81fd16db1fdeefac25bbae637f2f9329f1eea
+  ManticoreNative: 52236cbc64b97cb969487246c225fc453479de8f
+
+COCOAPODS: 0.39.0
