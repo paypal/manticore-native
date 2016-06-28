@@ -14,6 +14,7 @@ then
   brew install homebrew/versions/node4-lts
   npm install -g npm@3
   npm install
+  npm run build
   npm run build-testjs
   npm run objc-polyfill
   npm run objc-testjs
@@ -43,6 +44,7 @@ then
   nvm install 4.4
   npm install -g npm@3
   npm install
+  npm run build
   npm run build-testjs
   npm run android-polyfill
   npm run android-testjs
