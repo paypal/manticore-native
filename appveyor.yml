@@ -18,7 +18,7 @@ install:
   - git submodule update --init --recursive
   - npm install -g npm@3
   - npm install
-  - npm run build
+  - npm run postinstall
   - npm run build-testjs
   - npm run win-polyfill
   - npm run win-testjs
