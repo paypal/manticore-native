@@ -19,7 +19,7 @@
     "android-testjs": "babel-node -- ./bin/manticore-gen -q ./runtime/android/templates ./runtime/android/manticore/src/test/java/com/paypal/manticore/ test/js-source/*.js",
     "win-polyfill": "babel-node ./bin/mantify runtime/win/generated/polyfill.clearscript.pack.js runtime/win/js/polyfill.clearscript.js && babel-node ./bin/mantify runtime/win/generated/polyfill.jint.pack.js runtime/win/js/polyfill.jint.js",
     "win-testjs": "mkdirp runtime/win/generated/jint runtime/win/generated/ClearScript && babel-node -- ./bin/manticore-gen -q ./runtime/win/templates/jint runtime/win/generated/jint test/js-source/*.js && babel-node -- ./bin/manticore-gen -q ./runtime/win/templates/clearscript runtime/win/generated/ClearScript test/js-source/*.js",
-    "build": "babel index.js --out-dir build && babel lib --out-dir build",
+    "postinstall": "babel index.js --out-dir build && babel lib --out-dir build",
     "dev": "npm run build-testjs && npm run objc-polyfill && npm run android-polyfill && npm run win-polyfill && npm run objc-testjs && npm run android-testjs && npm run win-testjs"
   },
   "repository": {
