@@ -17,11 +17,20 @@ then
   npm run build-testjs
   npm run objc-polyfill
   npm run objc-testjs
-  cd runtime/objc
+
+  # now the test harness
+  pushd runtime/objc
   pod install
   instruments -s devices
   xcodebuild test -workspace Manticore.xcworkspace -scheme ManticoreContainer-OSX | tee xcodebuild-osx.log | xcpretty
   xcodebuild test -workspace Manticore.xcworkspace -scheme ManticoreContainer-iOS -destination 'platform=iOS Simulator,name=iPhone 6,OS=9.3' | tee xcodebuild9.log | xcpretty
+  popd
+
+  # now the hello world app
+  pushd examples/hello-world/src/ios/
+  ./build.sh
+  popd
+
 elif [ "$BUILD_ITEM" == "node" ]
 then
   set -ex
