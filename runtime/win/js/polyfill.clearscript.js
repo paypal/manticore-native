@@ -26,6 +26,11 @@ m._ = {
   array() {
     return [];
   },
+
+  // native functions (which these callbacks are) can't cope with variable argument length
+  //   on this platform.
+  //   we cannot use 'fnlike.apply(null, a);'
+  //   we MUST match in argument count.
   fn(fnlike, count) {
     return function csFn(...a) {
       switch (count) {
@@ -37,8 +42,16 @@ m._ = {
           return fnlike(a[0], a[1]);
         case 3:
           return fnlike(a[0], a[1], a[2]);
+        case 4:
+          return fnlike(a[0], a[1], a[2], a[3]);
+        case 5:
+          return fnlike(a[0], a[1], a[2], a[3], a[4]);
+        case 6:
+          return fnlike(a[0], a[1], a[2], a[3], a[4], a[5]);
+        case 7:
+          return fnlike(a[0], a[1], a[2], a[3], a[4], a[5], a[6]);
         default:
-          throw new Error('Do not make callbacks with so many arguments');
+          throw new Error('Consider using an object instead of so many arguments in this callback');
       }
     };
   },

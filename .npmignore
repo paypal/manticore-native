@@ -14,13 +14,28 @@ lib-cov
 coverage
 .nyc_output
 
+# test stuff
+report.xml
+test.tap
+
 # Users Environment Variables
 .lock-wscript
 
+# npm stuff
 node_modules
 npm-debug.log
 
+# OS stuff
 .idea
 .DS_Store
-report.xml
-test.tap
+
+
+# CI stuff
+build/*
+appveyor.yml
+scripts
+examples
+
+# Unrelated to the node package
+ManticoreNative.podspec
+output

@@ -14,14 +14,24 @@ then
   brew install homebrew/versions/node4-lts
   npm install -g npm@3
   npm install
+  npm run postinstall
   npm run build-testjs
   npm run objc-polyfill
   npm run objc-testjs
-  cd runtime/objc
+
+  # now the test harness
+  pushd runtime/objc
   pod install
   instruments -s devices
   xcodebuild test -workspace Manticore.xcworkspace -scheme ManticoreContainer-OSX | tee xcodebuild-osx.log | xcpretty
   xcodebuild test -workspace Manticore.xcworkspace -scheme ManticoreContainer-iOS -destination 'platform=iOS Simulator,name=iPhone 6,OS=9.3' | tee xcodebuild9.log | xcpretty
+  popd
+
+  # now the hello world app
+  pushd examples/hello-world/src/ios/
+  ./build.sh
+  popd
+
 elif [ "$BUILD_ITEM" == "node" ]
 then
   set -ex
@@ -34,6 +44,7 @@ then
   nvm install 4.4
   npm install -g npm@3
   npm install
+  npm run postinstall
   npm run build-testjs
   npm run android-polyfill
   npm run android-testjs
@@ -41,6 +52,6 @@ then
   cd runtime/android
   ./gradlew --stacktrace --info clean :manticore:generateDebugSources :manticore:mockableAndroidJar :manticore:prepareDebugUnitTestDependencies :manticore:generateDebugAndroidTestSources testDebug
 else
-  echo "The environment variable BUILD_ITEM contained the unrecognized value '$BUILD_ITEM'"
+  echo "The environment variable BUILD_ITEM contained the unrecognized value '$BUILD_ITEM' (expected {objc, java, node})"
   exit 1
 fi

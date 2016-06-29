@@ -1,5 +1,6 @@
 const g = global;
 const m = g.manticore;
+
 // Setup the JavaScriptCore runtime to look like what Manticore requires (bind native functions)
 m._log('info', 'Loading android polyfill');
 

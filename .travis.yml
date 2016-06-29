@@ -21,4 +21,4 @@ matrix:
           - android-23
 
 script:
-  - ./ci/travis.sh
+  - ./scripts/ci/travis.sh

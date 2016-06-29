@@ -1,14 +1,14 @@
 PODS:
-  - PayPalManticore (1.0.0)
+  - ManticoreNative (1.0.0)
 
 DEPENDENCIES:
-  - PayPalManticore (from `../../`)
+  - ManticoreNative (from `../../`)
 
 EXTERNAL SOURCES:
-  PayPalManticore:
+  ManticoreNative:
     :path: ../../
 
 SPEC CHECKSUMS:
-  PayPalManticore: cdc561c82ae30b85fff04cfa92c49705d8e78475
+  ManticoreNative: 52236cbc64b97cb969487246c225fc453479de8f
 
 COCOAPODS: 0.39.0
