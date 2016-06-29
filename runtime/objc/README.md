@@ -84,9 +84,9 @@ pod 'ManticoreGenerated', :path => 'generated/', :inhibit_warnings => true
 
 Just another line in the local `Podfile`.
 
-$ cat Podfile
 
 ```
+$ cat Podfile
 xcodeproj 'Hello Manticore/Hello Manticore.xcodeproj'
 
 pod 'ManticoreGenerated', :path => 'generated/', :inhibit_warnings => true
@@ -123,6 +123,8 @@ This consolidates all JavaScript code and dependencies into a single file called
 NSString *path = [[NSBundle mainBundle] pathForResource:@"manticore_modules" ofType:@"js"];
 [[PPManticoreJSBackedObject engine] loadScript:[NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:NULL] withName:nil];
 ```
+
+Note the reference to the `manticore_modules.js` file that we mantify'd in the previous step.
 
 
 Developing With Manticore-Native
