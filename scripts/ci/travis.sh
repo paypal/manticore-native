@@ -9,9 +9,6 @@ then
   set -ex
   node -v
   npm -v
-  brew update
-  brew unlink node
-  brew install homebrew/versions/node4-lts
   npm install -g npm@3
   npm install
   npm run postinstall
