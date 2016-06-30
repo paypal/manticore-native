@@ -7,11 +7,10 @@ echo "=*=*=*=*=*=*=*=*=*=*=*=* BUILDING $BUILD_ITEM =*=*=*=*=*=*=*=*=*=*=*=*"
 if [ "$BUILD_ITEM" == "objc" ]
 then
   set -ex
+  npm install -g npm@3
   node -v
   npm -v
-  npm install -g npm@3
   npm install
-  npm run postinstall
   npm run build-testjs
   npm run objc-polyfill
   npm run objc-testjs
@@ -32,6 +31,10 @@ then
 elif [ "$BUILD_ITEM" == "node" ]
 then
   set -ex
+  . /home/travis/.nvm/nvm.sh
+  nvm install 4.4
+  node -v
+  npm -v
   npm run lint
   npm test
 elif [ "$BUILD_ITEM" == "java" ]
@@ -40,8 +43,9 @@ then
   . /home/travis/.nvm/nvm.sh
   nvm install 4.4
   npm install -g npm@3
+  node -v
+  npm -v
   npm install
-  npm run postinstall
   npm run build-testjs
   npm run android-polyfill
   npm run android-testjs
