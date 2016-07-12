@@ -2,22 +2,6 @@
 Hello Manticore
 ===============
 
-* iOS: [src/ios/README.md](src/ios/README.md)
+The common JavaScript library is found in [src/js/](src/js/).
 
-Build Instructions
-------------------
-
-### iOS
-
-* `cd src/ios`
-* `./build.sh`
-
-
-### Android
-
-* ??
-
-
-### Windows
-
-* ??
+* [iOS example](src/ios/)

@@ -42,16 +42,17 @@ For more information, see the [README in lib/manticore-gen](lib/manticore-gen/RE
 ### Pre-Compilation: Generating Runtime JavaScript
 
 Manticore provides scripts to combine all the source JavaScript code (and its dependencies) into one large file,
-using (among other things) `browserify` and `folderify`.
+using (among other things) `browserify` and `folderify`.  This is the implementation code, for which the
+native shims are the interface.
 
-For more information, see [Mantify.md](Mantify.md).
+For more information, see the [README in lib/mantify](lib/mantify/README.md).
 
 
 ### Initialization: Launching Manticore-Powered Code
 
 Manticore launches a native JavaScript environment and loads the unified JavaScript file into it.
 
-For more information, see [Initialization.md](Initialization.md).
+For more information, see the [runtime documentation](runtime/) or complete [example projects](examples/).
 
 
 ### Runtime: Crossing the Boundary
