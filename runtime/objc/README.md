@@ -18,7 +18,13 @@ Hello.js
 index.js
 ```
 
-### 1. Install Manticore-Native Components
+### 1.1. Setup a private npm registry and publish manticore-native
+
+```
+https://docs.npmjs.com/private-modules/intro
+```
+
+### 1.2. Install Manticore-Native Components
 
 ```
 $ npm init
