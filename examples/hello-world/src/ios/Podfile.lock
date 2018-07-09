@@ -14,7 +14,9 @@ EXTERNAL SOURCES:
     :path: ../../../../
 
 SPEC CHECKSUMS:
-  ManticoreGenerated: fcd81fd16db1fdeefac25bbae637f2f9329f1eea
+  ManticoreGenerated: b3c7f6f86b9520e1db04d9a43d56fbf32eaf4fa0
   ManticoreNative: 52236cbc64b97cb969487246c225fc453479de8f
 
-COCOAPODS: 0.39.0
+PODFILE CHECKSUM: c32aa9fa430fb8873e795ff5eb679b99a0641955
+
+COCOAPODS: 1.0.1

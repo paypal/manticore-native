@@ -268,12 +268,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 239502111CF8C7FF00BFE8CD /* Build configuration list for PBXNativeTarget "ManticoreContainer-OSX" */;
 			buildPhases = (
-				F31A2E936E5398B65D899BBD /* Check Pods Manifest.lock */,
+				F31A2E936E5398B65D899BBD /* [CP] Check Pods Manifest.lock */,
 				239502031CF8C7FF00BFE8CD /* Sources */,
 				239502041CF8C7FF00BFE8CD /* Frameworks */,
 				239502051CF8C7FF00BFE8CD /* Resources */,
-				B3ECB9FB45EEE9460D387839 /* Embed Pods Frameworks */,
-				DFAA7EAE6BD2AB05C7749D24 /* Copy Pods Resources */,
+				B3ECB9FB45EEE9460D387839 /* [CP] Embed Pods Frameworks */,
+				DFAA7EAE6BD2AB05C7749D24 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -288,12 +288,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 239502221CF8C92E00BFE8CD /* Build configuration list for PBXNativeTarget "ManticoreContainer-OSXTests" */;
 			buildPhases = (
-				C1D559100102520FDB4FE2A3 /* Check Pods Manifest.lock */,
+				C1D559100102520FDB4FE2A3 /* [CP] Check Pods Manifest.lock */,
 				239502171CF8C92D00BFE8CD /* Sources */,
 				239502181CF8C92D00BFE8CD /* Frameworks */,
 				239502191CF8C92D00BFE8CD /* Resources */,
-				461B47BC91600365C05A63FF /* Embed Pods Frameworks */,
-				6995B01CA3593E87ACA3F1D2 /* Copy Pods Resources */,
+				461B47BC91600365C05A63FF /* [CP] Embed Pods Frameworks */,
+				6995B01CA3593E87ACA3F1D2 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -309,12 +309,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C71088121B3B493E005A3B40 /* Build configuration list for PBXNativeTarget "ManticoreContainer-iOS" */;
 			buildPhases = (
-				0FA6B33149A76158D42BF50B /* Check Pods Manifest.lock */,
+				0FA6B33149A76158D42BF50B /* [CP] Check Pods Manifest.lock */,
 				C71087EB1B3B493D005A3B40 /* Sources */,
 				C71087EC1B3B493D005A3B40 /* Frameworks */,
 				C71087ED1B3B493D005A3B40 /* Resources */,
-				081C24789EF649EA363E92EC /* Copy Pods Resources */,
-				F4465870D97D22D8E91AAAF3 /* Embed Pods Frameworks */,
+				081C24789EF649EA363E92EC /* [CP] Copy Pods Resources */,
+				F4465870D97D22D8E91AAAF3 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -329,12 +329,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C71088151B3B493E005A3B40 /* Build configuration list for PBXNativeTarget "ManticoreContainer-iOSTests" */;
 			buildPhases = (
-				FFAB45A977B05C70A1097C4A /* Check Pods Manifest.lock */,
+				FFAB45A977B05C70A1097C4A /* [CP] Check Pods Manifest.lock */,
 				C71088041B3B493E005A3B40 /* Sources */,
 				C71088051B3B493E005A3B40 /* Frameworks */,
 				C71088061B3B493E005A3B40 /* Resources */,
-				89ADB39B068E1A6572B36194 /* Copy Pods Resources */,
-				59CE7E6ED3B0EC09FE134548 /* Embed Pods Frameworks */,
+				89ADB39B068E1A6572B36194 /* [CP] Copy Pods Resources */,
+				59CE7E6ED3B0EC09FE134548 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -429,14 +429,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		081C24789EF649EA363E92EC /* Copy Pods Resources */ = {
+		081C24789EF649EA363E92EC /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Pods Resources";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -444,14 +444,14 @@
 			shellScript = "\"${SRCROOT}/../Pods/Target Support Files/Pods-ManticoreContainer-iOS/Pods-ManticoreContainer-iOS-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		0FA6B33149A76158D42BF50B /* Check Pods Manifest.lock */ = {
+		0FA6B33149A76158D42BF50B /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Check Pods Manifest.lock";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -459,14 +459,14 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		461B47BC91600365C05A63FF /* Embed Pods Frameworks */ = {
+		461B47BC91600365C05A63FF /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Embed Pods Frameworks";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -474,14 +474,14 @@
 			shellScript = "\"${SRCROOT}/../Pods/Target Support Files/Pods-ManticoreContainer-OSXTests/Pods-ManticoreContainer-OSXTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		59CE7E6ED3B0EC09FE134548 /* Embed Pods Frameworks */ = {
+		59CE7E6ED3B0EC09FE134548 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Embed Pods Frameworks";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -489,14 +489,14 @@
 			shellScript = "\"${SRCROOT}/../Pods/Target Support Files/Pods-ManticoreContainer-iOSTests/Pods-ManticoreContainer-iOSTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		6995B01CA3593E87ACA3F1D2 /* Copy Pods Resources */ = {
+		6995B01CA3593E87ACA3F1D2 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Pods Resources";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -504,14 +504,14 @@
 			shellScript = "\"${SRCROOT}/../Pods/Target Support Files/Pods-ManticoreContainer-OSXTests/Pods-ManticoreContainer-OSXTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		89ADB39B068E1A6572B36194 /* Copy Pods Resources */ = {
+		89ADB39B068E1A6572B36194 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Pods Resources";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -519,14 +519,14 @@
 			shellScript = "\"${SRCROOT}/../Pods/Target Support Files/Pods-ManticoreContainer-iOSTests/Pods-ManticoreContainer-iOSTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		B3ECB9FB45EEE9460D387839 /* Embed Pods Frameworks */ = {
+		B3ECB9FB45EEE9460D387839 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Embed Pods Frameworks";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -534,14 +534,14 @@
 			shellScript = "\"${SRCROOT}/../Pods/Target Support Files/Pods-ManticoreContainer-OSX/Pods-ManticoreContainer-OSX-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		C1D559100102520FDB4FE2A3 /* Check Pods Manifest.lock */ = {
+		C1D559100102520FDB4FE2A3 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Check Pods Manifest.lock";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -549,14 +549,14 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		DFAA7EAE6BD2AB05C7749D24 /* Copy Pods Resources */ = {
+		DFAA7EAE6BD2AB05C7749D24 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Pods Resources";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -564,14 +564,14 @@
 			shellScript = "\"${SRCROOT}/../Pods/Target Support Files/Pods-ManticoreContainer-OSX/Pods-ManticoreContainer-OSX-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		F31A2E936E5398B65D899BBD /* Check Pods Manifest.lock */ = {
+		F31A2E936E5398B65D899BBD /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Check Pods Manifest.lock";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -579,14 +579,14 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		F4465870D97D22D8E91AAAF3 /* Embed Pods Frameworks */ = {
+		F4465870D97D22D8E91AAAF3 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Embed Pods Frameworks";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -594,14 +594,14 @@
 			shellScript = "\"${SRCROOT}/../Pods/Target Support Files/Pods-ManticoreContainer-iOS/Pods-ManticoreContainer-iOS-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		FFAB45A977B05C70A1097C4A /* Check Pods Manifest.lock */ = {
+		FFAB45A977B05C70A1097C4A /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Check Pods Manifest.lock";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;

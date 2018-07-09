@@ -14,7 +14,7 @@
 		2B126E281C1206A900702EAF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2B126E261C1206A900702EAF /* Main.storyboard */; };
 		2B126E2A1C1206A900702EAF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2B126E291C1206A900702EAF /* Assets.xcassets */; };
 		2B126E2D1C1206A900702EAF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2B126E2B1C1206A900702EAF /* LaunchScreen.storyboard */; };
-		E8C0571C399ADA76D3D4FAD6 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E759D4310FAA605980BE99F0 /* libPods.a */; };
+		DA7C65779043EA52AD239CF6 /* libPods-Hello Manticore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B49D46FC29027FEBA3DD58E6 /* libPods-Hello Manticore.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +30,9 @@
 		2B126E2C1C1206A900702EAF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2B126E2E1C1206A900702EAF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5DB249512F59F316204810EB /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "../Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		74C5504063266C36D1E31146 /* Pods-Hello Manticore.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Hello Manticore.release.xcconfig"; path = "../Pods/Target Support Files/Pods-Hello Manticore/Pods-Hello Manticore.release.xcconfig"; sourceTree = "<group>"; };
+		B4632F90A9EF53B97A39E499 /* Pods-Hello Manticore.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Hello Manticore.debug.xcconfig"; path = "../Pods/Target Support Files/Pods-Hello Manticore/Pods-Hello Manticore.debug.xcconfig"; sourceTree = "<group>"; };
+		B49D46FC29027FEBA3DD58E6 /* libPods-Hello Manticore.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Hello Manticore.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB7BF350C630E00DA69289B8 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "../Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		E759D4310FAA605980BE99F0 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -39,7 +42,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E8C0571C399ADA76D3D4FAD6 /* libPods.a in Frameworks */,
+				DA7C65779043EA52AD239CF6 /* libPods-Hello Manticore.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -51,6 +54,8 @@
 			children = (
 				5DB249512F59F316204810EB /* Pods.debug.xcconfig */,
 				DB7BF350C630E00DA69289B8 /* Pods.release.xcconfig */,
+				B4632F90A9EF53B97A39E499 /* Pods-Hello Manticore.debug.xcconfig */,
+				74C5504063266C36D1E31146 /* Pods-Hello Manticore.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -102,6 +107,7 @@
 			isa = PBXGroup;
 			children = (
 				E759D4310FAA605980BE99F0 /* libPods.a */,
+				B49D46FC29027FEBA3DD58E6 /* libPods-Hello Manticore.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -113,12 +119,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2B126E311C1206A900702EAF /* Build configuration list for PBXNativeTarget "Hello Manticore" */;
 			buildPhases = (
-				A216CC5FBD841005A7AC69F2 /* Check Pods Manifest.lock */,
+				A216CC5FBD841005A7AC69F2 /* [CP] Check Pods Manifest.lock */,
 				2B126E161C1206A900702EAF /* Sources */,
 				2B126E171C1206A900702EAF /* Frameworks */,
 				2B126E181C1206A900702EAF /* Resources */,
-				D2B1A2B622481C06575EFF2D /* Embed Pods Frameworks */,
-				A9F930E93775749577E2AC3D /* Copy Pods Resources */,
+				D2B1A2B622481C06575EFF2D /* [CP] Embed Pods Frameworks */,
+				A9F930E93775749577E2AC3D /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -176,14 +182,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		A216CC5FBD841005A7AC69F2 /* Check Pods Manifest.lock */ = {
+		A216CC5FBD841005A7AC69F2 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Check Pods Manifest.lock";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -191,34 +197,34 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		A9F930E93775749577E2AC3D /* Copy Pods Resources */ = {
+		A9F930E93775749577E2AC3D /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Pods Resources";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/../Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/../Pods/Target Support Files/Pods-Hello Manticore/Pods-Hello Manticore-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		D2B1A2B622481C06575EFF2D /* Embed Pods Frameworks */ = {
+		D2B1A2B622481C06575EFF2D /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Embed Pods Frameworks";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/../Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/../Pods/Target Support Files/Pods-Hello Manticore/Pods-Hello Manticore-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -340,7 +346,7 @@
 		};
 		2B126E321C1206A900702EAF /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5DB249512F59F316204810EB /* Pods.debug.xcconfig */;
+			baseConfigurationReference = B4632F90A9EF53B97A39E499 /* Pods-Hello Manticore.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = "Hello Manticore/Info.plist";
@@ -352,7 +358,7 @@
 		};
 		2B126E331C1206A900702EAF /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = DB7BF350C630E00DA69289B8 /* Pods.release.xcconfig */;
+			baseConfigurationReference = 74C5504063266C36D1E31146 /* Pods-Hello Manticore.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = "Hello Manticore/Info.plist";

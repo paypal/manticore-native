@@ -15,6 +15,8 @@ then
   npm run objc-polyfill
   npm run objc-testjs
 
+  pod --version
+
   # now the test harness
   pushd runtime/objc
   pod install
@@ -50,8 +52,17 @@ then
   npm run android-polyfill
   npm run android-testjs
   find . -name polyfill_pack.js
-  cd runtime/android
+
+  # test harness
+  pushd runtime/android
   ./gradlew --stacktrace --info clean :manticore:generateDebugSources :manticore:mockableAndroidJar :manticore:prepareDebugUnitTestDependencies :manticore:generateDebugAndroidTestSources testDebug
+  popd
+
+  # Hello World app
+  pushd examples/hello-world/src/android/
+  ./build.sh
+  popd
+
 else
   echo "The environment variable BUILD_ITEM contained the unrecognized value '$BUILD_ITEM' (expected {objc, java, node})"
   exit 1

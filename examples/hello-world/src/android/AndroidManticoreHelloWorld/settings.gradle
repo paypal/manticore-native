@@ -1,0 +1,3 @@
+include ':app'
+include ':manticore'
+project(':manticore').projectDir = new File('../../../../../runtime/android/manticore')

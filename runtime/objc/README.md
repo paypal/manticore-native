@@ -2,7 +2,7 @@
 Adding Manticore-Native to an Objective-C Project
 =================================================
 
-This guide accompanies the example iOS project found in `examples/hello-world/`
+This guide accompanies the example iOS project found in [examples/hello-world/](../../examples/hello-world/src/ios/).
 
 ### 0. The Existing Project
 

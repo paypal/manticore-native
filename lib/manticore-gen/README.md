@@ -38,7 +38,7 @@ $ manticore-gen
 
 ### Programmatically
 
-See [test/test_gen.js](../test/test_gen.js) for examples.
+See [../../test/test_gen.js](../../test/test_gen.js) for examples.
 
 
 Configuration of Generated Languages: `config.json`

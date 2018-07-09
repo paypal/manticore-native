@@ -1,0 +1,9 @@
+# Manticore generated things
+manticore_modules.js
+
+# node
+node_modules
+
+**/.DS_Store
+.DS_Store
+.idea
